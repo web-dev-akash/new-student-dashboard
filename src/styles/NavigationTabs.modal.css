@@ -1,0 +1,32 @@
+.tab-div {
+  transition: all 0.3s ease-in-out;
+}
+
+.tab-div .tabs-mobile {
+  text-wrap: nowrap;
+  font-size: 8px;
+  font-weight: 800;
+  flex-direction: column;
+  gap: 1px;
+  color: #424242;
+  transition: all 0.3s ease-in-out;
+}
+
+.tab-div .icon-div {
+  margin: 0;
+  justify-content: center;
+}
+
+.tab-div .icon {
+  font-size: 21px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.tab-div button[aria-selected="true"] {
+  color: #5838fc;
+  font-size: 0;
+}
+
+.tab-div button[aria-selected="true"] .icon {
+  transform: scale(1.4);
+}

@@ -1,0 +1,10 @@
+#home {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 2rem;
+}
+@media screen and (max-width: 768px) {
+  #home {
+    padding: 1rem;
+  }
+}

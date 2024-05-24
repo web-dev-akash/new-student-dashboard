@@ -1,0 +1,35 @@
+.slider-main-div > div:first-child {
+  height: 100vh !important;
+}
+
+.slider-main-div > div > div > div > div > div {
+  height: 100%;
+}
+
+.slider-main-div {
+  position: relative;
+}
+
+button.Mui-disabled {
+  color: white !important;
+  background-color: #5838fc70 !important;
+  cursor: not-allowed !important;
+  pointer-events: unset !important;
+}
+
+.no-spinner input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.no-spinner input[type="number"]::-webkit-outer-spin-button,
+.no-spinner input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .slider-main-div > div:first-child {
+    height: 100% !important;
+  }
+}

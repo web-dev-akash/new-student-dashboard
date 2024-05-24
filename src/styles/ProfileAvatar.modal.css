@@ -1,0 +1,10 @@
+.profile-drawer {
+  padding: 2rem;
+}
+.profile-options > div {
+  padding-inline: 0;
+}
+.profile-drawer-cointainer > div:first-child {
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.3);
+}
