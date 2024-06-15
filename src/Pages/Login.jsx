@@ -12,7 +12,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Carousel from "react-material-ui-carousel";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import "/src/styles/Login.modal.css";
@@ -349,8 +348,12 @@ export const Login = () => {
                   No account ?{" "}
                   <Box
                     component={"span"}
-                    sx={{ color: "#5838fc", textDecoration: "underline" }}
-                    onClick={() => setSignup(!signup)}
+                    sx={{
+                      color: "#5838fc",
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setSignup(true)}
                   >
                     Register Now
                   </Box>
@@ -372,7 +375,7 @@ export const Login = () => {
           </Grid>
         </Grid>
       ) : (
-        <SignUp />
+        <SignUp setSignup={setSignup} />
       )}
     </ThemeProvider>
   );

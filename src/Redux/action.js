@@ -10,7 +10,10 @@ import {
   SET_USER_LOADING,
 } from "./actionTypes";
 
-const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+const emailRegex = new RegExp(
+  /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+  "gm"
+);
 
 export const getLoading = () => ({
   type: GET_USER_LOADING,
@@ -61,49 +64,49 @@ const dummyUserData = {
     address: null,
     referrals: [
       {
-        Student_Name: "Referral 1",
+        Student_Name: "Advik",
         Phone: "91XXXXXX1254",
         id: "1",
         quizAttempted: 0,
       },
       {
-        Student_Name: "Referral 2",
+        Student_Name: "Simran",
         Phone: "91XXXXXX1254",
         id: "2",
         quizAttempted: 1,
       },
       {
-        Student_Name: "Referral 3",
+        Student_Name: "Raman",
         Phone: "91XXXXXX1254",
         id: "3",
         quizAttempted: 2,
       },
       {
-        Student_Name: "Referral 4",
+        Student_Name: "Shiv",
         Phone: "91XXXXXX1254",
         id: "4",
         quizAttempted: 3,
       },
       {
-        Student_Name: "Referral 5",
+        Student_Name: "Rahul",
         Phone: "91XXXXXX1254",
         id: "5",
         quizAttempted: 5,
       },
       {
-        Student_Name: "Referral 6",
+        Student_Name: "Rashmi",
         Phone: "91XXXXXX1254",
         id: "6",
         quizAttempted: 6,
       },
       {
-        Student_Name: "Referral 7",
+        Student_Name: "Aarav",
         Phone: "91XXXXXX1254",
         id: "7",
         quizAttempted: 7,
       },
       {
-        Student_Name: "Referral 8",
+        Student_Name: "Vivek",
         Phone: "91XXXXXX1254",
         id: "8",
         quizAttempted: 8,
@@ -112,7 +115,58 @@ const dummyUserData = {
     quizzes: 45,
     age: 213,
     category: "Active",
-    session: [],
+    session: [
+      {
+        Session_Name: "Vocabulary",
+        Total_Questions: 12,
+        id: "4878003000022106041",
+        Subject: "English",
+        Session_Date_Time: "2024-06-03T11:00:00+05:30",
+      },
+      {
+        Session_Name: "The World of Living",
+        Total_Questions: 10,
+        id: "4878003000022106046",
+        Subject: "Science",
+        Session_Date_Time: "2024-06-04T11:00:00+05:30",
+      },
+      {
+        Session_Name: "Playing with Numbers",
+        Total_Questions: 10,
+        id: "4878003000022127101",
+        Subject: "Math",
+        Session_Date_Time: "2024-06-05T11:00:00+05:30",
+      },
+      {
+        Session_Name: "Verbs",
+        Total_Questions: 12,
+        id: "4878003000022127106",
+        Subject: "English",
+        Session_Date_Time: "2024-06-06T11:00:00+05:30",
+      },
+      {
+        Session_Name:
+          "Paper Folding and Paper Cutting, Cubes and Dice, Dot situation",
+        Total_Questions: 10,
+        id: "4878003000022127111",
+        Subject: "Math",
+        Session_Date_Time: "2024-06-07T11:00:00+05:30",
+      },
+      {
+        Session_Name: "Fibre to Fabric",
+        Total_Questions: 10,
+        id: "4878003000022127116",
+        Subject: "Science",
+        Session_Date_Time: "2024-06-08T11:00:00+05:30",
+      },
+      {
+        Session_Name: "Data Handling",
+        Total_Questions: 10,
+        id: "4878003000022127121",
+        Subject: "Math",
+        Session_Date_Time: "2024-06-09T11:00:00+05:30",
+      },
+    ],
     coinsHistory: [
       {
         Coins: 1500,
@@ -442,108 +496,118 @@ const dummyUserData = {
   alert: ["credits", "inProgress", "community", "address", "doubt"],
 };
 
-export const fetchUser =
-  ({ email, password, phone }) =>
-  async (dispatch) => {
-    try {
-      if (email && !emailRegex.test(email)) {
-        alert("Please Enter a Valid Email");
-        return;
-      }
-      if (email === "teststudent@wisechamps.com") {
-        dispatch(setAlert(dummyUserData.alert));
-        dispatch(setUser(dummyUserData.user));
-        dispatch(setMode("user"));
-        dispatch(setOrders(dummyUserData.orders));
-        localStorage.setItem("wise_email", email);
-        return;
-      }
-      const data =
-        email && password
-          ? {
-              email,
-              password,
-            }
-          : {
-              phone,
-            };
-      dispatch(getLoading());
-      const today = new Date();
-      const dayOfWeek = today.getDay();
-      const hours = today.getHours();
-      const minutes = today.getMinutes();
-      const previousCoins = Number(localStorage.getItem("wise_coins") || 0);
-      const url = `https://backend.wisechamps.com/student`;
-      const res = await axios.post(url, data);
-      const mode = res.data.mode;
-      const alertObj = [];
-      if (res.data.credits === 0) {
-        alertObj.push("credits");
-      }
-      if (
-        ((dayOfWeek >= 4 && dayOfWeek <= 6) || dayOfWeek === 0) &&
-        ((hours === 11 && minutes >= 0) || (hours === 11 && minutes < 30))
-      ) {
-        alertObj.push("inProgress");
-      } else if (
-        ((dayOfWeek >= 4 && dayOfWeek <= 6) || dayOfWeek === 0) &&
-        ((hours === 10 && minutes >= 45) || (hours === 11 && minutes <= 0))
-      ) {
-        alertObj.push("aboutToStart");
-      }
-      if (!res.data.joinedWisechamps) {
-        alertObj.push("community");
-      }
-      if (
-        dayOfWeek === 6 &&
-        ((hours > 16 && hours < 18) ||
-          (hours === 16 && minutes >= 45) ||
-          (hours === 18 && minutes <= 0))
-      ) {
-        alertObj.push("doubt");
-      }
-      if (res.data.credits <= 2 && !alertObj.includes("credits")) {
-        alertObj.push("lowCredits");
-      }
-      if (!res.data.address || res.data.address === null) {
-        alertObj.push("address");
-      }
-      if (Number(res.data.coins) > previousCoins) {
-        localStorage.setItem("wise_coins", res.data.coins);
-        alertObj.push("coins");
-      }
-      dispatch(setAlert([...alertObj]));
-      if (res.data.status === 200) {
-        localStorage.setItem("wise_email", email);
-        dispatch(
-          setUser({
-            name: res.data.name,
-            credits: res.data.credits,
-            coins: res.data.coins,
-            email: email,
-            phone: res.data.phone,
-            id: res.data.contactId,
-            studentName: res.data.studentName,
-            address: res.data.address,
-            referrals: res.data.referrals === 0 ? [] : res.data.referrals,
-            quizzes: res.data.quizzes,
-            age: res.data.age,
-            category: res.data.category,
-            session: res.data.session,
-            coinsHistory:
-              res.data.coinsHistory === 0 ? [] : res.data.coinsHistory,
-          })
-        );
-      }
-      dispatch(setMode(mode));
-    } catch (error) {
-      dispatch(getError());
-    }
+const checkTimeAlerts = () => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const alertObj = [];
+
+  const isTimeInRange = (startHour, startMinute, endHour, endMinute) => {
+    return (
+      (hours === startHour && minutes >= startMinute) ||
+      (hours > startHour && hours < endHour) ||
+      (hours === endHour && minutes < endMinute)
+    );
   };
+
+  if (dayOfWeek >= 1 && dayOfWeek <= 6) {
+    // Monday to Saturday
+    if (isTimeInRange(18, 45, 19, 0)) {
+      alertObj.push("aboutToStart");
+    } else if (isTimeInRange(19, 0, 19, 50)) {
+      alertObj.push("inProgress");
+    }
+  } else if (dayOfWeek === 0) {
+    // Sunday
+    if (isTimeInRange(10, 45, 11, 0)) {
+      alertObj.push("aboutToStart");
+    } else if (isTimeInRange(11, 0, 11, 50)) {
+      alertObj.push("inProgress");
+    }
+  }
+
+  if (
+    dayOfWeek === 6 &&
+    ((hours > 16 && hours < 18) ||
+      (hours === 16 && minutes >= 45) ||
+      (hours === 18 && minutes <= 0))
+  ) {
+    alertObj.push("doubt");
+  }
+
+  return alertObj;
+};
+
+export const fetchUser = (email) => async (dispatch) => {
+  try {
+    if (!emailRegex.test(email)) {
+      alert("Please Enter a Valid Email");
+      return;
+    }
+    if (email === "teststudent@wisechamps.com") {
+      dispatch(setAlert(dummyUserData.alert));
+      dispatch(setUser(dummyUserData.user));
+      dispatch(setOrders(dummyUserData.orders));
+      dispatch(setMode("user"));
+      localStorage.setItem("wise_email", email);
+      return;
+    }
+    dispatch(getLoading());
+    const previousCoins = Number(localStorage.getItem("wise_coins") || 0);
+    const url = `https://backend.wisechamps.com/student`;
+    const res = await axios.post(url, { email });
+    const alertObj = [];
+    if (res.data.credits === 0) {
+      alertObj.push("credits");
+    }
+    const timeAlerts = checkTimeAlerts();
+    alertObj.push(...timeAlerts);
+    if (!res.data.joinedWisechamps) {
+      alertObj.push("community");
+    }
+    if (res.data.credits <= 2 && !alertObj.includes("credits")) {
+      alertObj.push("lowCredits");
+    }
+    if (!res.data.address) {
+      alertObj.push("address");
+    }
+    if (Number(res.data.coins) > previousCoins) {
+      localStorage.setItem("wise_coins", res.data.coins);
+      alertObj.push("coins");
+    }
+    dispatch(setAlert(alertObj));
+    if (res.data.status === 200) {
+      localStorage.setItem("wise_email", email);
+      dispatch(
+        setUser({
+          name: res.data.name,
+          credits: res.data.credits,
+          coins: res.data.coins,
+          email,
+          phone: res.data.phone,
+          id: res.data.contactId,
+          studentName: res.data.studentName,
+          address: res.data.address,
+          referrals: res.data.referrals === 0 ? [] : res.data.referrals,
+          quizzes: res.data.quizzes,
+          age: res.data.age,
+          category: res.data.category,
+          session: res.data.session,
+          coinsHistory:
+            res.data.coinsHistory === 0 ? [] : res.data.coinsHistory,
+        })
+      );
+    }
+    dispatch(setMode(res.data.mode));
+  } catch (error) {
+    dispatch(getError());
+  }
+};
 
 export const getProducts = () => async (dispatch) => {
   try {
-    const authToken = process.env.REACT_APP_AUTH_TOKEN;
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
     const url = `https://backend.wisechamps.com/student/store`;
     const config = {
       headers: {
@@ -562,7 +626,7 @@ export const getProducts = () => async (dispatch) => {
 
 export const getOrders = (contactId) => async (dispatch) => {
   try {
-    const authToken = process.env.REACT_APP_AUTH_TOKEN;
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
     const url = `https://backend.wisechamps.com/student/store/orders`;
     const config = {
       headers: {

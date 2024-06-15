@@ -130,7 +130,7 @@ const initialState = {
       },
     ],
   },
-  mode: "",
+  mode: "user",
   products: [
     {
       Description:

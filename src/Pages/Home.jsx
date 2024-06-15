@@ -6,7 +6,7 @@ import "../styles/ProfileAvatar.modal.css";
 
 export const Home = () => {
   return (
-    <Box id={"home"}>
+    <Box>
       <Header />
       <NavigationTabs />
     </Box>

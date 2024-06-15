@@ -204,7 +204,7 @@ export const SignUp = ({ setSignup }) => {
                 <Box component={"p"}>Sign In</Box>
               </Box>
             ) : (
-              "Sign in"
+              "Submit"
             )}
           </Button>
           <Grid container sx={{ mt: 3 }}>
@@ -212,7 +212,11 @@ export const SignUp = ({ setSignup }) => {
               Already a member ?{" "}
               <Box
                 component={"span"}
-                sx={{ color: "#5838fc", textDecoration: "underline" }}
+                sx={{
+                  color: "#5838fc",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
                 onClick={() => setSignup(false)}
               >
                 Sign In
