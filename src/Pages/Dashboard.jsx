@@ -25,7 +25,7 @@ export const Dashboard = () => {
     }
   }, []);
   return (
-    <Box className="dashboard" mt={"20px"}>
+    <Box className="dashboard" mt={["10px", "10px", "15px", "15px"]}>
       <Box
         display={"grid"}
         gridTemplateColumns={[

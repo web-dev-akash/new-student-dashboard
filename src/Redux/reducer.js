@@ -43,6 +43,7 @@ const initialState = {
     name: "Akash",
     credits: 155,
     coins: 3456,
+    grade: 5,
     id: "4878003000003001027",
     studentName: "Akash Kumar",
     address: null,
@@ -221,7 +222,7 @@ const initialState = {
       Unit_Price: 1500,
     },
   ],
-  alert: ["credits", "doubt"],
+  alert: ["credits", "inProgress", "community", "address", "doubt"],
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
