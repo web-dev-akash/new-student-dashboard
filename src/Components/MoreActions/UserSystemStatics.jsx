@@ -40,6 +40,36 @@ export const UserSystemStatics = () => {
           }}
         />
 
+        <Chip
+          label={`Age in system : 
+          ${
+            user.age >= 365
+              ? Math.floor(user.age / 365) > 1
+                ? `${Math.floor(user.age / 365)} years`
+                : `${Math.floor(user.age / 365)} year`
+              : user.age >= 30
+              ? Math.floor(user.age / 30) > 1
+                ? `${Math.floor(user.age / 30)} months`
+                : `${Math.floor(user.age / 30)} month`
+              : `${user.age} days`
+          }`}
+          sx={{
+            fontSize: { xs: "11px", md: "13px", lg: "15px" },
+            fontWeight: 600,
+            bgcolor: "#E9D8FD",
+          }}
+        />
+
+        <Chip
+          label={`Grade : 
+          ${user.grade}`}
+          sx={{
+            fontSize: { xs: "11px", md: "13px", lg: "15px" },
+            fontWeight: 600,
+            bgcolor: "#E9D8FD",
+          }}
+        />
+
         {user.category && user.category !== "" && (
           <Chip
             label={
@@ -85,9 +115,9 @@ export const UserSystemStatics = () => {
               fontWeight: 600,
               bgcolor:
                 user.category === "Active"
-                  ? "green"
+                  ? "#C6F6D5"
                   : user.category === "Regular"
-                  ? "green"
+                  ? "#C6F6D5"
                   : user.category === "Inactive" ||
                     user.category === "AtRisk" ||
                     user.category === "Dropouts"
@@ -96,25 +126,6 @@ export const UserSystemStatics = () => {
             }}
           />
         )}
-        <Chip
-          label={`Age in system : 
-          ${
-            user.age >= 365
-              ? Math.floor(user.age / 365) > 1
-                ? `${Math.floor(user.age / 365)} years`
-                : `${Math.floor(user.age / 365)} year`
-              : user.age >= 30
-              ? Math.floor(user.age / 30) > 1
-                ? `${Math.floor(user.age / 30)} months`
-                : `${Math.floor(user.age / 30)} month`
-              : `${user.age} days`
-          }`}
-          sx={{
-            fontSize: { xs: "11px", md: "13px", lg: "15px" },
-            fontWeight: 600,
-            bgcolor: "#E9D8FD",
-          }}
-        />
       </Box>
     </>
   );

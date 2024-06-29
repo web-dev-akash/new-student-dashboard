@@ -1,11 +1,11 @@
 #preset {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1.5rem 2rem 2rem;
+  padding: 1rem 2rem 2rem;
 }
 @media screen and (max-width: 768px) {
   #preset {
-    padding: 1rem;
+    padding: 0.5rem 0.7rem;
   }
 }
 
