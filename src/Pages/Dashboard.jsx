@@ -1,49 +1,93 @@
 import { Box } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getOrders, getProducts } from "../Redux/action";
+import { setAlert } from "../Redux/action";
 
 import { CarousalMain } from "../Components/Alerts/CarousalMain";
-import { ReferralComponent } from "../Components/Referral/ReferralComponent";
-import { CoinsComponent } from "../Components/CoinsComponent/CoinsComponent";
-import { Schedule } from "../Components/Schedule/Schedule";
 import { Pricing } from "../Components/Pricing/Pricing";
-import { MoreActions } from "../Components/MoreActions/MoreActions";
-import { Footer } from "../Components/Footer/Footer";
+import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
 
 export const Dashboard = () => {
-  const user = useSelector((state) => state.user);
-  const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
+  const weeklyQuizzes = useSelector((state) => state.user.weeklyQuizzes);
+  const alert = useSelector((state) => state.alert);
+  const newUser = useSelector((state) => state.user.newUser);
+  const timersRef = useRef([]);
 
   useEffect(() => {
-    dispatch(getOrders(user.id));
-    localStorage.setItem("wisechamps_current_path", window.location.pathname);
-    if (products?.length === 0) {
-      dispatch(getProducts());
+    const now = new Date();
+    const initialIndex = weeklyQuizzes.findIndex((quiz) => {
+      const quizDate = new Date(quiz.Session_Date_Time);
+      return quizDate.toDateString() === now.toDateString();
+    });
+    const sessionDateTimeStr =
+      initialIndex === -1 ? 0 : weeklyQuizzes[initialIndex].Session_Date_Time;
+    const sessionDate = new Date(sessionDateTimeStr);
+    const sessionTime = sessionDate.getTime();
+
+    const twentyMinutesBefore = new Date(sessionTime - 35 * 60 * 1000);
+    const zeroMinutesAfter = new Date(sessionTime - 5 * 60 * 1000);
+
+    timersRef.current.forEach((timer) => clearTimeout(timer));
+    timersRef.current = [];
+
+    if (now >= twentyMinutesBefore && now <= zeroMinutesAfter) {
+      if (newUser && !alert.includes("newToWisechamps")) {
+        const newAlerts = ["newToWisechamps", ...alert];
+        dispatch(setAlert(newAlerts));
+      }
+    } else {
+      if (alert.includes("newToWisechamps")) {
+        const newAlerts = alert.filter((item) => item !== "newToWisechamps");
+        dispatch(setAlert(newAlerts));
+      }
     }
-  }, []);
+
+    if (now < twentyMinutesBefore) {
+      timersRef.current.push(
+        setTimeout(() => {
+          if (!alert.includes("newToWisechamps")) {
+            const newAlerts = ["newToWisechamps", ...alert];
+            dispatch(setAlert(newAlerts));
+          }
+        }, twentyMinutesBefore - now)
+      );
+    }
+
+    if (now < zeroMinutesAfter) {
+      timersRef.current.push(
+        setTimeout(() => {
+          if (alert.includes("newToWisechamps")) {
+            const newAlerts = alert.filter(
+              (item) => item !== "newToWisechamps"
+            );
+            dispatch(setAlert(newAlerts));
+          }
+        }, zeroMinutesAfter - now)
+      );
+    }
+
+    return () => {
+      timersRef.current.forEach((timer) => clearTimeout(timer));
+    };
+  }, [alert]);
+
   return (
-    <Box className="dashboard" mt={["10px", "10px", "15px", "15px"]}>
-      <Box
-        display={"grid"}
-        gridTemplateColumns={[
-          "repeat(1, 1fr)",
-          "repeat(1, 1fr)",
-          "repeat(2, 1fr)",
-          "repeat(2, 1fr)",
-          "repeat(2, 1fr)",
-        ]}
-        gap={["10px", "10px", "20px", "20px"]}
-      >
+    <Box
+      className="dashboard"
+      bg={"#fefefe"}
+      padding={[
+        "3.8rem 0.7rem 6rem",
+        "3.8rem 0.7rem 6rem",
+        "4rem 1.5rem 6rem",
+        "4rem 1.5rem 6rem",
+      ]}
+    >
+      <Box display={"grid"} gridTemplateColumns={"repeat(1, 1fr)"}>
         <CarousalMain />
-        <ReferralComponent />
-        <CoinsComponent />
-        <Schedule />
+        <WeeklyQuiz />
         <Pricing />
-        <MoreActions />
-        <Footer />
       </Box>
     </Box>
   );

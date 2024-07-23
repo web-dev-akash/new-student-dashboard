@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { setMode } from "../Redux/action";
 import { useDispatch } from "react-redux";
 import { Box, Heading, Text } from "@chakra-ui/react";

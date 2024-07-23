@@ -1,15 +1,15 @@
 .tab-div {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .tab-div .tabs-mobile {
   text-wrap: nowrap;
-  font-size: 8px;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: 700;
   flex-direction: column;
   gap: 1px;
-  color: #424242;
-  transition: all 0.3s ease-in-out;
+  color: #383838;
+  transition: all 0.2s ease-in-out;
 }
 
 .tab-div .icon-div {
@@ -18,8 +18,9 @@
 }
 
 .tab-div .icon {
-  font-size: 21px;
-  transition: transform 0.3s ease-in-out;
+  margin-bottom: 2px;
+  font-size: 25px;
+  transition: transform 0.2s ease-in-out;
 }
 
 .tab-div button[aria-selected="true"] {
@@ -29,4 +30,13 @@
 
 .tab-div button[aria-selected="true"] .icon {
   transform: scale(1.4);
+}
+
+@media screen and (max-width: 768px) {
+  .tab-div .tabs-mobile {
+    font-size: 7px;
+  }
+  .tab-div .icon {
+    font-size: 21px;
+  }
 }

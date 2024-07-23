@@ -14,7 +14,7 @@ export const Loading = () => {
     >
       <l-ring
         size="50"
-        stroke="6"
+        stroke="8"
         bg-opacity="0.2"
         speed="2"
         color="#5838fc"

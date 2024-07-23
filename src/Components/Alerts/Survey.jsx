@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Alert,
   AlertDescription,
@@ -7,7 +8,6 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { SiGoogleforms } from "react-icons/si";
 
 export const Survey = () => {

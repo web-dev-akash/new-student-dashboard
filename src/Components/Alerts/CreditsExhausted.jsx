@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Alert,
   AlertDescription,
@@ -7,7 +8,6 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { useSelector } from "react-redux";
 
 export const CreditsExhausted = () => {
@@ -16,7 +16,6 @@ export const CreditsExhausted = () => {
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
       <Alert
         padding={"15px 20px"}
-        minHeight={"170px"}
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
@@ -37,14 +36,15 @@ export const CreditsExhausted = () => {
           <Text
             fontSize={["13px", "13px", "15px", "15px"]}
             m={"5px 0"}
-            width={["100%", "100%", "100%", "70%"]}
+            width={"100%"}
+            fontWeight={500}
           >
             You have 0 quiz balance left. Add more to join today's quiz.
           </Text>
           <Button
             fontSize={"13px"}
             margin={"10px 0 5px 0"}
-            width={"100%"}
+            width={["100%", "100%", "160px", "160px"]}
             bg={"white"}
             border={"none"}
             onClick={() =>

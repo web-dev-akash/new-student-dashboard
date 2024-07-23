@@ -11,17 +11,17 @@ import {
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getError, getLoading, setLoading } from "../Redux/action";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as changeCase from "change-case";
 import { Loading } from "../Components/Loading/Loading";
-import { Header } from "../Components/Header/Header";
 
 export const Address = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
   const [tempMode, setTempMode] = useState("");
-  const dispatch = useDispatch();
   const [address, setAddess] = useState({
     pincode: "",
     flat: "",
@@ -110,9 +110,48 @@ export const Address = () => {
   }
 
   if (tempMode === "thankyou") {
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
     return (
       <>
-        <Header />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            position: "absolute",
+            width: "100%",
+            padding: { xs: "5px 11px 5px 11px", md: "10px 1.4rem 10px 1.4rem" },
+            top: 0,
+            left: 0,
+          }}
+        >
+          <Box sx={{ width: { xs: "140px", md: "170px" } }}>
+            <img
+              src="/src/assets/logo.png"
+              alt="Wisechamps"
+              style={{
+                width: "inherit",
+              }}
+            />
+          </Box>
+          <Link to={"/"}>
+            <Typography
+              sx={{
+                fontSize: { xs: "11px", md: "13px", lg: "14px" },
+                padding: "5px 15px",
+                fontWeight: 600,
+                background: "#4346e4",
+                border: "1px solid #4e46e4",
+                borderRadius: "5px",
+                color: "white",
+              }}
+            >
+              Back
+            </Typography>
+          </Link>
+        </Box>
         <Container
           sx={{
             height: "80vh",
@@ -145,14 +184,50 @@ export const Address = () => {
 
   return (
     <Box sx={{ border: "1px solid transparent" }}>
-      <Header />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          position: "absolute",
+          width: "100%",
+          padding: { xs: "5px 11px 5px 11px", md: "10px 1.4rem 10px 1.4rem" },
+          top: 0,
+          left: 0,
+        }}
+      >
+        <Box sx={{ width: { xs: "140px", md: "170px" } }}>
+          <img
+            src="/src/assets/logo.png"
+            alt="Wisechamps"
+            style={{
+              width: "inherit",
+            }}
+          />
+        </Box>
+        <Link to={"/"}>
+          <Typography
+            sx={{
+              fontSize: { xs: "11px", md: "13px", lg: "14px" },
+              padding: "5px 15px",
+              fontWeight: 600,
+              background: "#4346e4",
+              border: "1px solid #4e46e4",
+              borderRadius: "5px",
+              color: "white",
+            }}
+          >
+            Back
+          </Typography>
+        </Link>
+      </Box>
       <Container
         className="animate__animated animate__fadeInRight address"
         sx={{
           border: { xs: "none", sm: "1px solid #ccc" },
-          p: { xs: "0", sm: "1rem", md: "1rem 2rem 2rem" },
+          p: { xs: "2rem 1rem 1rem", sm: "1rem", md: "1rem 2rem 2rem" },
           borderRadius: "10px",
-          margin: "1rem auto",
+          marginTop: { xs: "1rem", sm: "5rem" },
           maxWidth: "600px !important",
         }}
       >

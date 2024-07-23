@@ -6,40 +6,36 @@ import {
   ListItemDecorator,
   TabPanel,
   ThemeProvider,
-  Typography,
   extendTheme,
 } from "@mui/joy";
 import { TiHome } from "react-icons/ti";
 import { TbReport } from "react-icons/tb";
-import { FaGift } from "react-icons/fa";
+import { FaGift, FaPhoneAlt } from "react-icons/fa";
 import { GoPersonFill } from "react-icons/go";
-import { BsFillChatDotsFill } from "react-icons/bs";
 import { Dashboard } from "../../Pages/Dashboard";
 import { ChakraProvider } from "@chakra-ui/react";
+import { Store } from "../../Pages/Store";
+import { Referrals } from "../../Pages/Referrals";
+import { Report } from "../Report/Report";
+import { ContactUs } from "../ContactUs/ContactUs";
+// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+// import { QuizBalance } from "../QuizBalance/QuizBalance";
 
 const theme = extendTheme({
   fontFamily: {
-    body: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
+    body: "Poppins, Inter, sans-serif",
   },
 });
 
 export const NavigationTabs = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [loadedTabs, setLoadedTabs] = useState([
-    true,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const savedActiveTab = localStorage.getItem("wise_active_tab");
+  const [activeTab, setActiveTab] = useState(
+    savedActiveTab ? Number(savedActiveTab) : 0
+  );
 
   const handleTabChange = (event, newValue) => {
+    localStorage.setItem("wise_active_tab", newValue);
     setActiveTab(newValue);
-    setLoadedTabs((prevState) => {
-      const newLoadedTabs = [...prevState];
-      newLoadedTabs[newValue] = true;
-      return newLoadedTabs;
-    });
   };
 
   return (
@@ -57,17 +53,23 @@ export const NavigationTabs = () => {
           disableUnderline
           tabFlex={1}
           sx={{
-            width: "93%",
+            width: "97%",
             maxWidth: "600px",
             position: "fixed",
-            bottom: 20,
+            bottom: 15,
             top: "auto",
             left: "50%",
             transform: "translateX(-50%)",
             p: 0.7,
             gap: 0.5,
-            borderRadius: "xl",
-            bgcolor: "background.level1",
+            borderRadius: "15px",
+            bgcolor: "white",
+            boxShadow: {
+              xs: "0 20px 50px 45px rgba(0,0,0, 0.7)",
+              md: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
+            },
+            zIndex: 999,
+            minHeight: "60px",
           }}
         >
           <Tab className="tabs-mobile" disableIndicator>
@@ -92,93 +94,45 @@ export const NavigationTabs = () => {
             <ListItemDecorator className="icon-div">
               <GoPersonFill className="icon" />
             </ListItemDecorator>
-            Referral
+            Referrals
           </Tab>
+          {/* <Tab className="tabs-mobile" disableIndicator>
+            <ListItemDecorator className="icon-div">
+              <RiMoneyRupeeCircleFill className="icon" />
+            </ListItemDecorator>
+            Quiz Balance
+          </Tab> */}
           <Tab className="tabs-mobile" disableIndicator>
             <ListItemDecorator className="icon-div">
-              <BsFillChatDotsFill className="icon" />
+              <FaPhoneAlt className="icon" />
             </ListItemDecorator>
-            Chat Now
+            Contact Us
           </Tab>
         </TabList>
         <ChakraProvider disableGlobalStyle>
-          {loadedTabs[0] && (
-            <TabPanel value={0} sx={{ padding: 0 }}>
-              <Dashboard />
-            </TabPanel>
-          )}
-          {loadedTabs[1] && (
-            <TabPanel value={1} sx={{ padding: 0 }}>
-              <Typography level="inherit">
-                Best for professional developers building enterprise or
-                data-rich applications.
-              </Typography>
-              <Typography
-                textColor="primary.400"
-                fontSize="xl3"
-                fontWeight="xl"
-                mt={1}
-              >
-                $15{" "}
-                <Typography
-                  fontSize="sm"
-                  textColor="text.secondary"
-                  fontWeight="md"
-                >
-                  / dev / month
-                </Typography>
-              </Typography>
-            </TabPanel>
-          )}
-          {loadedTabs[2] && (
-            <TabPanel value={2} sx={{ padding: 0 }}>
-              <Typography level="inherit">
-                The most advanced features for data-rich applications, as well
-                as the highest priority for support.
-              </Typography>
-              <Typography
-                textColor="primary.400"
-                fontSize="xl3"
-                fontWeight="xl"
-                mt={1}
-              >
-                <Typography
-                  fontSize="xl"
-                  borderRadius="sm"
-                  px={0.7}
-                  mr={0.7}
-                  sx={(theme) => ({
-                    ...theme.variants.soft.danger,
-                    color: "danger.400",
-                    verticalAlign: "text-top",
-                    textDecoration: "line-through",
-                  })}
-                >
-                  $49
-                </Typography>
-                $37*{" "}
-                <Typography
-                  fontSize="sm"
-                  textColor="text.secondary"
-                  fontWeight="md"
-                >
-                  / dev / month
-                </Typography>
-              </Typography>
-            </TabPanel>
-          )}
-          {loadedTabs[3] && (
-            <TabPanel value={3} sx={{ padding: 0 }}>
-              <Typography level="inherit">Referral Program.</Typography>
-            </TabPanel>
-          )}
-          {loadedTabs[4] && (
-            <TabPanel value={4} sx={{ padding: 0 }}>
-              <Typography level="inherit">
-                Chat with our support team.
-              </Typography>
-            </TabPanel>
-          )}
+          <TabPanel value={0} sx={{ padding: 0 }}>
+            <Dashboard />
+          </TabPanel>
+
+          <TabPanel value={1} sx={{ padding: 0 }}>
+            <Report />
+          </TabPanel>
+
+          <TabPanel value={2} sx={{ padding: 0 }}>
+            <Store />
+          </TabPanel>
+
+          <TabPanel value={3} sx={{ padding: 0 }}>
+            <Referrals />
+          </TabPanel>
+
+          {/* <TabPanel value={4} sx={{ padding: 0 }}>
+            <QuizBalance />
+          </TabPanel> */}
+
+          <TabPanel value={4} sx={{ padding: 0 }}>
+            <ContactUs />
+          </TabPanel>
         </ChakraProvider>
       </Tabs>
     </ThemeProvider>

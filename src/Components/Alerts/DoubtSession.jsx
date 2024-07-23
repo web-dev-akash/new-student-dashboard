@@ -7,14 +7,12 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 
 export const DoubtSession = () => {
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
       <Alert
         padding={"15px 20px"}
-        minHeight={"170px"}
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
@@ -35,14 +33,15 @@ export const DoubtSession = () => {
           <Text
             fontSize={["13px", "13px", "15px", "15px"]}
             m={"5px 0"}
-            width={["100%", "100%", "100%", "70%"]}
+            width={"100%"}
+            fontWeight={500}
           >
             Got questions? Join our special session to clear your doubts!
           </Text>
           <Button
             fontSize={"13px"}
             margin={"10px 0 5px 0"}
-            width={"100%"}
+            width={["100%", "100%", "160px", "160px"]}
             bg={"white"}
             border={"none"}
             onClick={() => {

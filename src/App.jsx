@@ -6,14 +6,13 @@ import { PrivateRouter } from "./Components/PrivateRouter/PrivateRouter";
 import { Login } from "./Pages/Login";
 import { Address } from "./Pages/Address";
 import { Box } from "@mui/material";
-import { Referrals } from "./Pages/Referrals";
-import { Store } from "./Pages/Store";
-import { Coins } from "./Pages/Coins";
 import { Orders } from "./Pages/Orders";
 import { SessionNotFound } from "./Pages/SessionNotFound";
 import { NoUserFound } from "./Pages/NoUserFound";
 import { Error } from "./Pages/Error";
 import { Heading, Text } from "@chakra-ui/react";
+import { Missed } from "./Pages/Missed";
+import { WeeklyWinners } from "./Pages/WeeklyWinners";
 
 function App() {
   return (
@@ -23,6 +22,16 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route
             path="/"
+            element={
+              <PrivateRouter>
+                <Box id={"preset"}>
+                  <Home />
+                </Box>
+              </PrivateRouter>
+            }
+          ></Route>
+          <Route
+            path="/dashboard"
             element={
               <PrivateRouter>
                 <Box id={"preset"}>
@@ -42,41 +51,31 @@ function App() {
             }
           ></Route>
           <Route
-            path="/dashboard/referrals"
-            element={
-              <PrivateRouter>
-                <Box id={"preset"}>
-                  <Referrals />
-                </Box>
-              </PrivateRouter>
-            }
-          ></Route>
-          <Route
-            path="/dashboard/store"
-            element={
-              <PrivateRouter>
-                <Box id={"preset"}>
-                  <Store />
-                </Box>
-              </PrivateRouter>
-            }
-          ></Route>
-          <Route
-            path="/dashboard/coins"
-            element={
-              <PrivateRouter>
-                <Box id={"preset"}>
-                  <Coins />
-                </Box>
-              </PrivateRouter>
-            }
-          ></Route>
-          <Route
-            path="/dashboard/orders"
+            path="/orders"
             element={
               <PrivateRouter>
                 <Box id={"preset"}>
                   <Orders />
+                </Box>
+              </PrivateRouter>
+            }
+          ></Route>
+          <Route
+            path="/dashboard/missed"
+            element={
+              <PrivateRouter>
+                <Box>
+                  <Missed />
+                </Box>
+              </PrivateRouter>
+            }
+          ></Route>
+          <Route
+            path="/winners"
+            element={
+              <PrivateRouter>
+                <Box>
+                  <WeeklyWinners />
                 </Box>
               </PrivateRouter>
             }
@@ -87,18 +86,20 @@ function App() {
           <Route
             path="*"
             element={
-              <Box
-                height={["80vh", "80vh", "90vh", "95vh"]}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                flexDirection={"column"}
-              >
-                <Heading>OOPS!</Heading>
-                <Text fontSize={["15px", "15px", "18px", "18px"]}>
-                  Page not Found...
-                </Text>
-              </Box>
+              <PrivateRouter>
+                <Box
+                  height={["80vh", "80vh", "90vh", "95vh"]}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  flexDirection={"column"}
+                >
+                  <Heading>OOPS!</Heading>
+                  <Text fontSize={["15px", "15px", "18px", "18px"]}>
+                    Page not Found...
+                  </Text>
+                </Box>
+              </PrivateRouter>
             }
           ></Route>
         </Routes>

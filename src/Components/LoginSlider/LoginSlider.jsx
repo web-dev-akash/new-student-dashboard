@@ -1,23 +1,23 @@
+/* eslint-disable react/prop-types */
 import { Box } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-
+import slider1 from "/src/assets/slider1.webp";
+import slider3 from "/src/assets/slider3.webp";
+import slider4 from "/src/assets/slider4.webp";
+import slider5 from "/src/assets/slider5.webp";
 export const LoginSlider = () => {
   const carouselItems = [
     {
-      image:
-        "https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNoaWxkcmVuJTIwcmVhZGluZ3xlbnwwfHwwfHx8MA%3D%3D",
+      image: slider1,
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1549737221-bef65e2604a6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGNoaWxkcmVuJTIwcmVhZGluZ3xlbnwwfHwwfHx8MA%3D%3D",
+      image: slider3,
     },
     {
-      image:
-        "https://images.unsplash.com/flagged/photo-1551887373-6edba6dacbb1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTR8fGNoaWxkcmVuJTIwcmVhZGluZ3xlbnwwfHwwfHx8MA%3D%3D",
+      image: slider4,
     },
     {
-      image:
-        "https://images.unsplash.com/photo-1577835724923-f591f5f98c89?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fGNoaWxkcmVuJTIwcmVhZGluZ3xlbnwwfHwwfHx8MA%3D%3D",
+      image: slider5,
     },
   ];
 
@@ -53,8 +53,8 @@ export const LoginSlider = () => {
           color: "#5838fc",
         },
       }}
-      interval={3000}
-      duration={1000}
+      interval={2500}
+      duration={500}
       sx={{ height: "100%" }}
       className="slider-main-div"
     >

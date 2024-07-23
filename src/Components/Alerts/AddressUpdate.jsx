@@ -7,17 +7,13 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const AddressUpdate = () => {
-  const user = useSelector((state) => state.user);
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
       <Alert
         padding={"15px 20px"}
-        minHeight={"170px"}
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
@@ -38,14 +34,15 @@ export const AddressUpdate = () => {
           <Text
             fontSize={["13px", "13px", "15px", "15px"]}
             m={"5px 0"}
-            width={["100%", "100%", "100%", "70%"]}
+            width={"100%"}
+            fontWeight={500}
           >
             Please fill your mailing address to recieve gifts from Wisechamps.
           </Text>
           <Button
             fontSize={"13px"}
             margin={"10px 0 5px 0"}
-            width={"100%"}
+            width={["100%", "100%", "160px", "160px"]}
             bg={"white"}
             border={"none"}
             padding={0}
@@ -58,7 +55,7 @@ export const AddressUpdate = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
-              to={"/dashboard/address"}
+              to={"/address"}
             >
               Add Your Address
             </Link>

@@ -112,6 +112,7 @@ export const SignUp = ({ setSignup }) => {
             value={userData.phone}
             disabled={showOTPInput}
             className="no-spinner"
+            autoFocus
           />
           <TextField
             margin="normal"
@@ -122,7 +123,6 @@ export const SignUp = ({ setSignup }) => {
             name="email"
             type="email"
             autoComplete="email"
-            autoFocus
             onChange={""}
             value={userData.email}
           />

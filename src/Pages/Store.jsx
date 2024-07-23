@@ -16,8 +16,8 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Code,
   Divider,
-  Heading,
   Image,
   SimpleGrid,
   Stack,
@@ -27,7 +27,6 @@ import {
   Tbody,
   Td,
   Text,
-  Th,
   Thead,
   Tr,
   useDisclosure,
@@ -37,10 +36,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { GiTwoCoins } from "react-icons/gi";
 import preview from "../assets/preview.jpg";
-import { getError, getLoading, getOrders } from "../Redux/action";
+import { getError, getLoading } from "../Redux/action";
 import axios from "axios";
 import order_placed from "../assets/order_placed.gif";
 import { Loading } from "../Components/Loading/Loading";
+import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
 
 export const Store = () => {
   const dispatch = useDispatch();
@@ -53,6 +53,7 @@ export const Store = () => {
   const cancelRef = useRef();
   const [showDescription, setShowDescription] = useState(null);
   const [productId, setProductId] = useState(null);
+  const coinsHistory = useSelector((state) => state.user.coinsHistory);
 
   const handleProductPurchase = async (body) => {
     try {
@@ -78,8 +79,6 @@ export const Store = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-    dispatch(getOrders(id));
-    localStorage.setItem("wisechamps_current_path", window.location.pathname);
     if (tempMode === "thankyou") {
       setTimeout(() => {
         window.location.reload();
@@ -144,7 +143,7 @@ export const Store = () => {
     );
   }
 
-  if (loading) {
+  if (loading || products?.length === 0) {
     return <Loading />;
   }
 
@@ -152,52 +151,86 @@ export const Store = () => {
     return <Navigate to={"/error"} />;
   }
 
-  if (products?.length === 0) {
-    return (
-      <Box
-        height={["95vh", "95vh", "95vh", "98vh"]}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        textAlign={"center"}
-      >
-        <Text>
-          <Text mb={4}>The Reward Store will be available soon..</Text>
-          <Link style={{ fontSize: "13px" }} to={"/dashboard"} id="submit-btn">
-            Try Again
-          </Link>
-        </Text>
-      </Box>
-    );
-  }
+  // if (products?.length === 0) {
+  //   return (
+  //     <Box
+  //       height={["95vh", "95vh", "95vh", "98vh"]}
+  //       display={"flex"}
+  //       justifyContent={"center"}
+  //       alignItems={"center"}
+  //       textAlign={"center"}
+  //     >
+  //       <Text>
+  //         <Text mb={4}>The Reward Store will be available soon..</Text>
+  //         <Link style={{ fontSize: "13px" }} to={"/dashboard"} id="submit-btn">
+  //           Try Again
+  //         </Link>
+  //       </Text>
+  //     </Box>
+  //   );
+  // }
 
   return (
-    <Box padding={"1rem 11px"} bg={"#e7e6ff"}>
-      <Box mt={"35px"}>
-        <Box>
-          <Text fontSize={["13px", "13px", "15px", "15px"]}>
-            Available Coin Balance
-          </Text>
-          <Text
-            fontWeight={700}
-            display={"flex"}
-            alignItems={"center"}
-            gap={"5px"}
-            fontSize={["30px", "30px", "35px", "40px"]}
-            m={"0px 0 8px 0"}
-          >
-            {coins}{" "}
-            <GiTwoCoins
-              color={"gold"}
-              style={{
-                filter: "drop-shadow(0 0 0.8px rgba(0, 0, 0, 0.8))",
-              }}
-            />
-          </Text>
+    <Box
+      bg={"#E7E6FF"}
+      padding={[
+        "2.5rem 0.7rem 6rem",
+        "2.5rem 0.7rem 6rem",
+        "3.5rem 1.5rem 6rem",
+        "3.5rem 1.5rem 6rem",
+      ]}
+    >
+      <Box mt={"15px"}>
+        <Box
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <Box>
+            <Text fontWeight={500} fontSize={["14px", "14px", "16px", "16px"]}>
+              Available Coin Balance
+            </Text>
+            <Text
+              fontWeight={700}
+              display={"flex"}
+              alignItems={"center"}
+              gap={"5px"}
+              fontSize={["30px", "30px", "35px", "40px"]}
+              m={"0px 0 8px 0"}
+            >
+              {coins}{" "}
+              <GiTwoCoins
+                color={"gold"}
+                style={{
+                  filter: "drop-shadow(0 0 0.8px rgba(0, 0, 0, 0.8))",
+                }}
+              />
+            </Text>
+          </Box>
+          <Box>
+            <Button
+              fontSize={["12px", "12px", "13px", "14px"]}
+              padding={"0 !important"}
+              bg={"white"}
+              border={"1px solid #5838fc"}
+              color={"#5838fc"}
+            >
+              <Link
+                style={{
+                  width: "100%",
+                  padding: "10px 20px",
+                }}
+                to={"/orders"}
+              >
+                My Orders
+              </Link>
+            </Button>
+          </Box>
         </Box>
-        <Accordion allowToggle mb={"25px"}>
+
+        <Accordion allowToggle mb={"10px"}>
           <AccordionItem
-            border={"1px solid #4e46e4"}
+            border={"none"}
             borderRadius={"10px"}
             overflow={"hidden"}
           >
@@ -216,7 +249,150 @@ export const Store = () => {
                   padding={"3px 0"}
                   fontWeight={600}
                 >
-                  How to earn coins ?
+                  Coins Transaction History
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel p={0}>
+              <Box bg={"white"} padding={"0px 10px"} id="transactions">
+                {coinsHistory.length === 0 && (
+                  <Box
+                    minHeight={"80px"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Text
+                      fontWeight={700}
+                      fontSize={["30px"]}
+                      textAlign={"center"}
+                      opacity={0.3}
+                    >
+                      No Transactions Found
+                    </Text>
+                  </Box>
+                )}
+                {coinsHistory.map(
+                  ({ Coins, Updated_Date, id, Action_Type, Description }) => (
+                    <Box
+                      key={id}
+                      bg={"white"}
+                      padding={"10px 0"}
+                      borderBottom={"1px solid #e0e0e0"}
+                    >
+                      <Box
+                        display={"flex"}
+                        justifyContent={"space-between"}
+                        alignItems={"center"}
+                      >
+                        <Box display={"flex"} alignItems={"center"} gap={"5px"}>
+                          <Box
+                            display={"flex"}
+                            bg={"#e7e6ff"}
+                            minWidth={"38px"}
+                            minHeight={"38px"}
+                            borderRadius={"10px"}
+                            justifyContent={"center"}
+                            alignItems={"center"}
+                            fontSize={["16px", "16px", "17px", "18px"]}
+                          >
+                            {Action_Type === "Credit" ? (
+                              <CgArrowBottomLeftR />
+                            ) : (
+                              <CgArrowTopRightR />
+                            )}
+                          </Box>
+                          <Box
+                            display={"flex"}
+                            alignItems={"flex-start"}
+                            justifyContent={"center"}
+                            flexDirection={"column"}
+                          >
+                            <Text
+                              isTruncated
+                              fontWeight={600}
+                              fontSize={["12px", "12px", "14px", "15px"]}
+                              maxWidth={["210px", "400px", "600px", "900px"]}
+                            >
+                              {Description}
+                            </Text>
+                            <Text fontSize={["11px", "11px", "12px", "13px"]}>
+                              {Action_Type === "Credit"
+                                ? `Coins Added`
+                                : `Coins Deducted`}
+                            </Text>
+                          </Box>
+                        </Box>
+                        <Box
+                          display={"flex"}
+                          alignItems={"flex-end"}
+                          justifyContent={"center"}
+                          flexDirection={"column"}
+                        >
+                          <Text
+                            display={"flex"}
+                            gap={"2px"}
+                            alignItems={"center"}
+                            fontSize={["13px", "12px", "15px", "15px"]}
+                            fontWeight={600}
+                          >
+                            <Text
+                              color={
+                                Action_Type === "Credit" ? "#12ca21" : "#da1f2f"
+                              }
+                            >
+                              {Action_Type === "Credit"
+                                ? `+${Coins}`
+                                : `-${Coins}`}
+                            </Text>
+                            <GiTwoCoins
+                              color={
+                                Action_Type === "Credit" ? "#12ca21" : "#da1f2f"
+                              }
+                            />
+                          </Text>
+                          <Text
+                            fontSize={["09px", "10px", "12px", "12px"]}
+                            fontWeight={500}
+                          >
+                            {new Date(Updated_Date).toLocaleDateString("en", {
+                              year: "numeric",
+                              month: "short",
+                              day: "2-digit",
+                            })}
+                          </Text>
+                        </Box>
+                      </Box>
+                    </Box>
+                  )
+                )}
+              </Box>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+        <Accordion allowToggle mb={"25px"}>
+          <AccordionItem
+            border={"none"}
+            borderRadius={"10px"}
+            overflow={"hidden"}
+          >
+            <h2
+              style={{
+                background: "white",
+                borderRadius: "10px 10px 0 0",
+              }}
+            >
+              <AccordionButton>
+                <Box
+                  as="span"
+                  flex="1"
+                  textAlign="left"
+                  fontSize={["13px", "13px", "14px", "15px"]}
+                  padding={"3px 0"}
+                  fontWeight={600}
+                >
+                  How to earn more coins ?
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
@@ -224,26 +400,44 @@ export const Store = () => {
             <AccordionPanel p={0}>
               <TableContainer whiteSpace={"none"} maxWidth={"100%"}>
                 <Table
+                  id="howToEarnCoins"
                   variant="striped"
                   bg={"purple.100"}
                   fontSize={["11px", "11px", "13px", "14px"]}
+                  fontWeight={[500, 500, 450, 450]}
                 >
                   <TableCaption padding={"10px 0"} m={0} bg={"white"}>
-                    <Text fontSize={["13px", "13px", "14px", "15px"]}>
+                    <Code
+                      fontSize={["13px", "13px", "14px", "15px"]}
+                      colorScheme="red"
+                      fontWeight={600}
+                    >
                       Note : 10 Coins = ₹1
-                    </Text>
+                    </Code>
                   </TableCaption>
                   <Thead>
                     <Tr>
-                      <Th>
-                        <Text>Criteria</Text>
-                      </Th>
-                      <Th>
-                        <Text>Coins</Text>
-                      </Th>
+                      <Td>
+                        <Text
+                          textTransform={"uppercase"}
+                          color={"#000"}
+                          fontWeight={700}
+                        >
+                          Criteria
+                        </Text>
+                      </Td>
+                      <Td>
+                        <Text
+                          textTransform={"uppercase"}
+                          color={"#000"}
+                          fontWeight={700}
+                        >
+                          Coins
+                        </Text>
+                      </Td>
                     </Tr>
                   </Thead>
-                  <Tbody>
+                  <Tbody style={{ color: "#575757" }}>
                     <Tr>
                       <Td>Lucky draw winner every day</Td>
                       <Td>
@@ -252,7 +446,7 @@ export const Store = () => {
                           alignItems={"center"}
                           gap={"5px"}
                         >
-                          200{" "}
+                          100{" "}
                           <GiTwoCoins
                             color={"gold"}
                             style={{
@@ -283,7 +477,34 @@ export const Store = () => {
                       </Td>
                     </Tr>
                     <Tr>
-                      <Td>Top 5 highest scorers every week</Td>
+                      <Td>Top 3 highest scorers weekly</Td>
+                      <Td>
+                        <Text
+                          display={"flex"}
+                          alignItems={"center"}
+                          gap={"5px"}
+                        >
+                          300{" "}
+                          <GiTwoCoins
+                            color={"gold"}
+                            style={{
+                              filter:
+                                "drop-shadow(0 0 0.5px rgba(0, 0, 0, 0.9))",
+                            }}
+                          />
+                        </Text>
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>
+                        Top 3 highest percentage weekly{" "}
+                        <Text
+                          as={"span"}
+                          fontSize={["9px", "9px", "13px", "14px"]}
+                        >
+                          (Total Score / Total Questions Attempted)
+                        </Text>
+                      </Td>
                       <Td>
                         <Text
                           display={"flex"}
@@ -359,7 +580,7 @@ export const Store = () => {
                       </Td>
                     </Tr>
                     <Tr>
-                      <Td>Referral takes the first quiz</Td>
+                      <Td>Referral takes the 1st quiz</Td>
                       <Td>
                         <Text
                           display={"flex"}
@@ -462,18 +683,18 @@ export const Store = () => {
                   />
                 </Box>
                 <Stack mt="6" spacing="3">
-                  <Heading size="sm">
-                    <Text
-                      noOfLines={showDescription === Product_Id ? 99 : 2}
-                      onClick={() =>
-                        setShowDescription(
-                          showDescription === Product_Id ? "" : Product_Id
-                        )
-                      }
-                    >
-                      {Product_Name}
-                    </Text>
-                  </Heading>
+                  <Text
+                    fontWeight={600}
+                    fontSize={["14px", "14px", "16px", "16px"]}
+                    noOfLines={showDescription === Product_Id ? 99 : 2}
+                    onClick={() =>
+                      setShowDescription(
+                        showDescription === Product_Id ? "" : Product_Id
+                      )
+                    }
+                  >
+                    {Product_Name}
+                  </Text>
                   <Text
                     noOfLines={showDescription === Product_Id ? 99 : 4}
                     onClick={() =>

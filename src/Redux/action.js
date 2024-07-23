@@ -6,14 +6,12 @@ import {
   GET_USER_LOADING,
   GET_USER_MODE,
   GET_USER_ORDERS,
+  GET_USER_PAYMENT_HISTORY,
+  GET_USER_REPORT,
   GET_USER_STORE,
+  GET_WEEKLY_WINNERS,
   SET_USER_LOADING,
 } from "./actionTypes";
-
-const emailRegex = new RegExp(
-  /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-  "gm"
-);
 
 export const getLoading = () => ({
   type: GET_USER_LOADING,
@@ -49,6 +47,21 @@ export const setAlert = (payload) => ({
 
 export const setOrders = (payload) => ({
   type: GET_USER_ORDERS,
+  payload,
+});
+
+export const setReport = (payload) => ({
+  type: GET_USER_REPORT,
+  payload,
+});
+
+export const setWinners = (payload) => ({
+  type: GET_WEEKLY_WINNERS,
+  payload,
+});
+
+export const setPaymentHistory = (payload) => ({
+  type: GET_USER_PAYMENT_HISTORY,
   payload,
 });
 
@@ -190,6 +203,7 @@ const dummyUserData = {
         Description: "First 50 quizzes completed",
       },
     ],
+    newUser: true,
   },
   mode: "user",
   products: [
@@ -503,30 +517,6 @@ const checkTimeAlerts = () => {
   const minutes = today.getMinutes();
   const alertObj = [];
 
-  const isTimeInRange = (startHour, startMinute, endHour, endMinute) => {
-    return (
-      (hours === startHour && minutes >= startMinute) ||
-      (hours > startHour && hours < endHour) ||
-      (hours === endHour && minutes < endMinute)
-    );
-  };
-
-  if (dayOfWeek >= 1 && dayOfWeek <= 6) {
-    // Monday to Saturday
-    if (isTimeInRange(18, 45, 19, 0)) {
-      alertObj.push("aboutToStart");
-    } else if (isTimeInRange(19, 0, 19, 50)) {
-      alertObj.push("inProgress");
-    }
-  } else if (dayOfWeek === 0) {
-    // Sunday
-    if (isTimeInRange(10, 45, 11, 0)) {
-      alertObj.push("aboutToStart");
-    } else if (isTimeInRange(11, 0, 11, 50)) {
-      alertObj.push("inProgress");
-    }
-  }
-
   if (
     dayOfWeek === 6 &&
     ((hours > 16 && hours < 18) ||
@@ -541,18 +531,6 @@ const checkTimeAlerts = () => {
 
 export const fetchUser = (email) => async (dispatch) => {
   try {
-    if (!emailRegex.test(email)) {
-      alert("Please Enter a Valid Email");
-      return;
-    }
-    if (email === "teststudent@wisechamps.com") {
-      dispatch(setAlert(dummyUserData.alert));
-      dispatch(setUser(dummyUserData.user));
-      dispatch(setOrders(dummyUserData.orders));
-      dispatch(setMode("user"));
-      localStorage.setItem("wise_email", email);
-      return;
-    }
     dispatch(getLoading());
     const previousCoins = Number(localStorage.getItem("wise_coins") || 0);
     const url = `https://backend.wisechamps.com/student`;
@@ -561,24 +539,57 @@ export const fetchUser = (email) => async (dispatch) => {
     if (res.data.credits === 0) {
       alertObj.push("credits");
     }
+
     const timeAlerts = checkTimeAlerts();
     alertObj.push(...timeAlerts);
+
     if (!res.data.joinedWisechamps) {
       alertObj.push("community");
     }
-    if (res.data.credits <= 2 && !alertObj.includes("credits")) {
+
+    if (!alertObj.includes("credits") && res.data.credits <= 2) {
       alertObj.push("lowCredits");
     }
+
     if (!res.data.address) {
       alertObj.push("address");
     }
+
     if (Number(res.data.coins) > previousCoins) {
       localStorage.setItem("wise_coins", res.data.coins);
       alertObj.push("coins");
     }
+
     dispatch(setAlert(alertObj));
+
     if (res.data.status === 200) {
       localStorage.setItem("wise_email", email);
+      if (email === "teststudent@wisechamps.com") {
+        dispatch(
+          setUser({
+            name: dummyUserData.user.name,
+            credits: dummyUserData.user.credits,
+            coins: dummyUserData.user.coins,
+            email,
+            phone: dummyUserData.user.phone,
+            id: res.data.contactId,
+            studentName: dummyUserData.user.studentName,
+            grade: res.data.grade,
+            address: res.data.address,
+            referrals: dummyUserData.user.referrals,
+            quizzes: dummyUserData.user.quizzes,
+            age: dummyUserData.user.age,
+            category: dummyUserData.user.category,
+            coinsHistory: dummyUserData.user.coinsHistory,
+            weeklyQuizzes: res.data.weeklyQuizzes,
+            newUser: res.data.newUser,
+          })
+        );
+        dispatch(setOrders(dummyUserData.orders));
+        dispatch(setMode(res.data.mode));
+        return;
+      }
+
       dispatch(
         setUser({
           name: res.data.name,
@@ -588,17 +599,20 @@ export const fetchUser = (email) => async (dispatch) => {
           phone: res.data.phone,
           id: res.data.contactId,
           studentName: res.data.studentName,
+          grade: res.data.grade,
           address: res.data.address,
           referrals: res.data.referrals === 0 ? [] : res.data.referrals,
           quizzes: res.data.quizzes,
           age: res.data.age,
           category: res.data.category,
-          session: res.data.session,
           coinsHistory:
             res.data.coinsHistory === 0 ? [] : res.data.coinsHistory,
+          weeklyQuizzes: res.data.weeklyQuizzes,
+          newUser: res.data.newUser,
         })
       );
     }
+
     dispatch(setMode(res.data.mode));
   } catch (error) {
     dispatch(getError());
@@ -637,6 +651,68 @@ export const getOrders = (contactId) => async (dispatch) => {
     const res = await axios.post(url, { contactId: contactId }, config);
     if (res.data.status === 200) {
       dispatch(setOrders(res.data.orders));
+    }
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+export const getReportDataNew = (email) => async (dispatch) => {
+  try {
+    dispatch(getLoading());
+    const url = `https://backend.wisechamps.com/quiz/report`;
+    const res = await axios.post(url, { email: email });
+    if (res.data.mode === "user") {
+      dispatch(
+        setReport({
+          percentage: res.data.percentage,
+          sessions: res.data.sessions,
+        })
+      );
+    }
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+export const getWinnersData = (grade) => async (dispatch) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = `https://backend.wisechamps.com/student/weekly/winners`;
+    const res = await axios.post(
+      url,
+      { grade: grade },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+    if (res.data.status === 200) {
+      dispatch(setWinners(res.data));
+    }
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+export const getUserPaymentHistory = (contactId) => async (dispatch) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = `https://backend.wisechamps.com/student/payment/history`;
+    const res = await axios.post(
+      url,
+      { contactId: contactId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+    if (res.data.status === 200) {
+      dispatch(setPaymentHistory(res.data.paymentHistory));
     }
   } catch (error) {
     console.log("Error :", error);

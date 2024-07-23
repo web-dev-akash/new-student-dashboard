@@ -1,12 +1,5 @@
 #preset {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 1rem 2rem 2rem;
-}
-@media screen and (max-width: 768px) {
-  #preset {
-    padding: 0.5rem 0.7rem;
-  }
 }
 
 #submit-btn,
@@ -207,41 +200,6 @@
   padding: 2rem 2rem 2.5rem 2rem !important;
 }
 
-@media (max-width: 768px) {
-  .radio-input-wrapper {
-    padding-inline: 2.5rem;
-    padding-block: 1.5rem;
-  }
-  .main_div {
-    padding: unset !important;
-    padding-top: 10px !important;
-    padding-bottom: 20px !important;
-  }
-  .label-text {
-    font-size: 13px;
-  }
-  .main-div-btn #submit-btn {
-    width: 90%;
-    margin: 0 auto;
-  }
-  .main-div-btn {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .radio-input-wrapper > p {
-    width: 92%;
-    margin: 5px auto;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .radio-input-wrapper #submit-btn {
-    width: 80% !important;
-  }
-  .radio-input-wrapper .label {
-    margin: auto 10px;
-  }
-}
-
 .radio-input-wrapper #submit-btn {
   width: 40%;
 }
@@ -357,12 +315,12 @@ select {
 
 .plansTable th,
 .plansTable td {
-  padding-left: 0px !important;
+  padding-left: 13px !important;
   padding-right: 0px !important;
 }
 
 #plansPackage {
-  padding-left: 15px !important;
+  padding-left: 13px !important;
 }
 
 .chakra-step__indicator {
@@ -386,4 +344,206 @@ select {
 #chakra-modal-alertDialogBoxMainDiv {
   padding: 10px 0;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3);
+}
+
+#quizScroller::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .radio-input-wrapper {
+    padding-inline: 2.5rem;
+    padding-block: 1.5rem;
+  }
+
+  .main_div {
+    padding: unset !important;
+    padding-top: 10px !important;
+    padding-bottom: 20px !important;
+  }
+  .label-text {
+    font-size: 13px;
+  }
+  .main-div-btn #submit-btn {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .main-div-btn {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .radio-input-wrapper > p {
+    width: 92%;
+    margin: 5px auto;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .radio-input-wrapper #submit-btn {
+    width: 80% !important;
+  }
+  .radio-input-wrapper .label {
+    margin: auto 10px;
+  }
+}
+
+.input {
+  width: 100%;
+  height: 45px;
+  line-height: 30px;
+  padding: 0 1rem;
+  padding-left: 1rem;
+  border: 2px solid #4e46e4;
+  border-radius: 10px;
+  outline: none;
+  background-color: #f5faff;
+  color: #0d0c22;
+  transition: 0.5s ease;
+  font-size: 13px;
+}
+
+.input::placeholder {
+  color: #8698b1;
+}
+
+.input:focus,
+.input:hover {
+  outline: none;
+  border-color: #4e46e4;
+  background-color: #fff;
+  box-shadow: 0 0 0 5px #4e46e450;
+}
+.main {
+  width: 95%;
+  margin: 0 auto;
+  max-width: 350px;
+  padding: 2rem;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  border-radius: 1rem;
+  text-align: left;
+}
+
+.email-not-found > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+.email-not-found > div > button {
+  padding: 10px 15px !important;
+  font-size: 15px !important;
+  width: 100%;
+}
+
+#tableContainer tbody tr:last-child {
+  border-radius: 20px !important;
+}
+
+#tableContainer td {
+  text-align: center !important;
+}
+#tableContainer thead td {
+  background-color: #646cff;
+  color: white !important;
+  font-weight: 500 !important;
+}
+#tableContainer tbody td {
+  font-size: 12px;
+  border: 1px solid #646cff;
+}
+
+.input-container {
+  text-align: left;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 20px 1px #00000025;
+}
+
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  outline: none;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  border-radius: 0 5px 5px 0;
+  font-weight: 500;
+}
+
+.input-field:not(input[type="tel"]) {
+  border: 1px solid #d7dce2;
+  border-radius: 5px;
+}
+
+.input-field:is(input[type="tel"]) {
+  border-top: 1px solid #d7dce2;
+  border-right: 1px solid #d7dce2;
+  border-bottom: 1px solid #d7dce2;
+  border-radius: 0 5px 5px 0;
+}
+
+.input-container select {
+  font-size: 13px;
+  padding: 0 10px;
+  color: #6e6e6e;
+}
+
+.input-container select:focus {
+  color: black;
+}
+
+.input-label {
+  font-weight: 600;
+  position: absolute;
+  top: 0;
+  left: 60px;
+  font-size: 16px;
+  color: rgba(204, 204, 204, 0);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  height: 12px;
+}
+
+.input-field:not(input[type="tel"]) + .input-label {
+  left: 10px;
+}
+
+.input-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: #4e46e4;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus::placeholder {
+  opacity: 0;
+}
+
+.input-field:focus + .input-label {
+  top: -11px;
+  font-size: 13px;
+  color: #4e46e4;
+  background: white;
+}
+
+.input-field:not(input[type="tel"]):focus + .input-label {
+  left: 10px;
+}
+
+.input-field:focus + .input-label + .input-highlight {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .input-container {
+    padding: 5px;
+    box-shadow: none;
+  }
 }

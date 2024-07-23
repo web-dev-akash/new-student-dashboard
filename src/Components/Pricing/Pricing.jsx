@@ -6,7 +6,6 @@ import {
   Tbody,
   Td,
   Text,
-  Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
@@ -16,13 +15,13 @@ export const Pricing = () => {
   const user = useSelector((state) => state.user);
   return (
     <Box
-      background="white"
-      border={"1px solid #4E46E4"}
+      background="#fff"
       borderRadius={"10px"}
-      // overflowX={"auto"}
+      padding={"1.2rem 0 1.5rem 0"}
+      boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
     >
       <Text
-        m={"1rem 0 0 1rem"}
+        m={"0 0 0 1rem"}
         fontWeight={700}
         fontSize={["15px", "15px", "18px", "18px"]}
       >
@@ -39,27 +38,55 @@ export const Pricing = () => {
         <Table variant="striped" colorScheme="blue" className="plansTable">
           <Thead>
             <Tr>
-              <Th id="plansPackage">
-                <Text fontSize={["10px", "10px", "13px", "13px"]}>Package</Text>
-              </Th>
-              <Th>
-                <Text fontSize={["10px", "10px", "13px", "13px"]}>Amount</Text>
-              </Th>
-              <Th>
-                <Text fontSize={["10px", "10px", "13px", "13px"]}>Quizzes</Text>
-              </Th>
-              <Th>
-                <Text fontSize={["10px", "10px", "13px", "13px"]}>
+              <Td>
+                <Text
+                  textTransform={"uppercase"}
+                  color={"#000"}
+                  fontWeight={700}
+                  fontSize={["11px", "12px", "13px", "14px"]}
+                >
+                  Package
+                </Text>
+              </Td>
+              <Td>
+                <Text
+                  textTransform={"uppercase"}
+                  color={"#000"}
+                  fontWeight={700}
+                  fontSize={["11px", "12px", "13px", "14px"]}
+                >
+                  Amount
+                </Text>
+              </Td>
+              <Td>
+                <Text
+                  textTransform={"uppercase"}
+                  color={"#000"}
+                  fontWeight={700}
+                  fontSize={["11px", "12px", "13px", "14px"]}
+                >
+                  Quizzes
+                </Text>
+              </Td>
+              <Td>
+                <Text
+                  textTransform={"uppercase"}
+                  color={"#000"}
+                  fontWeight={700}
+                  fontSize={["11px", "12px", "13px", "14px"]}
+                >
                   Validity
                 </Text>
-              </Th>
+              </Td>
             </Tr>
           </Thead>
-          <Tbody fontSize={["11px", "11px", "13px", "13px"]}>
+          <Tbody
+            fontSize={["11px", "11px", "13px", "13px"]}
+            fontWeight={500}
+            color={"#323232"}
+          >
             <Tr>
-              <Td fontWeight={600} id="plansPackage">
-                Trial Package
-              </Td>
+              <Td id="plansPackage">Trial Package</Td>
               <Td>₹199</Td>
               <Td>
                 5 Quizzes <br />
@@ -96,9 +123,10 @@ export const Pricing = () => {
       </TableContainer>
       <Box
         width={"100%"}
-        margin={"1rem auto"}
+        margin={"1rem auto 0 auto"}
         display={"flex"}
         justifyContent={"center"}
+        padding={"0 1rem"}
       >
         <Button
           onClick={() =>
@@ -110,7 +138,7 @@ export const Pricing = () => {
           color={"white"}
           fontSize={["13px", "13px", "15px", "15px"]}
           fontWeight={400}
-          width={"90%"}
+          width={"100%"}
         >
           Add Quiz Balance
         </Button>

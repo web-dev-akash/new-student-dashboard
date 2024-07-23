@@ -3,25 +3,24 @@ import { useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { CreditsExhausted } from "./CreditsExhausted";
-import { AboutToStart } from "./AboutToStart";
-import { MeetingInProgress } from "./MeetingInProgress";
 import { LowCredits } from "./LowCredits";
 import { CoinsUpdated } from "./CoinsUpdated";
 import { AddressUpdate } from "./AddressUpdate";
 import { DoubtSession } from "./DoubtSession";
 import { JoinCommunity } from "./JoinCommunity";
+import { IntroLuckyDrawMeeting } from "./IntroLuckyDrawMeeting";
 
 export const CarousalMain = () => {
   const alert = useSelector((state) => state.alert);
   return (
     <Box
-      gridColumn={["unset", "unset", "1 / span 2", "1 / span 2"]}
       overflow={"hidden"}
       width={"100%"}
       borderRadius={"10px"}
       display={alert.length > 0 ? "block" : "none"}
     >
       <Carousel
+        transitionTime={500}
         dynamicHeight={true}
         autoPlay={true}
         centerMode={true}
@@ -38,11 +37,8 @@ export const CarousalMain = () => {
               if (alert === "credits") {
                 return <CreditsExhausted key={index} />;
               }
-              if (alert === "aboutToStart") {
-                return <AboutToStart key={index} />;
-              }
-              if (alert === "inProgress") {
-                return <MeetingInProgress key={index} />;
+              if (alert === "newToWisechamps") {
+                return <IntroLuckyDrawMeeting key={index} />;
               }
               if (alert === "community") {
                 return <JoinCommunity key={index} />;

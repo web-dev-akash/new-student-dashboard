@@ -6,7 +6,6 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { useSelector } from "react-redux";
 
 export const CoinsUpdated = () => {
@@ -15,7 +14,6 @@ export const CoinsUpdated = () => {
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
       <Alert
         padding={"15px 20px"}
-        minHeight={"170px"}
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
@@ -36,7 +34,8 @@ export const CoinsUpdated = () => {
           <Text
             fontSize={["13px", "13px", "15px", "15px"]}
             m={"5px 0"}
-            width={["100%", "100%", "100%", "80%"]}
+            width={"100%"}
+            fontWeight={500}
           >
             Coins added successfully. Your coins have updated to {user.coins}.
           </Text>

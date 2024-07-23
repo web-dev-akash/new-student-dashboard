@@ -7,7 +7,6 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { useSelector } from "react-redux";
 
 export const LowCredits = () => {
@@ -16,7 +15,6 @@ export const LowCredits = () => {
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
       <Alert
         padding={"15px 20px"}
-        minHeight={"170px"}
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
@@ -37,7 +35,8 @@ export const LowCredits = () => {
           <Text
             fontSize={["13px", "13px", "15px", "15px"]}
             m={"5px 0"}
-            width={["100%", "100%", "100%", "80%"]}
+            width={"100%"}
+            fontWeight={500}
           >
             You have {user.credits} quiz balance left. Add more to enjoy
             uninterrupted quiz.
@@ -45,7 +44,7 @@ export const LowCredits = () => {
           <Button
             fontSize={"13px"}
             margin={"10px 0 5px 0"}
-            width={"100%"}
+            width={["100%", "100%", "160px", "160px"]}
             bg={"white"}
             border={"none"}
             onClick={() =>
