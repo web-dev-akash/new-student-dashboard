@@ -25,7 +25,7 @@ const initialState = {
     studentName: "",
     address: null,
     referrals: [],
-    quizzes: 0,
+    quizzes: [],
     age: 0,
     category: "",
     coinsHistory: [],
@@ -110,7 +110,37 @@ const initialState = {
 //         quizAttempted: 50,
 //       },
 //     ],
-//     quizzes: 45,
+//     quizzes: [
+//       {
+//         contactId: "4878003000003001027",
+//         Session_Name: null,
+//         id: "4878003000015013025",
+//         Quiz_Score: 7,
+//         Session_Date_Time: "2024-04-14T11:00:00+05:30",
+//       },
+//       {
+//         contactId: "4878003000003001027",
+//         Session_Name: null,
+//         id: "4878003000015013043",
+//         Quiz_Score: 10,
+//         Session_Date_Time: "2024-04-13T19:00:00+05:30",
+//       },
+//       {
+//         contactId: "4878003000003001027",
+//         Session_Name: "Math Live Quiz Grade 4 Data Handling 03 May",
+//         id: "4878003000015013061",
+//         Quiz_Score: 10,
+//         Session_Date_Time: "2024-04-12T19:00:00+05:30",
+//       },
+//       {
+//         contactId: "4878003000003001027",
+//         Session_Name:
+//           "Science Live Quiz Grade 4 Food and Nutrition with the help of a computer 02 May",
+//         id: "4878003000015013079",
+//         Quiz_Score: 11,
+//         Session_Date_Time: "2024-04-11T21:00:00+05:30",
+//       },
+//     ],
 //     age: 213,
 //     category: "Active",
 //     coinsHistory: [
@@ -670,7 +700,26 @@ const initialState = {
 //       },
 //     ],
 //   },
-//   paymentHistory: [],
+//   paymentHistory: [
+//     {
+//       Payment_Date: "2024-01-31",
+//       Credits: 200,
+//       Amount: 1999,
+//       id: "4878003000015099001",
+//     },
+//     {
+//       Payment_Date: "2023-10-13",
+//       Credits: 1,
+//       Amount: 39,
+//       id: "4878003000008932116",
+//     },
+//     {
+//       Payment_Date: "2023-10-13",
+//       Credits: 1,
+//       Amount: 39,
+//       id: "4878003000008992001",
+//     },
+//   ],
 // };
 
 export const reducer = (state = initialState, { type, payload }) => {

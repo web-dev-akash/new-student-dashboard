@@ -21,14 +21,16 @@ export const UserSystemStatics = () => {
             fontSize: { xs: "11px", md: "13px", lg: "15px" },
             fontWeight: 600,
             bgcolor: "#E9D8FD",
+            color: "#442e63",
           }}
         />
         <Chip
-          label={`Quiz Taken : ${user.quizzes}`}
+          label={`Quiz Taken : ${user.quizzes.length}`}
           sx={{
             fontSize: { xs: "11px", md: "13px", lg: "15px" },
             fontWeight: 600,
             bgcolor: "#E9D8FD",
+            color: "#442e63",
           }}
         />
         <Chip
@@ -37,6 +39,7 @@ export const UserSystemStatics = () => {
             fontSize: { xs: "11px", md: "13px", lg: "15px" },
             fontWeight: 600,
             bgcolor: "#E9D8FD",
+            color: "#442e63",
           }}
         />
 
@@ -57,6 +60,7 @@ export const UserSystemStatics = () => {
             fontSize: { xs: "11px", md: "13px", lg: "15px" },
             fontWeight: 600,
             bgcolor: "#E9D8FD",
+            color: "#442e63",
           }}
         />
 
@@ -67,6 +71,7 @@ export const UserSystemStatics = () => {
             fontSize: { xs: "11px", md: "13px", lg: "15px" },
             fontWeight: 600,
             bgcolor: "#E9D8FD",
+            color: "#442e63",
           }}
         />
 

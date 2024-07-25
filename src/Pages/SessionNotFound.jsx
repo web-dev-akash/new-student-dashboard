@@ -1,14 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setMode } from "../Redux/action";
 import { Box, Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export const SessionNotFound = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setMode(""));
-  }, []);
   return (
     <Box
       textAlign={"center"}

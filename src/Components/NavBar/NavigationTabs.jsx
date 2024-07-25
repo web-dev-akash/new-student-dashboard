@@ -18,8 +18,8 @@ import { Store } from "../../Pages/Store";
 import { Referrals } from "../../Pages/Referrals";
 import { Report } from "../Report/Report";
 import { ContactUs } from "../ContactUs/ContactUs";
-// import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-// import { QuizBalance } from "../QuizBalance/QuizBalance";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+import { QuizBalance } from "../QuizBalance/QuizBalance";
 
 const theme = extendTheme({
   fontFamily: {
@@ -96,12 +96,12 @@ export const NavigationTabs = () => {
             </ListItemDecorator>
             Referrals
           </Tab>
-          {/* <Tab className="tabs-mobile" disableIndicator>
+          <Tab className="tabs-mobile" disableIndicator>
             <ListItemDecorator className="icon-div">
               <RiMoneyRupeeCircleFill className="icon" />
             </ListItemDecorator>
             Quiz Balance
-          </Tab> */}
+          </Tab>
           <Tab className="tabs-mobile" disableIndicator>
             <ListItemDecorator className="icon-div">
               <FaPhoneAlt className="icon" />
@@ -126,11 +126,11 @@ export const NavigationTabs = () => {
             <Referrals />
           </TabPanel>
 
-          {/* <TabPanel value={4} sx={{ padding: 0 }}>
-            <QuizBalance />
-          </TabPanel> */}
-
           <TabPanel value={4} sx={{ padding: 0 }}>
+            <QuizBalance />
+          </TabPanel>
+
+          <TabPanel value={5} sx={{ padding: 0 }}>
             <ContactUs />
           </TabPanel>
         </ChakraProvider>

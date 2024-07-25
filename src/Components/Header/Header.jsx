@@ -27,7 +27,8 @@ export const Header = () => {
         <img
           src="/images/logo.png"
           alt="Wisechamps"
-          width={"inherit"}
+          style={{ width: "inherit" }}
+          width={"120px"}
           onClick={() => navigate("/")}
         />
       </Box>

@@ -125,7 +125,37 @@ const dummyUserData = {
         quizAttempted: 8,
       },
     ],
-    quizzes: 45,
+    quizzes: [
+      {
+        contactId: "4878003000003001027",
+        Session_Name: null,
+        id: "4878003000015013025",
+        Quiz_Score: 7,
+        Session_Date_Time: "2024-04-14T11:00:00+05:30",
+      },
+      {
+        contactId: "4878003000003001027",
+        Session_Name: null,
+        id: "4878003000015013043",
+        Quiz_Score: 10,
+        Session_Date_Time: "2024-04-13T19:00:00+05:30",
+      },
+      {
+        contactId: "4878003000003001027",
+        Session_Name: "Math Live Quiz Grade 4 Data Handling 03 May",
+        id: "4878003000015013061",
+        Quiz_Score: 10,
+        Session_Date_Time: "2024-04-12T19:00:00+05:30",
+      },
+      {
+        contactId: "4878003000003001027",
+        Session_Name:
+          "Science Live Quiz Grade 4 Food and Nutrition with the help of a computer 02 May",
+        id: "4878003000015013079",
+        Quiz_Score: 11,
+        Session_Date_Time: "2024-04-11T21:00:00+05:30",
+      },
+    ],
     age: 213,
     category: "Active",
     session: [
@@ -577,7 +607,7 @@ export const fetchUser = (email) => async (dispatch) => {
             grade: res.data.grade,
             address: res.data.address,
             referrals: dummyUserData.user.referrals,
-            quizzes: dummyUserData.user.quizzes,
+            quizzes: dummyUserData.user.quizzes || [],
             age: dummyUserData.user.age,
             category: dummyUserData.user.category,
             coinsHistory: dummyUserData.user.coinsHistory,
@@ -602,7 +632,7 @@ export const fetchUser = (email) => async (dispatch) => {
           grade: res.data.grade,
           address: res.data.address,
           referrals: res.data.referrals === 0 ? [] : res.data.referrals,
-          quizzes: res.data.quizzes,
+          quizzes: res.data.quizzes === 0 ? [] : res.data.quizzes,
           age: res.data.age,
           category: res.data.category,
           coinsHistory:
