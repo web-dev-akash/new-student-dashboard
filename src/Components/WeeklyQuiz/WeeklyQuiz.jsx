@@ -441,7 +441,7 @@ export const WeeklyQuiz = () => {
                         isDisabled={!Vevox_Survey_Link}
                         padding={"0 !important"}
                       >
-                        Missed Quiz
+                        Review Questions
                       </Button>
                     </Link>
                   )}
