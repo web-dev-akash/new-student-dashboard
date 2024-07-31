@@ -82,8 +82,8 @@ export const QuizBalance = () => {
       padding={[
         "3rem 0.7rem 6rem",
         "3rem 0.7rem 6rem",
-        "3.2rem 1.5rem 6rem",
-        "3.2rem 1.5rem 6rem",
+        "4rem 1.5rem 1.5rem",
+        "4rem 1.5rem 1.5rem",
       ]}
       minHeight={"100vh"}
     >

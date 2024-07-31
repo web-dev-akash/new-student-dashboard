@@ -92,8 +92,9 @@ export const ProfileAvatar = () => {
       sx={{
         display: "flex",
         position: "absolute",
-        top: "10px",
+        top: { xs: "10px", md: "17px" },
         right: { xs: "10px", md: "1.5rem" },
+        zIndex: 999,
       }}
     >
       <ChakraProvider disableGlobalStyle>

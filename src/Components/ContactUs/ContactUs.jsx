@@ -10,7 +10,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { RiPhoneFill, RiWhatsappFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import contact_us from "/src/assets/contact_us.svg";
+import contact_us from "/src/assets/contact_us.png";
 
 export const ContactUs = () => {
   const toast = useToast();
@@ -120,8 +120,8 @@ export const ContactUs = () => {
         padding={[
           "3rem 0.7rem 3rem",
           "3rem 0.7rem 3rem",
-          "3.5rem 1.5rem 3rem",
-          "3.5rem 1.5rem 3rem",
+          "4.5rem 1.5rem 3rem",
+          "4.5rem 1.5rem 3rem",
         ]}
       >
         <Box
@@ -176,26 +176,30 @@ export const ContactUs = () => {
         </Box>
       </Box>
       <Box
-        padding={[
-          "1rem 0.7rem 3rem",
-          "1rem 0.7rem 3rem",
-          "1.5rem 1.5rem 6rem",
-          "1.5rem 1.5rem 6rem",
-        ]}
+        padding={["1rem 0.7rem 3rem", "1rem 0.7rem 3rem", "1.5rem", "1.5rem"]}
         display={"flex"}
-        justifyContent={"center"}
+        justifyContent={["center", "center", "flex-end", "flex-end"]}
         alignItems={"center"}
+        minHeight={["auto", "auto", "50vh", "60vh"]}
         gap={20}
+        position={"relative"}
+        maxWidth={"1200px"}
+        margin={"0 auto"}
       >
         <Image
+          position={"absolute"}
+          left={0}
+          top={0}
           src={contact_us}
           alt=""
           width={"100%"}
-          maxWidth={["0", "0", "400px", "400px", "600px"]}
+          maxWidth={["0", "0", "450px", "500px", "650px"]}
           display={["none", "none", "block", "block"]}
-          transform={"scaleX(-1)"}
         />
-        <form className="input-container">
+        <form
+          className="input-container"
+          style={{ zIndex: 9, position: "relative", background: "white" }}
+        >
           <Text
             fontSize={["18px", "18px", "22px", "22px"]}
             fontWeight={600}

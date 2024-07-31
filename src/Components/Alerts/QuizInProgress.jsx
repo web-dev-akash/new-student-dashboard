@@ -8,10 +8,44 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export const QuizInProgress = () => {
   const user = useSelector((state) => state.user);
+  const weeklyQuizzes = useSelector((state) => state.user.weeklyQuizzes);
+  const [time, setTime] = useState(null);
+
+  function formatDateTime(Session_Date_Time) {
+    const dateObj = new Date(Session_Date_Time);
+    let hours = dateObj.getHours();
+    const minutes = dateObj.getMinutes();
+    const period = hours >= 12 ? "PM" : "AM";
+
+    if (hours > 12) {
+      hours -= 12;
+    }
+
+    if (hours === 0) {
+      hours = 12;
+    }
+
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    return `${hours}:${formattedMinutes} ${period}`;
+  }
+
+  useEffect(() => {
+    const now = new Date();
+    const initialIndex = weeklyQuizzes.findIndex((quiz) => {
+      const quizDate = new Date(quiz.Session_Date_Time);
+      return quizDate.toDateString() === now.toDateString();
+    });
+    const sessionDateTimeStr =
+      initialIndex === -1 ? 0 : weeklyQuizzes[initialIndex].Session_Date_Time;
+    const sessionDate = new Date(sessionDateTimeStr);
+    const currTime = formatDateTime(sessionDate);
+    setTime(currTime);
+  }, []);
 
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
@@ -31,7 +65,7 @@ export const QuizInProgress = () => {
           gap={"5px"}
         >
           <AlertIcon margin={0} />
-          <AlertTitle>Join Meeting Now</AlertTitle>
+          <AlertTitle>Join Today's Quiz ({time})</AlertTitle>
         </Box>
         <AlertDescription width={"100%"}>
           <Text
@@ -40,8 +74,7 @@ export const QuizInProgress = () => {
             width={"100%"}
             fontWeight={500}
           >
-            Meeting is about to start in some time. Click the below button to
-            join today's quiz.
+            Click the JOIN QUIZ NOW button to join today's quiz.
           </Text>
           <Button
             fontSize={"13px"}
@@ -53,7 +86,7 @@ export const QuizInProgress = () => {
               window.open(`https://zoom.wisechamps.com?email=${user.email}`)
             }
           >
-            Join Meeting Now
+            Join Quiz Now
           </Button>
         </AlertDescription>
       </Alert>

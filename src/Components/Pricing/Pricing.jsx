@@ -9,6 +9,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 
 export const Pricing = () => {
@@ -20,13 +21,27 @@ export const Pricing = () => {
       padding={"1.2rem 0 1.5rem 0"}
       boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
     >
-      <Text
+      <Box
         m={"0 0 0 1rem"}
         fontWeight={700}
         fontSize={["15px", "15px", "18px", "18px"]}
+        display={"flex"}
+        alignItems={"center"}
+        gap={"10px"}
       >
-        Plans & Pricing
-      </Text>
+        <Text
+          fontSize={["25px", "25px", "30px", "32px", "35px"]}
+          style={{
+            background: "black",
+            color: "white",
+            padding: "10px",
+            borderRadius: "5px",
+          }}
+        >
+          <RiMoneyRupeeCircleFill />
+        </Text>
+        <Text>Plans & Pricing</Text>
+      </Box>
       <TableContainer
         width={"100%"}
         maxWidth={"100%"}
@@ -35,7 +50,12 @@ export const Pricing = () => {
         whiteSpace={"none"}
         mt={4}
       >
-        <Table variant="striped" colorScheme="blue" className="plansTable">
+        <Table
+          variant="striped"
+          colorScheme="blue"
+          borderTop={"1.3px solid #5838fc !important"}
+          className="plansTable"
+        >
           <Thead>
             <Tr>
               <Td>

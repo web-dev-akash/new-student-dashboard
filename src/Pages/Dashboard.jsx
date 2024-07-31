@@ -7,6 +7,7 @@ import { setAlert } from "../Redux/action";
 import { CarousalMain } from "../Components/Alerts/CarousalMain";
 import { Pricing } from "../Components/Pricing/Pricing";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
+// import { OQAD } from "../Components/OQAD/OQAD";
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
@@ -26,8 +27,10 @@ export const Dashboard = () => {
     const sessionDate = new Date(sessionDateTimeStr);
     const sessionTime = sessionDate.getTime();
 
-    const twentyMinutesBefore = new Date(sessionTime - 35 * 60 * 1000);
-    const zeroMinutesAfter = new Date(sessionTime - 5 * 60 * 1000);
+    const twentyMinutesBefore = new Date(sessionTime - 30 * 60 * 1000);
+    const zeroMinutesAfter = new Date(sessionTime - 10 * 60 * 1000);
+    const fiveMinutesBefore = new Date(sessionTime - 10 * 60 * 1000);
+    const seventyMinutesAfter = new Date(sessionTime + 70 * 60 * 1000);
 
     timersRef.current.forEach((timer) => clearTimeout(timer));
     timersRef.current = [];
@@ -68,6 +71,40 @@ export const Dashboard = () => {
       );
     }
 
+    if (now >= fiveMinutesBefore && now <= seventyMinutesAfter) {
+      if (!alert.includes("meeting")) {
+        const newAlerts = ["meeting", ...alert];
+        dispatch(setAlert(newAlerts));
+      }
+    } else {
+      if (alert.includes("meeting")) {
+        const newAlerts = alert.filter((item) => item !== "meeting");
+        dispatch(setAlert(newAlerts));
+      }
+    }
+
+    if (now < fiveMinutesBefore) {
+      timersRef.current.push(
+        setTimeout(() => {
+          if (!alert.includes("meeting")) {
+            const newAlerts = ["meeting", ...alert];
+            dispatch(setAlert(newAlerts));
+          }
+        }, fiveMinutesBefore - now)
+      );
+    }
+
+    if (now < seventyMinutesAfter) {
+      timersRef.current.push(
+        setTimeout(() => {
+          if (alert.includes("meeting")) {
+            const newAlerts = alert.filter((item) => item !== "meeting");
+            dispatch(setAlert(newAlerts));
+          }
+        }, seventyMinutesAfter - now)
+      );
+    }
+
     return () => {
       timersRef.current.forEach((timer) => clearTimeout(timer));
     };
@@ -80,14 +117,15 @@ export const Dashboard = () => {
       padding={[
         "3.8rem 0.7rem 6rem",
         "3.8rem 0.7rem 6rem",
-        "4rem 1.5rem 6rem",
-        "4rem 1.5rem 6rem",
+        "5rem 1.5rem 1.5rem",
+        "5rem 1.5rem 1.5rem",
       ]}
     >
       <Box display={"grid"} gridTemplateColumns={"repeat(1, 1fr)"}>
         <CarousalMain />
         <WeeklyQuiz />
         <Pricing />
+        {/* <OQAD /> */}
       </Box>
     </Box>
   );

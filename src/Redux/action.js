@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  GET_OQAD,
   GET_USER,
   GET_USER_ALERT,
   GET_USER_ERROR,
@@ -62,6 +63,11 @@ export const setWinners = (payload) => ({
 
 export const setPaymentHistory = (payload) => ({
   type: GET_USER_PAYMENT_HISTORY,
+  payload,
+});
+
+export const setOqad = (payload) => ({
+  type: GET_OQAD,
   payload,
 });
 
@@ -744,6 +750,26 @@ export const getUserPaymentHistory = (contactId) => async (dispatch) => {
     if (res.data.status === 200) {
       dispatch(setPaymentHistory(res.data.paymentHistory));
     }
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+export const getDailyQuestion = (grade, contactId) => async (dispatch) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = `https://backend.wisechamps.com/question/daily`;
+    const res = await axios.post(
+      url,
+      { grade, contactId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+    dispatch(setOqad(res.data));
   } catch (error) {
     console.log("Error :", error);
   }

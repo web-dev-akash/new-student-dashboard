@@ -9,6 +9,7 @@ import { AddressUpdate } from "./AddressUpdate";
 import { DoubtSession } from "./DoubtSession";
 import { JoinCommunity } from "./JoinCommunity";
 import { IntroLuckyDrawMeeting } from "./IntroLuckyDrawMeeting";
+import { QuizInProgress } from "./QuizInProgress";
 
 export const CarousalMain = () => {
   const alert = useSelector((state) => state.alert);
@@ -30,7 +31,7 @@ export const CarousalMain = () => {
         showThumbs={false}
         centerSlidePercentage={100}
         interval={3000}
-        stopOnHover={false}
+        stopOnHover={true}
       >
         {alert.length > 0
           ? alert.map((alert, index) => {
@@ -39,6 +40,9 @@ export const CarousalMain = () => {
               }
               if (alert === "newToWisechamps") {
                 return <IntroLuckyDrawMeeting key={index} />;
+              }
+              if (alert === "meeting") {
+                return <QuizInProgress key={index} />;
               }
               if (alert === "community") {
                 return <JoinCommunity key={index} />;

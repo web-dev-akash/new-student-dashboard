@@ -176,8 +176,8 @@ export const Store = () => {
       padding={[
         "2.5rem 0.7rem 6rem",
         "2.5rem 0.7rem 6rem",
-        "3.5rem 1.5rem 6rem",
-        "3.5rem 1.5rem 6rem",
+        "4.2rem 1.5rem 1.5rem",
+        "4.2rem 1.5rem 1.5rem",
       ]}
     >
       <Box mt={"15px"}>
@@ -249,7 +249,7 @@ export const Store = () => {
                   padding={"3px 0"}
                   fontWeight={600}
                 >
-                  Coins Transaction History
+                  My Coins Transaction History
                 </Box>
                 <AccordionIcon />
               </AccordionButton>

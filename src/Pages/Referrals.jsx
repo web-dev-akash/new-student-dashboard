@@ -18,8 +18,8 @@ export const Referrals = () => {
       padding={[
         "2.5rem 0.7rem 6rem",
         "2.5rem 0.7rem 6rem",
-        "3.5rem 1.5rem 6rem",
-        "3.5rem 1.5rem 6rem",
+        "4rem 1.5rem 1.5rem",
+        "4rem 1.5rem 1.5rem",
       ]}
       minHeight={"100vh"}
     >

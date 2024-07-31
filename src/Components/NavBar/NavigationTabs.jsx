@@ -54,10 +54,10 @@ export const NavigationTabs = () => {
           tabFlex={1}
           sx={{
             width: "97%",
-            maxWidth: "600px",
+            maxWidth: { md: "550px", lg: "600px" },
             position: "fixed",
-            bottom: 15,
-            top: "auto",
+            bottom: { xs: 15, md: "auto" },
+            top: { xs: "auto", md: "10px" },
             left: "50%",
             transform: "translateX(-50%)",
             p: 0.7,
@@ -66,10 +66,12 @@ export const NavigationTabs = () => {
             bgcolor: "white",
             boxShadow: {
               xs: "0 20px 50px 45px rgba(0,0,0, 0.7)",
-              md: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
+              md: "none",
             },
-            zIndex: 999,
-            minHeight: "60px",
+            border: { md: "1px solid #5838fc" },
+            zIndex: 1001,
+            minHeight: { xs: "60px", md: "40px" },
+            maxHeight: { md: "55px" },
           }}
         >
           <Tab className="tabs-mobile" disableIndicator>

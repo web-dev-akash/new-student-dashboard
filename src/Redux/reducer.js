@@ -1,4 +1,5 @@
 import {
+  GET_OQAD,
   GET_USER,
   GET_USER_ALERT,
   GET_USER_ERROR,
@@ -39,6 +40,7 @@ const initialState = {
   report: {},
   winners: {},
   paymentHistory: [],
+  oqad: {},
 };
 
 // const initialState = {
@@ -225,7 +227,7 @@ const initialState = {
 //           "https://youtu.be/nVEw3gW2RQc?si=aQdbMUrZ0BeLHOfu",
 //       },
 //       {
-//         Session_Video_Link: "https://youtu.be/nVEw3gW2RQc?si=aQdbMUrZ0BeLHOfu",
+//         Session_Video_Link: "aa",
 //         Session_Image_Link:
 //           "https://cdn.sketchbubble.com/pub/media/catalog/product/optimized1/6/c/6c2f8292b66d3362e1f674f3fb2af2fcda63f95ab6be0200b46481c1e3da40e6/animals-theme-slide1.png",
 //         Session_Name: "Knowing our Numbers",
@@ -233,7 +235,7 @@ const initialState = {
 //         Vevox_Survey_Link:
 //           "https://vevox.app/#/m/192062760/survey/7b8b72ee-20b5-4801-8f2b-2a7afee7a3bf",
 //         Subject: "Math",
-//         Session_Date_Time: "2024-07-12T17:55:00+05:30",
+//         Session_Date_Time: "2024-07-31T16:56:00+05:30",
 //       },
 //       {
 //         Session_Video_Link: "https://youtu.be/nVEw3gW2RQc?si=aQdbMUrZ0BeLHOfu",
@@ -511,7 +513,7 @@ const initialState = {
 //       },
 //     ],
 //   },
-//   alert: ["credits", "doubt", "address"],
+//   alert: ["credits", "address"],
 //   winners: {
 //     status: 200,
 //     topFiveUsers: [
@@ -720,6 +722,13 @@ const initialState = {
 //       id: "4878003000008992001",
 //     },
 //   ],
+//   oqad: {
+//     status: 200,
+//     question: "This is a test question",
+//     anwser: "testing",
+//     options: ["option1", "option2", "option3", "option4"],
+//     image: "/src/assets/preview.jpg",
+//   },
 // };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -796,6 +805,12 @@ export const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         paymentHistory: payload,
+      };
+    }
+    case GET_OQAD: {
+      return {
+        ...state,
+        oqad: payload,
       };
     }
     default: {

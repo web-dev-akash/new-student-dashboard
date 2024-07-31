@@ -298,6 +298,18 @@ select {
   box-shadow: 0 0 0 5px rgb(94 110 255 / 30%);
 }
 
+#oqad button {
+  border: unset !important;
+}
+
+#oqad button:hover,
+#oqad button:focus {
+  color: white !important;
+  border-color: unset !important;
+  background-color: #5838fc50 !important;
+  box-shadow: unset !important;
+}
+
 .carousel .control-dots .dot {
   background: #4e46e4 !important;
   box-shadow: none !important;

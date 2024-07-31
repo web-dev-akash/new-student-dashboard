@@ -279,7 +279,7 @@ export const WeeklyQuiz = () => {
         padding={"20px 0"}
         display={"flex"}
         alignItems={"center"}
-        gap={["10px", "10px", "15px", "15px"]}
+        gap={["12px", "12px", "15px", "15px"]}
         flexWrap={"nowrap"}
         overflowX={"auto"}
         scrollSnapType={"x mandatory"}
@@ -309,7 +309,6 @@ export const WeeklyQuiz = () => {
               <Box
                 key={id}
                 bg={"#fff"}
-                boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
                 padding={"15px 15px 15px"}
                 borderRadius={"20px"}
                 alignSelf={"stretch"}
@@ -317,6 +316,11 @@ export const WeeklyQuiz = () => {
                 scrollSnapAlign={"center"}
                 minWidth={"260px"}
                 position={"relative"}
+                boxShadow={
+                  getColorScheme(Session_Date_Time) === "whatsapp"
+                    ? "0 0 0 2px rgba(218,102,123,1), 8px 8px 0 0 rgba(218,102,123,1)"
+                    : "rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"
+                }
               >
                 <Box
                   display={"flex"}
@@ -379,16 +383,6 @@ export const WeeklyQuiz = () => {
                   justifyContent={"space-between"}
                   gap={"10px"}
                 >
-                  {!Session_Video_Link && !Session_Video_Link_2 && (
-                    <Button
-                      id="submit-btn-active"
-                      isDisabled
-                      fontSize={"12px"}
-                      mb={"8px"}
-                    >
-                      No Preview Video
-                    </Button>
-                  )}
                   {Session_Video_Link && (
                     <Button
                       id="submit-btn"

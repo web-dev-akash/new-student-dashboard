@@ -12,14 +12,19 @@ export const Header = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        position: "relative",
-        zIndex: 9,
+        position: { xs: "absolute", md: "fixed" },
+        zIndex: 1000,
+        width: "100%",
+        minHeight: { xs: "60px", md: "75px" },
+        bgcolor: { md: "white" },
+        boxShadow: { md: "0 0 2px 1px #00000050" },
       }}
     >
+      <Box></Box>
       <Box
         sx={{
           position: "absolute",
-          top: { xs: "7px", md: "5px" },
+          top: { xs: "7px", md: "12px" },
           left: { xs: "10px", md: "1.5rem" },
           width: { xs: "140px", md: "170px" },
         }}
