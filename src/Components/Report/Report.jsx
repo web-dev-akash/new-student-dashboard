@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { Loading } from "../Loading/Loading";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ClickBtn } from "../ClickBtn/ClickBtn";
 
 // eslint-disable-next-line no-unused-vars
 export const Report = () => {
@@ -39,6 +40,7 @@ export const Report = () => {
           alignItems={"center"}
           mt={"10px"}
           mb={"15px"}
+          position={"relative"}
         >
           <Text
             fontSize={["13px", "14px", "15px", "16px", "17px"]}
@@ -69,6 +71,13 @@ export const Report = () => {
             fontSize={["11px", "12px", "13px", "14px", "15px"]}
             fontWeight={400}
             padding={0}
+            transition={"0.2s ease-in-out"}
+            border={"2px solid transparent"}
+            _hover={{
+              bg: "white",
+              color: "black",
+              border: "2px solid #5838fc",
+            }}
           >
             <Link
               style={{
@@ -84,6 +93,7 @@ export const Report = () => {
               Weekly Winners
             </Link>
           </Button>
+          <ClickBtn style={{ top: 8 }} />
         </Box>
         <Text
           textAlign={"left"}

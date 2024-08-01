@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ReferralSteps } from "../Components/Referral/ReferralSteps";
 import { InviteButton } from "../Components/InviteButton/InviteButton";
 import { useEffect } from "react";
+import { ClickBtn } from "../Components/ClickBtn/ClickBtn";
 
 export const Referrals = () => {
   const referrals = useSelector((state) => state.user.referrals);
@@ -18,8 +19,8 @@ export const Referrals = () => {
       padding={[
         "2.5rem 0.7rem 6rem",
         "2.5rem 0.7rem 6rem",
-        "4rem 1.5rem 1.5rem",
-        "4rem 1.5rem 1.5rem",
+        "5rem 1.5rem 1.5rem",
+        "5rem 1.5rem 1.5rem",
       ]}
       minHeight={"100vh"}
     >
@@ -28,6 +29,7 @@ export const Referrals = () => {
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
+          position={"relative"}
         >
           <Box>
             <Text fontWeight={500} fontSize={["14px", "14px", "16px", "16px"]}>
@@ -46,6 +48,7 @@ export const Referrals = () => {
             </Text>
           </Box>
           <InviteButton />
+          <ClickBtn style={{ top: "53px" }} />
         </Box>
         {referrals.length === 0 && (
           <Box

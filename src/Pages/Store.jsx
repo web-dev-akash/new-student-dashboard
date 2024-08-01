@@ -41,6 +41,7 @@ import axios from "axios";
 import order_placed from "../assets/order_placed.gif";
 import { Loading } from "../Components/Loading/Loading";
 import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
+import { ClickBtn } from "../Components/ClickBtn/ClickBtn";
 
 export const Store = () => {
   const dispatch = useDispatch();
@@ -176,8 +177,8 @@ export const Store = () => {
       padding={[
         "2.5rem 0.7rem 6rem",
         "2.5rem 0.7rem 6rem",
-        "4.2rem 1.5rem 1.5rem",
-        "4.2rem 1.5rem 1.5rem",
+        "5rem 1.5rem 1.5rem",
+        "5rem 1.5rem 1.5rem",
       ]}
     >
       <Box mt={"15px"}>
@@ -207,7 +208,7 @@ export const Store = () => {
               />
             </Text>
           </Box>
-          <Box>
+          <Box position={"relative"}>
             <Button
               fontSize={["12px", "12px", "13px", "14px"]}
               padding={"0 !important"}
@@ -225,6 +226,7 @@ export const Store = () => {
                 My Orders
               </Link>
             </Button>
+            <ClickBtn style={{ top: 8 }} />
           </Box>
         </Box>
 

@@ -117,8 +117,8 @@ export const Dashboard = () => {
       padding={[
         "3.8rem 0.7rem 6rem",
         "3.8rem 0.7rem 6rem",
-        "5rem 1.5rem 1.5rem",
-        "5rem 1.5rem 1.5rem",
+        "5.5rem 1.5rem 1.5rem",
+        "5.5rem 1.5rem 1.5rem",
       ]}
     >
       <Box display={"grid"} gridTemplateColumns={"repeat(1, 1fr)"}>

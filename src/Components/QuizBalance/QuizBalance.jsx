@@ -14,12 +14,15 @@ import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
 import { FaRupeeSign } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading/Loading";
+import { ClickBtn } from "../ClickBtn/ClickBtn";
+import { useEffect, useState } from "react";
 
 export const QuizBalance = () => {
   const paymentHistory = useSelector((state) => state.paymentHistory);
   const quizzes = useSelector((state) => state.user.quizzes);
   const credits = useSelector((state) => state.user.credits);
   const user = useSelector((state) => state.user);
+  const [history, setHistory] = useState(null);
 
   let wordsToRemove = [
     "Final",
@@ -72,6 +75,26 @@ export const QuizBalance = () => {
     return newString.trim();
   };
 
+  useEffect(() => {
+    const combinedArray = quizzes
+      .map((quiz) => ({
+        ...quiz,
+        date: quiz.Session_Date_Time
+          ? new Date(quiz.Session_Date_Time)
+          : new Date(quiz.createdTime),
+        type: "quiz",
+      }))
+      .concat(
+        paymentHistory.map((payment) => ({
+          ...payment,
+          date: new Date(payment.Payment_Date),
+          type: "payment",
+        }))
+      );
+    combinedArray.sort((a, b) => b.date - a.date);
+    setHistory(combinedArray);
+  }, []);
+
   if (!quizzes || !quizzes.length) {
     return <Loading />;
   }
@@ -82,8 +105,8 @@ export const QuizBalance = () => {
       padding={[
         "3rem 0.7rem 6rem",
         "3rem 0.7rem 6rem",
-        "4rem 1.5rem 1.5rem",
-        "4rem 1.5rem 1.5rem",
+        "4.5rem 1.5rem 1.5rem",
+        "4.5rem 1.5rem 1.5rem",
       ]}
       minHeight={"100vh"}
     >
@@ -92,6 +115,7 @@ export const QuizBalance = () => {
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
+          position={"relative"}
         >
           <Box>
             <Text fontWeight={700} fontSize={["29px", "30px", "35px", "40px"]}>
@@ -138,287 +162,246 @@ export const QuizBalance = () => {
           >
             Add Quiz Balance
           </Button>
+          <ClickBtn style={{ top: 8, zIndex: 99 }} />
         </Box>
         <Divider
           m={"10px 0 15px 0"}
           border={"1.3px solid #4e46e4"}
           borderRadius={"2px"}
         />
-        <Accordion allowToggle defaultIndex={1}>
-          <AccordionItem
-            border={"none"}
-            borderRadius={"10px"}
-            overflow={"hidden"}
+
+        {!history ? (
+          <Box
+            minHeight={"50vh"}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
           >
-            <h2
-              style={{
-                background: "white",
-                borderRadius: "10px 10px 0 0",
-              }}
+            <Text
+              fontWeight={700}
+              fontSize={"30px"}
+              textAlign={"center"}
+              opacity={0.3}
             >
-              <AccordionButton>
-                <Box
-                  as="span"
-                  flex="1"
-                  textAlign="left"
-                  fontSize={["13px", "13px", "14px", "15px"]}
-                  padding={"3px 0"}
-                  fontWeight={600}
-                >
-                  Quiz Payment History
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel p={0}>
-              <Box bg={"white"} padding={"0px 10px"} id="transactions">
-                {paymentHistory.length === 0 && (
+              No Quiz Balance <br /> History Found
+            </Text>
+          </Box>
+        ) : (
+          <Accordion allowToggle defaultIndex={0}>
+            <AccordionItem
+              border={"none"}
+              borderRadius={"10px"}
+              overflow={"hidden"}
+            >
+              <h2
+                style={{
+                  background: "white",
+                  borderRadius: "10px 10px 0 0",
+                }}
+              >
+                <AccordionButton>
                   <Box
-                    minHeight={"80px"}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
+                    as="span"
+                    flex="1"
+                    textAlign="left"
+                    fontSize={["13px", "13px", "14px", "15px"]}
+                    padding={"3px 0"}
+                    fontWeight={600}
                   >
-                    <Text
-                      fontWeight={700}
-                      fontSize={"30px"}
-                      textAlign={"center"}
-                      opacity={0.3}
-                    >
-                      No Purchases <br /> Made Yet
-                    </Text>
+                    My Quiz Balance History ({quizzes.length} Quiz Balance used)
                   </Box>
-                )}
-                {paymentHistory.map(({ Payment_Date, id, Amount, Credits }) => (
-                  <Box
-                    key={id}
-                    bg={"white"}
-                    padding={"10px 0"}
-                    borderBottom={"1px solid #e0e0e0"}
-                  >
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel p={0}>
+                <Box bg={"white"} padding={"0px 10px"} id="transactions">
+                  {!history && (
                     <Box
+                      minHeight={"80px"}
                       display={"flex"}
-                      justifyContent={"space-between"}
+                      justifyContent={"center"}
                       alignItems={"center"}
                     >
-                      <Box display={"flex"} alignItems={"center"} gap={"5px"}>
-                        <Box
-                          display={"flex"}
-                          bg={"#e7e6ff"}
-                          minWidth={"38px"}
-                          minHeight={"38px"}
-                          borderRadius={"10px"}
-                          justifyContent={"center"}
-                          alignItems={"center"}
-                          fontSize={["16px", "16px", "17px", "18px"]}
-                        >
-                          <CgArrowBottomLeftR />
-                        </Box>
-                        <Box
-                          display={"flex"}
-                          alignItems={"flex-start"}
-                          justifyContent={"center"}
-                          flexDirection={"column"}
-                        >
-                          <Text
-                            isTruncated
-                            fontWeight={600}
-                            fontSize={["12px", "12px", "14px", "15px"]}
-                            maxWidth={["210px", "400px", "600px", "900px"]}
-                          >
-                            Quiz Balance Added
-                          </Text>
-                          <Text fontSize={["11px", "11px", "12px", "13px"]}>
-                            {!Credits || Credits === 1
-                              ? `1 quiz`
-                              : `${Credits} quizzes`}{" "}
-                            added to your account
-                          </Text>
-                        </Box>
-                      </Box>
-                      <Box
-                        display={"flex"}
-                        alignItems={"flex-end"}
-                        justifyContent={"center"}
-                        flexDirection={"column"}
+                      <Text
+                        fontWeight={700}
+                        fontSize={"30px"}
+                        textAlign={"center"}
+                        opacity={0.3}
                       >
-                        <Text
-                          display={"flex"}
-                          gap={"2px"}
-                          alignItems={"center"}
-                          fontSize={["13px", "12px", "15px", "15px"]}
-                          fontWeight={600}
-                        >
-                          <FaRupeeSign />
-                          <Text>{Amount}</Text>
-                        </Text>
-                        <Text
-                          fontSize={["09px", "10px", "12px", "12px"]}
-                          fontWeight={500}
-                        >
-                          {new Date(Payment_Date).toLocaleDateString("en", {
-                            year: "numeric",
-                            month: "short",
-                            day: "2-digit",
-                          })}
-                        </Text>
-                      </Box>
+                        No Purchases <br /> Made Yet
+                      </Text>
                     </Box>
-                  </Box>
-                ))}
-              </Box>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem
-            mt={"10px"}
-            border={"none"}
-            borderRadius={"10px"}
-            overflow={"hidden"}
-          >
-            <h2
-              style={{
-                background: "white",
-                borderRadius: "10px 10px 0 0",
-              }}
-            >
-              <AccordionButton>
-                <Box
-                  as="span"
-                  flex="1"
-                  textAlign="left"
-                  fontSize={["13px", "13px", "14px", "15px"]}
-                  padding={"3px 0"}
-                  fontWeight={600}
-                >
-                  Quiz Balance Usage ({quizzes.length} Quiz Balance used)
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel
-              p={0}
-              // overflowX={"hidden"}
-              // overflowY={"auto"}
-              // maxHeight={"20vh"}
-            >
-              <Box bg={"white"} padding={"0px 10px"} id="transactions">
-                {quizzes.length === 0 && (
-                  <Box
-                    minHeight={"80px"}
-                    padding={"0 0 20px 0"}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  >
-                    <Text
-                      fontWeight={700}
-                      fontSize={"30px"}
-                      textAlign={"center"}
-                      opacity={0.3}
-                    >
-                      No Quiz <br /> Attempts Yet
-                    </Text>
-                  </Box>
-                )}
-                {quizzes.map(
-                  ({
-                    Session_Date_Time,
-                    id,
-                    Quiz_Score,
-                    Session_Name,
-                    Created_Time,
-                  }) => (
-                    <Box
-                      key={id}
-                      bg={"white"}
-                      padding={"10px 0"}
-                      borderBottom={"1px solid #e0e0e0"}
-                    >
+                  )}
+                  {history.map((item) => {
+                    return item.type === "payment" ? (
                       <Box
-                        display={"flex"}
-                        justifyContent={"space-between"}
-                        alignItems={"center"}
+                        key={item.id}
+                        bg={"white"}
+                        padding={"10px 0"}
+                        borderBottom={"1px solid #e0e0e0"}
                       >
-                        <Box display={"flex"} alignItems={"center"} gap={"5px"}>
+                        <Box
+                          display={"flex"}
+                          justifyContent={"space-between"}
+                          alignItems={"center"}
+                        >
                           <Box
                             display={"flex"}
-                            bg={"#e7e6ff"}
-                            minWidth={"38px"}
-                            minHeight={"38px"}
-                            borderRadius={"10px"}
-                            justifyContent={"center"}
                             alignItems={"center"}
-                            fontSize={["16px", "16px", "17px", "18px"]}
+                            gap={"5px"}
                           >
-                            <CgArrowTopRightR />
+                            <Box
+                              display={"flex"}
+                              bg={"#e7e6ff"}
+                              minWidth={"38px"}
+                              minHeight={"38px"}
+                              borderRadius={"10px"}
+                              justifyContent={"center"}
+                              alignItems={"center"}
+                              fontSize={["16px", "16px", "17px", "18px"]}
+                            >
+                              <CgArrowBottomLeftR />
+                            </Box>
+                            <Box
+                              display={"flex"}
+                              alignItems={"flex-start"}
+                              justifyContent={"center"}
+                              flexDirection={"column"}
+                            >
+                              <Text
+                                isTruncated
+                                fontWeight={600}
+                                fontSize={["12px", "12px", "14px", "15px"]}
+                                maxWidth={["210px", "400px", "600px", "900px"]}
+                              >
+                                Quiz Balance Added
+                              </Text>
+                              <Text
+                                display={"flex"}
+                                gap={"2px"}
+                                alignItems={"center"}
+                                fontSize={["11px", "11px", "12px", "13px"]}
+                              >
+                                <FaRupeeSign />
+                                <Text fontWeight={500}>{item.Amount}</Text>
+                              </Text>
+                            </Box>
                           </Box>
                           <Box
                             display={"flex"}
-                            alignItems={"flex-start"}
+                            alignItems={"flex-end"}
+                            justifyContent={"center"}
+                            flexDirection={"column"}
+                          >
+                            <Tag
+                              fontSize={["10px", "11px", "13px", "15px"]}
+                              colorScheme="whatsapp"
+                              size={["sm", "sm", "md", "md"]}
+                              whiteSpace={"nowrap"}
+                            >
+                              +{item.Credits} Quiz Balance
+                            </Tag>
+                            <Text
+                              fontSize={["10px", "11px", "13px", "13px"]}
+                              fontWeight={500}
+                            >
+                              {new Date(item.date).toLocaleDateString("en", {
+                                year: "numeric",
+                                month: "short",
+                                day: "2-digit",
+                              })}
+                            </Text>
+                          </Box>
+                        </Box>
+                      </Box>
+                    ) : (
+                      <Box
+                        key={item.id}
+                        bg={"white"}
+                        padding={"10px 0"}
+                        borderBottom={"1px solid #e0e0e0"}
+                      >
+                        <Box
+                          display={"flex"}
+                          justifyContent={"space-between"}
+                          alignItems={"center"}
+                        >
+                          <Box
+                            display={"flex"}
+                            alignItems={"center"}
+                            gap={"5px"}
+                          >
+                            <Box
+                              display={"flex"}
+                              bg={"#e7e6ff"}
+                              minWidth={"38px"}
+                              minHeight={"38px"}
+                              borderRadius={"10px"}
+                              justifyContent={"center"}
+                              alignItems={"center"}
+                              fontSize={["16px", "16px", "17px", "18px"]}
+                            >
+                              <CgArrowTopRightR />
+                            </Box>
+                            <Box
+                              display={"flex"}
+                              alignItems={"flex-start"}
+                              justifyContent={"center"}
+                              flexDirection={"column"}
+                              gap={"2px"}
+                            >
+                              <Text
+                                isTruncated
+                                fontWeight={600}
+                                fontSize={["12px", "12px", "14px", "15px"]}
+                                maxWidth={["170px", "400px", "600px", "900px"]}
+                              >
+                                {originalSessionName(item.Session_Name)}
+                              </Text>
+                              <Text
+                                fontWeight={500}
+                                fontSize={["11px", "11px", "12px", "13px"]}
+                              >
+                                Quiz Score : {item.Quiz_Score}
+                              </Text>
+                            </Box>
+                          </Box>
+                          <Box
+                            display={"flex"}
+                            alignItems={"flex-end"}
                             justifyContent={"center"}
                             flexDirection={"column"}
                             gap={"2px"}
+                            overflow={"hidden"}
                           >
-                            <Text
-                              isTruncated
-                              fontWeight={600}
-                              fontSize={["12px", "12px", "14px", "15px"]}
-                              maxWidth={["170px", "400px", "600px", "900px"]}
+                            <Tag
+                              fontSize={["10px", "11px", "13px", "15px"]}
+                              colorScheme="pink"
+                              size={["sm", "sm", "md", "md"]}
+                              whiteSpace={"nowrap"}
                             >
-                              {originalSessionName(Session_Name)}
-                            </Text>
-                            <Text fontSize={["11px", "11px", "12px", "13px"]}>
-                              Quiz Score : {Quiz_Score}
+                              -1 Quiz Balance
+                            </Tag>
+                            <Text
+                              fontSize={["10px", "11px", "13px", "13px"]}
+                              fontWeight={500}
+                            >
+                              {new Date(item.date).toLocaleDateString("en", {
+                                year: "numeric",
+                                month: "short",
+                                day: "2-digit",
+                              })}
                             </Text>
                           </Box>
                         </Box>
-                        <Box
-                          display={"flex"}
-                          alignItems={"flex-end"}
-                          justifyContent={"center"}
-                          flexDirection={"column"}
-                          gap={"2px"}
-                          overflow={"hidden"}
-                        >
-                          <Tag
-                            fontSize={["10px", "11px", "13px", "15px"]}
-                            colorScheme="pink"
-                            size={["sm", "sm", "md", "md"]}
-                            whiteSpace={"nowrap"}
-                          >
-                            -1 Quiz Balance
-                          </Tag>
-                          <Text
-                            fontSize={["10px", "11px", "13px", "13px"]}
-                            fontWeight={500}
-                          >
-                            {Session_Date_Time
-                              ? new Date(Session_Date_Time).toLocaleDateString(
-                                  "en",
-                                  {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "2-digit",
-                                  }
-                                )
-                              : new Date(Created_Time).toLocaleDateString(
-                                  "en",
-                                  {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "2-digit",
-                                  }
-                                )}
-                          </Text>
-                        </Box>
                       </Box>
-                    </Box>
-                  )
-                )}
-              </Box>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+                    );
+                  })}
+                </Box>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        )}
       </Box>
     </Box>
   );

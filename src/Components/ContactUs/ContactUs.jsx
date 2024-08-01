@@ -120,8 +120,8 @@ export const ContactUs = () => {
         padding={[
           "3rem 0.7rem 3rem",
           "3rem 0.7rem 3rem",
-          "4.5rem 1.5rem 3rem",
-          "4.5rem 1.5rem 3rem",
+          "5rem 1.5rem 3rem",
+          "5rem 1.5rem 3rem",
         ]}
       >
         <Box
@@ -193,7 +193,7 @@ export const ContactUs = () => {
           src={contact_us}
           alt=""
           width={"100%"}
-          maxWidth={["0", "0", "450px", "500px", "650px"]}
+          maxWidth={["0", "0", "450px", "500px", "580px"]}
           display={["none", "none", "block", "block"]}
         />
         <form
