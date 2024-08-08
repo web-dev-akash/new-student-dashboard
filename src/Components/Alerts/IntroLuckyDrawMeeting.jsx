@@ -76,7 +76,7 @@ export const IntroLuckyDrawMeeting = () => {
             loadingText={""}
             onClick={() => handleClick(id, freeMeetLink)}
           >
-            Join Intro Session
+            Join Introduction Zoom Meeting
           </Button>
         </AlertDescription>
       </Alert>
