@@ -25,6 +25,7 @@ import { setMode } from "../../Redux/action";
 import { Link } from "react-router-dom";
 export const ProfileAvatar = () => {
   const studentName = useSelector((state) => state.user.studentName);
+  const address = useSelector((state) => state.user.address);
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(
     localStorage.getItem("wise_profile_pic")
@@ -218,6 +219,26 @@ export const ProfileAvatar = () => {
                   to={"/orders"}
                 >
                   My Orders
+                </Link>
+              </Button>
+            </ListItemContent>
+
+            <ListItemContent sx={{ padding: 0 }} className="profile-options">
+              <Button
+                id="submit-btn"
+                sx={{
+                  padding: "0px !important",
+                  mt: "10px",
+                }}
+              >
+                <Link
+                  style={{
+                    width: "100%",
+                    padding: "7px",
+                  }}
+                  to={"/address"}
+                >
+                  {!address ? "Add Address" : "Update Address"}
                 </Link>
               </Button>
             </ListItemContent>
