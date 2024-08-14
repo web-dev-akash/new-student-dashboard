@@ -10,6 +10,7 @@ import { DoubtSession } from "./DoubtSession";
 import { JoinCommunity } from "./JoinCommunity";
 import { IntroLuckyDrawMeeting } from "./IntroLuckyDrawMeeting";
 import { QuizInProgress } from "./QuizInProgress";
+import { SpecialQuizEvent } from "./SpecialQuizEvent";
 
 export const CarousalMain = () => {
   const alert = useSelector((state) => state.alert);
@@ -58,6 +59,9 @@ export const CarousalMain = () => {
               }
               if (alert === "doubt") {
                 return <DoubtSession key={index} />;
+              }
+              if (alert === "special" && new Date().getDate() <= 15) {
+                return <SpecialQuizEvent key={index} />;
               }
               return null;
             })

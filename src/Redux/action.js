@@ -240,6 +240,7 @@ const dummyUserData = {
       },
     ],
     newUser: true,
+    difficulty: false,
   },
   mode: "user",
   products: [
@@ -568,9 +569,16 @@ const checkTimeAlerts = () => {
 export const fetchUser = (email) => async (dispatch) => {
   try {
     dispatch(getLoading());
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
     const previousCoins = Number(localStorage.getItem("wise_coins") || 0);
     const url = `https://backend.wisechamps.com/student`;
-    const res = await axios.post(url, { email });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    };
+    const res = await axios.post(url, { email }, config);
     const alertObj = [];
     if (res.data.credits === 0) {
       alertObj.push("credits");
@@ -619,6 +627,7 @@ export const fetchUser = (email) => async (dispatch) => {
             coinsHistory: dummyUserData.user.coinsHistory,
             weeklyQuizzes: res.data.weeklyQuizzes,
             newUser: res.data.newUser,
+            difficulty: res.data.difficulty,
           })
         );
         dispatch(setOrders(dummyUserData.orders));
@@ -645,6 +654,7 @@ export const fetchUser = (email) => async (dispatch) => {
             res.data.coinsHistory === 0 ? [] : res.data.coinsHistory,
           weeklyQuizzes: res.data.weeklyQuizzes,
           newUser: res.data.newUser,
+          difficulty: res.data.difficulty,
         })
       );
     }
@@ -774,3 +784,72 @@ export const getDailyQuestion = (grade, contactId) => async (dispatch) => {
     console.log("Error :", error);
   }
 };
+
+export const captureDailyQuestionAttempt =
+  ({ contactId, questionId, optionSelected, correctAnswer }) =>
+  async (dispatch) => {
+    try {
+      const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+      const url = `https://backend.wisechamps.com/question/attempt`;
+      const res = await axios.post(
+        url,
+        {
+          contactId,
+          questionId,
+          optionSelected,
+          correctAnswer,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (res.data.status === 200) {
+        dispatch(
+          setOqad({
+            status: 409,
+            message: "Already Attempted today's Question",
+          })
+        );
+      } else {
+        dispatch(getError());
+      }
+    } catch (error) {
+      console.log("Error :", error);
+      dispatch(getError());
+    }
+  };
+
+export const updateDifficultyLevel =
+  (contactId, difficulty, user) => async (dispatch) => {
+    try {
+      const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+      // const url = `https://backend.wisechamps.com/user/update`;
+      const url = `http://localhost:8080/user/update`;
+      const res = await axios.post(
+        url,
+        { contactId, difficulty },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (res.status === 200 || res.data.status === 200) {
+        dispatch(setUser({ ...user, difficulty: difficulty }));
+      }
+      return {
+        status: res.status || res.data.status,
+      };
+    } catch (error) {
+      console.log("Error :", error);
+      return {
+        status: error.status || 500,
+      };
+    }
+  };

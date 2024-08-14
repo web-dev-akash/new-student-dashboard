@@ -32,6 +32,7 @@ const initialState = {
     coinsHistory: [],
     weeklyQuizzes: [],
     newUser: false,
+    difficulty: false,
   },
   mode: "",
   products: [],
@@ -246,7 +247,7 @@ const initialState = {
 //         Vevox_Survey_Link:
 //           "https://vevox.app/#/m/192062760/survey/7b8b72ee-20b5-4801-8f2b-2a7afee7a3bf",
 //         Subject: "English",
-//         Session_Date_Time: "2024-06-26T20:00:00+05:30",
+//         Session_Date_Time: "2024-08-13T15:11:00+05:30",
 //       },
 //       {
 //         Session_Video_Link: "https://youtu.be/nVEw3gW2RQc?si=aQdbMUrZ0BeLHOfu",
@@ -349,6 +350,7 @@ const initialState = {
 //       },
 //     ],
 //     newUser: true,
+//     difficulty: true,
 //   },
 //   mode: "user",
 //   products: [
@@ -513,7 +515,7 @@ const initialState = {
 //       },
 //     ],
 //   },
-//   alert: ["credits", "address"],
+//   alert: ["special"],
 //   winners: {
 //     status: 200,
 //     topFiveUsers: [
@@ -725,8 +727,8 @@ const initialState = {
 //   oqad: {
 //     status: 200,
 //     question: "This is a test question",
-//     anwser: "testing",
-//     options: ["option1", "option2", "option3", "option4"],
+//     answer: "Option 1",
+//     options: ["A", "B", "C", "D"],
 //     image: "/src/assets/preview.jpg",
 //   },
 // };

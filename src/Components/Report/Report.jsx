@@ -54,7 +54,7 @@ export const Report = () => {
               "en-US",
               {
                 day: "numeric",
-                month: "long",
+                month: "short",
               }
             )}{" "}
             -{" "}
@@ -62,7 +62,7 @@ export const Report = () => {
               sessions[sessions.length - 1].Session_Date_Time
             ).toLocaleDateString("en-US", {
               day: "numeric",
-              month: "long",
+              month: "short",
             })}
           </Text>
           <Button

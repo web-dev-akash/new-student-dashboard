@@ -661,12 +661,7 @@ export const Store = () => {
             Product_Image_URL,
             Unit_Price,
           }) => (
-            <Card
-              key={Product_Id}
-              boxShadow={
-                "rgb(204, 219, 232) 0px 0px 6px 1px, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px"
-              }
-            >
+            <Card key={Product_Id} borderRadius={"10px"} boxShadow={"none"}>
               <CardBody pb={0}>
                 <Box
                   borderRadius={"lg"}

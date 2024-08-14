@@ -44,7 +44,7 @@ export const CreditsExhausted = () => {
           <Button
             fontSize={"13px"}
             margin={"10px 0 5px 0"}
-            width={["100%", "100%", "160px", "160px"]}
+            width={["100%", "100%", "max-content", "max-content"]}
             bg={"white"}
             border={"none"}
             onClick={() =>

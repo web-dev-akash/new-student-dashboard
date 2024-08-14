@@ -1,15 +1,14 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Alert,
   AlertDescription,
   AlertIcon,
   AlertTitle,
   Box,
-  Button,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 
-export const AddressUpdate = () => {
+export const SpecialQuizEvent = () => {
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
       <Alert
@@ -17,7 +16,7 @@ export const AddressUpdate = () => {
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
-        colorScheme={"purple"}
+        status={"info"}
         borderRadius={"10px"}
         position={"relative"}
       >
@@ -28,7 +27,7 @@ export const AddressUpdate = () => {
           gap={"5px"}
         >
           <AlertIcon margin={0} />
-          <AlertTitle>Add Your Address</AlertTitle>
+          <AlertTitle>INDEPENDENCE DAY SPECIAL QUIZ FOR PARENTS</AlertTitle>
         </Box>
         <AlertDescription width={"100%"}>
           <Text
@@ -37,30 +36,15 @@ export const AddressUpdate = () => {
             width={"100%"}
             fontWeight={500}
           >
-            Please fill your mailing address to recieve gifts from Wisechamps.
+            On GK, Logical Reasoning and Science Time for parents to win lots of
+            exciting prizes!!! <br />
+            <Text as={"span"} fontWeight={600}>
+              Date: 15th Aug 2024
+            </Text>{" "}
+            <Text as={"span"} ml={"15px"} fontWeight={600}>
+              Time 11 AM to 12 PM
+            </Text>
           </Text>
-          <Button
-            fontSize={"13px"}
-            margin={"10px 0 5px 0"}
-            width={["100%", "100%", "max-content", "max-content"]}
-            bg={"white"}
-            border={"none"}
-            padding={0}
-          >
-            <Link
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "15px",
-              }}
-              to={"/address"}
-            >
-              Add Your Address
-            </Link>
-          </Button>
         </AlertDescription>
       </Alert>
     </Box>

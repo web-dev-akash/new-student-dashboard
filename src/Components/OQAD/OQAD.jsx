@@ -8,42 +8,69 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import tick from "/src/assets/order_placed.gif";
+import { ConfettiComponent } from "../ConfettiComponent/ConfettiComponent";
 
 export const OQAD = () => {
   const oqad = useSelector((state) => state.oqad);
   const user = useSelector((state) => state.user);
   const [selectedOption, setSelectedOption] = useState(null);
   const [correct, setCorrect] = useState(false);
+  const [tempLoading, setTempLoading] = useState(false);
   const toast = useToast();
 
   const options = {
-    Option_1: oqad.options[0],
-    Option_2: oqad.options[1],
-    Option_3: oqad.options[2],
-    Option_4: oqad.options[3],
+    [oqad.options[0]]: "Option 1",
+    [oqad.options[1]]: "Option 2",
+    [oqad.options[2]]: "Option 3",
+    [oqad.options[3]]: "Option 4",
   };
 
-  // const handleSubmit = (selectedOption, contactId, questionId) => {
-  //   try {
-  //     if (selectedOption === options[selectedOption])
-  //   } catch (error) {
-  //     console.log("Error is -----------", error);
-  //     toast({
-  //       title: "Something Went Wrong",
-  //       duration: 1000,
-  //       status: "error",
-  //       isClosable: true,
-  //       position: "top",
-  //     });
-  //   }
-  // };
+  useEffect(() => {}, [correct]);
+
+  const handleSubmit = (selectedOption, contactId, questionId) => {
+    try {
+      setCorrect(false);
+      setTempLoading(true);
+      if (options[selectedOption] === oqad.answer) {
+        setCorrect(true);
+        toast({
+          title: "Correct Answer",
+          duration: 3000,
+          status: "success",
+          isClosable: true,
+          position: "top",
+        });
+      } else {
+        toast({
+          title: "Wrong Answer",
+          duration: 3000,
+          status: "error",
+          isClosable: true,
+          position: "top",
+        });
+      }
+
+      setTempLoading(false);
+    } catch (error) {
+      console.log("Error is -----------", error);
+      toast({
+        title: "Something Went Wrong",
+        duration: 1000,
+        status: "error",
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
 
   console.log("OQAD is :", oqad);
+
+  useEffect(() => {}, [oqad.status]);
 
   return (
     <Box
@@ -53,6 +80,7 @@ export const OQAD = () => {
       borderRadius={"10px"}
       shadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
     >
+      {correct && <ConfettiComponent />}
       <Box
         fontWeight={700}
         padding={"1.2rem 0 0 1.2rem"}
@@ -93,7 +121,7 @@ export const OQAD = () => {
             padding={"0px 15px 25px"}
             display={"flex"}
             justifyContent={"center"}
-            maxWidth={"500px"}
+            maxWidth={"400px"}
             margin={"0 auto"}
           >
             <Image
@@ -119,10 +147,8 @@ export const OQAD = () => {
                   fontSize={["13px", "13px", "15px", "16px"]}
                   transition={"0.2s ease-in-out"}
                   cursor={"pointer"}
-                  _hover={{
-                    background: ["", "", "#5853fc10", "#5853fc10"],
-                  }}
                   textTransform={"capitalize"}
+                  textAlign={"center"}
                 >
                   {option.toLowerCase()}
                 </Text>
@@ -160,8 +186,8 @@ export const OQAD = () => {
           justifyContent={"center"}
           gap={"10px"}
         >
-          <Text fontSize={"20px"} fontWeight={600}>
-            Already Answered
+          <Text fontSize={"18px"} fontWeight={600}>
+            You have answered today's question. Please come back tomorrow.
           </Text>
           <Image src={tick} alt="✅" width={"60px"} />
         </Box>
