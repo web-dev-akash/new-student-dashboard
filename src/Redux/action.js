@@ -587,6 +587,8 @@ export const fetchUser = (email) => async (dispatch) => {
     const timeAlerts = checkTimeAlerts();
     alertObj.push(...timeAlerts);
 
+    alertObj.push("special");
+
     if (!res.data.joinedWisechamps) {
       alertObj.push("community");
     }
