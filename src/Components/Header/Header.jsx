@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 
 export const Header = () => {
   const mode = useSelector((state) => state.mode);
+  const grade = useSelector((state) => state.user.grade);
   const navigate = useNavigate();
   return (
     <Box
@@ -22,7 +23,7 @@ export const Header = () => {
       }}
     >
       <Box></Box>
-      {/* <DifficultyLevelToggler /> */}
+      {/* {Number(grade) === 5 && <DifficultyLevelToggler />} */}
       <Box
         sx={{
           position: "absolute",

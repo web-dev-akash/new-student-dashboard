@@ -587,8 +587,6 @@ export const fetchUser = (email) => async (dispatch) => {
     const timeAlerts = checkTimeAlerts();
     alertObj.push(...timeAlerts);
 
-    alertObj.push("special");
-
     if (!res.data.joinedWisechamps) {
       alertObj.push("community");
     }
@@ -829,8 +827,7 @@ export const updateDifficultyLevel =
   (contactId, difficulty, user) => async (dispatch) => {
     try {
       const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
-      // const url = `https://backend.wisechamps.com/user/update`;
-      const url = `http://localhost:8080/user/update`;
+      const url = `https://backend.wisechamps.com/user/update`;
       const res = await axios.post(
         url,
         { contactId, difficulty },

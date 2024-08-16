@@ -11,6 +11,8 @@ import {
   Divider,
   useMediaQuery,
   useTheme,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import "/src/styles/Login.modal.css";
 import { useEffect, useState } from "react";
@@ -21,6 +23,8 @@ import { fetchUser } from "../Redux/action";
 import { LoginSlider } from "../Components/LoginSlider/LoginSlider";
 import { Loading } from "../Components/Loading/Loading";
 ring2.register();
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const theme = createTheme({
   palette: {
@@ -41,6 +45,7 @@ const theme = createTheme({
 
 export const Login = () => {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
   const mode = useSelector((state) => state.mode);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
@@ -73,8 +78,18 @@ export const Login = () => {
   //   setShowOTPInput(true);
   // };
 
+  const handleKeyDown = (e, email) => {
+    if (e.key === "Enter") {
+      handleUserLoginWithEmail(email);
+    }
+  };
+
   const handleUserLoginWithEmail = async (email) => {
-    dispatch(fetchUser(email));
+    if (emailRegex.test(email)) {
+      dispatch(fetchUser(email));
+    } else {
+      setOpen(true);
+    }
   };
 
   // const verifyUserLoginOTP = async (phone, otp) => {
@@ -133,6 +148,21 @@ export const Login = () => {
           overflow: "hidden",
         }}
       >
+        <Snackbar
+          open={open}
+          autoHideDuration={3000}
+          onClose={() => setOpen(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert
+            onClose={() => setOpen(false)}
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            Enter a Valid Email
+          </Alert>
+        </Snackbar>
         <Box position={"absolute"} top={"1rem"} left={"1rem"}>
           <img src="/images/logo.png" alt="Wisechamps" width={"120px"} />
         </Box>
@@ -200,6 +230,7 @@ export const Login = () => {
                 autoComplete="email"
                 onChange={(e) => handleLoginDataChange(e)}
                 value={loginData.email}
+                onKeyDown={(e) => handleKeyDown(e, loginData.email)}
               />
               {/* <TextField
                     margin="normal"

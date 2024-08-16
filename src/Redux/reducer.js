@@ -22,6 +22,7 @@ const initialState = {
     name: "",
     credits: 0,
     coins: 0,
+    grade: 0,
     id: "",
     studentName: "",
     address: null,
