@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Box,
   Button,
@@ -105,7 +106,7 @@ export const Pricing = () => {
             fontWeight={500}
             color={"#323232"}
           >
-            <Tr>
+            {/* <Tr>
               <Td id="plansPackage">Trial Package</Td>
               <Td>₹199</Td>
               <Td>
@@ -113,11 +114,10 @@ export const Pricing = () => {
                 (₹40 per quiz)
               </Td>
               <Td>1 Month</Td>
-            </Tr>
+            </Tr> */}
             <Tr>
               <Td fontWeight={600} id="plansPackage">
-                Academic <br />
-                Advancement
+                Beginner's <br /> Package
               </Td>
               <Td>₹499</Td>
               <Td>
@@ -125,6 +125,18 @@ export const Pricing = () => {
                 (₹20 per quiz)
               </Td>
               <Td>6 Months</Td>
+            </Tr>
+            <Tr>
+              <Td id="plansPackage">
+                Academic
+                <br /> Advancement
+              </Td>
+              <Td>₹999</Td>
+              <Td>
+                67 Quizzes <br />
+                (₹15 per quiz)
+              </Td>
+              <Td>1 year</Td>
             </Tr>
             <Tr>
               <Td fontWeight={600} id="plansPackage">
