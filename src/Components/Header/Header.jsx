@@ -2,7 +2,7 @@ import { ProfileAvatar } from "./ProfileAvatar";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-// import { DifficultyLevelToggler } from "../DifficultyLevelToggler/DifficultyLevelToggler";
+import { DifficultyLevelToggler } from "../DifficultyLevelToggler/DifficultyLevelToggler";
 
 export const Header = () => {
   const mode = useSelector((state) => state.mode);
@@ -23,7 +23,7 @@ export const Header = () => {
       }}
     >
       <Box></Box>
-      {/* {Number(grade) === 5 && <DifficultyLevelToggler />} */}
+      {Number(grade) === 5 && <DifficultyLevelToggler />}
       <Box
         sx={{
           position: "absolute",

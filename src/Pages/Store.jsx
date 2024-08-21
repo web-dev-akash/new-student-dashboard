@@ -18,6 +18,7 @@ import {
   CardFooter,
   Code,
   Divider,
+  Fade,
   Image,
   SimpleGrid,
   Stack,
@@ -42,6 +43,8 @@ import order_placed from "../assets/order_placed.gif";
 import { Loading } from "../Components/Loading/Loading";
 import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
 import { ClickBtn } from "../Components/ClickBtn/ClickBtn";
+import Lottie from "lottie-react";
+import scrollDown from "/src/Lottie/ScrollDown.json";
 
 export const Store = () => {
   const dispatch = useDispatch();
@@ -51,7 +54,11 @@ export const Store = () => {
   const loading = useSelector((state) => state.loading);
   const { coins, id } = useSelector((state) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef();
+  const cancelRef = useRef(null);
+  const lottieRef = useRef(null);
+  const [isTop, setIsTop] = useState(true);
+  const panelRef = useRef(null);
+
   const [showDescription, setShowDescription] = useState(null);
   const [productId, setProductId] = useState(null);
   const coinsHistory = useSelector((state) => state.user.coinsHistory);
@@ -86,6 +93,23 @@ export const Store = () => {
       }, 4000);
     }
   }, [tempMode]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (panelRef.current?.scrollTop > 0) {
+        setIsTop(false);
+      } else {
+        setIsTop(true);
+      }
+    };
+
+    const panel = panelRef.current;
+    panel?.addEventListener("scroll", handleScroll);
+
+    return () => {
+      panel?.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   if (tempMode === "thankyou") {
     return (
@@ -256,7 +280,32 @@ export const Store = () => {
                 <AccordionIcon />
               </AccordionButton>
             </h2>
-            <AccordionPanel p={0}>
+            <AccordionPanel
+              p={0}
+              maxHeight={"45vh"}
+              overflowX={"hidden"}
+              overflowY={"auto"}
+              position={"relative"}
+              ref={panelRef}
+            >
+              {coinsHistory.length !== 0 && (
+                <Fade in={isTop}>
+                  <Lottie
+                    animationData={scrollDown}
+                    loop={true}
+                    autoPlay={false}
+                    lottieRef={lottieRef}
+                    style={{
+                      width: "150px",
+                      position: "absolute",
+                      bottom: "-45px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      opacity: 0.5,
+                    }}
+                  />
+                </Fade>
+              )}
               <Box bg={"white"} padding={"0px 10px"} id="transactions">
                 {coinsHistory.length === 0 && (
                   <Box

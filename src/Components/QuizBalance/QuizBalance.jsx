@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Divider,
+  Fade,
   Tag,
   Text,
 } from "@chakra-ui/react";
@@ -15,7 +16,10 @@ import { FaRupeeSign } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading/Loading";
 import { ClickBtn } from "../ClickBtn/ClickBtn";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Lottie from "lottie-react";
+import scrollDown from "/src/Lottie/ScrollDown.json";
+// import { PlansAndPricing } from "../Pricing/PlansAndPricing";
 
 export const QuizBalance = () => {
   const paymentHistory = useSelector((state) => state.paymentHistory);
@@ -23,6 +27,9 @@ export const QuizBalance = () => {
   const credits = useSelector((state) => state.user.credits);
   const user = useSelector((state) => state.user);
   const [history, setHistory] = useState(null);
+  const lottieRef = useRef(null);
+  const [isTop, setIsTop] = useState(true);
+  const panelRef = useRef(null);
 
   let wordsToRemove = [
     "Final",
@@ -94,6 +101,24 @@ export const QuizBalance = () => {
     combinedArray.sort((a, b) => b.date - a.date);
     setHistory(combinedArray);
   }, []);
+
+  const handleScroll = () => {
+    if (panelRef.current?.scrollTop > 0) {
+      setIsTop(false);
+    } else {
+      console.log("Panel Ref ---------", panelRef.current?.scrollTop);
+      setIsTop(true);
+    }
+  };
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    panel?.addEventListener("scroll", handleScroll);
+
+    return () => {
+      panel?.removeEventListener("scroll", handleScroll);
+    };
+  }, [history]);
 
   if (!quizzes || !quizzes.length) {
     return <Loading />;
@@ -170,24 +195,8 @@ export const QuizBalance = () => {
           borderRadius={"2px"}
         />
 
-        {!history ? (
-          <Box
-            minHeight={"50vh"}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <Text
-              fontWeight={700}
-              fontSize={"30px"}
-              textAlign={"center"}
-              opacity={0.3}
-            >
-              No Quiz Balance <br /> History Found
-            </Text>
-          </Box>
-        ) : (
-          <Accordion allowToggle defaultIndex={0}>
+        {history && (
+          <Accordion allowToggle defaultIndex={[0]}>
             <AccordionItem
               border={"none"}
               borderRadius={"10px"}
@@ -213,25 +222,31 @@ export const QuizBalance = () => {
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel p={0}>
+              <AccordionPanel
+                p={0}
+                maxHeight={"45vh"}
+                overflowX={"hidden"}
+                overflowY={"auto"}
+                position={"relative"}
+                ref={panelRef}
+              >
+                <Fade in={isTop}>
+                  <Lottie
+                    animationData={scrollDown}
+                    loop={true}
+                    autoPlay={false}
+                    lottieRef={lottieRef}
+                    style={{
+                      width: "150px",
+                      position: "absolute",
+                      bottom: "-45px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      opacity: 0.5,
+                    }}
+                  />
+                </Fade>
                 <Box bg={"white"} padding={"0px 10px"} id="transactions">
-                  {!history && (
-                    <Box
-                      minHeight={"80px"}
-                      display={"flex"}
-                      justifyContent={"center"}
-                      alignItems={"center"}
-                    >
-                      <Text
-                        fontWeight={700}
-                        fontSize={"30px"}
-                        textAlign={"center"}
-                        opacity={0.3}
-                      >
-                        No Purchases <br /> Made Yet
-                      </Text>
-                    </Box>
-                  )}
                   {history.map((item) => {
                     return item.type === "payment" ? (
                       <Box
@@ -402,6 +417,8 @@ export const QuizBalance = () => {
             </AccordionItem>
           </Accordion>
         )}
+
+        {/* <PlansAndPricing /> */}
       </Box>
     </Box>
   );

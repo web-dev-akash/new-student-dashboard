@@ -842,6 +842,7 @@ export const updateDifficultyLevel =
       if (res.status === 200 || res.data.status === 200) {
         dispatch(setUser({ ...user, difficulty: difficulty }));
       }
+
       return {
         status: res.status || res.data.status,
       };
