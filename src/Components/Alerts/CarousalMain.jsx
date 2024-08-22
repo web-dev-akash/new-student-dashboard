@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -11,7 +12,7 @@ import { JoinCommunity } from "./JoinCommunity";
 import { IntroLuckyDrawMeeting } from "./IntroLuckyDrawMeeting";
 import { QuizInProgress } from "./QuizInProgress";
 
-export const CarousalMain = () => {
+export const CarousalMain = ({ setTab }) => {
   const alert = useSelector((state) => state.alert);
   return (
     <Box
@@ -36,7 +37,7 @@ export const CarousalMain = () => {
         {alert.length > 0
           ? alert.map((alert, index) => {
               if (alert === "credits") {
-                return <CreditsExhausted key={index} />;
+                return <CreditsExhausted setTab={setTab} key={index} />;
               }
               if (alert === "newToWisechamps") {
                 return <IntroLuckyDrawMeeting key={index} />;
@@ -48,7 +49,7 @@ export const CarousalMain = () => {
                 return <JoinCommunity key={index} />;
               }
               if (alert === "lowCredits") {
-                return <LowCredits key={index} />;
+                return <LowCredits setTab={setTab} key={index} />;
               }
               if (alert === "coins") {
                 return <CoinsUpdated key={index} />;

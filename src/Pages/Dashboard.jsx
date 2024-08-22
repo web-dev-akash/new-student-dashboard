@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +10,7 @@ import { Pricing } from "../Components/Pricing/Pricing";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
 // import { OQAD } from "../Components/OQAD/OQAD";
 
-export const Dashboard = () => {
+export const Dashboard = ({ setTab }) => {
   const dispatch = useDispatch();
   const weeklyQuizzes = useSelector((state) => state.user.weeklyQuizzes);
   const alert = useSelector((state) => state.alert);
@@ -122,9 +123,9 @@ export const Dashboard = () => {
       ]}
     >
       <Box display={"grid"} gridTemplateColumns={"repeat(1, 1fr)"}>
-        <CarousalMain />
+        <CarousalMain setTab={setTab} />
         <WeeklyQuiz />
-        <Pricing />
+        <Pricing setTab={setTab} />
         {/* <OQAD /> */}
       </Box>
     </Box>

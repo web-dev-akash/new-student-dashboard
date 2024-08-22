@@ -113,7 +113,7 @@ export const NavigationTabs = () => {
         </TabList>
         <ChakraProvider disableGlobalStyle>
           <TabPanel value={0} sx={{ padding: 0 }}>
-            <Dashboard />
+            <Dashboard setTab={setActiveTab} />
           </TabPanel>
 
           <TabPanel value={1} sx={{ padding: 0 }}>

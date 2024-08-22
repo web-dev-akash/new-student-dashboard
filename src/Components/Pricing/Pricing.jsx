@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import {
   Box,
@@ -11,10 +12,16 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-import { useSelector } from "react-redux";
 
-export const Pricing = () => {
-  const user = useSelector((state) => state.user);
+export const Pricing = ({ setTab }) => {
+  const goToPricingPage = () => {
+    try {
+      setTab(4);
+    } catch (error) {
+      console.log("Error");
+    }
+  };
+
   return (
     <Box
       background="#fff"
@@ -161,11 +168,7 @@ export const Pricing = () => {
         padding={"0 1rem"}
       >
         <Button
-          onClick={() =>
-            window.open(
-              `https://quizbalance.wisechamps.com/?email=${user.email}`
-            )
-          }
+          onClick={goToPricingPage}
           bg={"#4E46E4"}
           color={"white"}
           fontSize={["13px", "13px", "15px", "15px"]}

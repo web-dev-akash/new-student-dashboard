@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Alert,
   AlertDescription,
@@ -9,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-export const LowCredits = () => {
+export const LowCredits = ({ setTab }) => {
   const user = useSelector((state) => state.user);
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
@@ -47,11 +48,7 @@ export const LowCredits = () => {
             width={["100%", "100%", "max-content", "max-content"]}
             bg={"white"}
             border={"none"}
-            onClick={() =>
-              window.open(
-                `https://quizbalance.wisechamps.com?email=${user.email}`
-              )
-            }
+            onClick={() => setTab(4)}
           >
             Add Quiz Balance
           </Button>

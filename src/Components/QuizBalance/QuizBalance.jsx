@@ -19,17 +19,17 @@ import { ClickBtn } from "../ClickBtn/ClickBtn";
 import { useEffect, useRef, useState } from "react";
 import Lottie from "lottie-react";
 import scrollDown from "/src/Lottie/ScrollDown.json";
-// import { PlansAndPricing } from "../Pricing/PlansAndPricing";
+import { PlansAndPricing } from "../Pricing/PlansAndPricing";
 
 export const QuizBalance = () => {
   const paymentHistory = useSelector((state) => state.paymentHistory);
   const quizzes = useSelector((state) => state.user.quizzes);
   const credits = useSelector((state) => state.user.credits);
-  const user = useSelector((state) => state.user);
   const [history, setHistory] = useState(null);
   const lottieRef = useRef(null);
   const [isTop, setIsTop] = useState(true);
   const panelRef = useRef(null);
+  const quizBalanaceRef = useRef(null);
 
   let wordsToRemove = [
     "Final",
@@ -66,6 +66,9 @@ export const QuizBalance = () => {
     "August",
     "September",
     "Group",
+    "Olympiad",
+    "Level",
+    "School",
   ];
 
   const originalSessionName = (sessionName) => {
@@ -80,6 +83,12 @@ export const QuizBalance = () => {
       return "Maths Quiz";
     }
     return newString.trim();
+  };
+
+  const handleQuizBalanceBtnClick = () => {
+    quizBalanaceRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {
@@ -106,7 +115,6 @@ export const QuizBalance = () => {
     if (panelRef.current?.scrollTop > 0) {
       setIsTop(false);
     } else {
-      console.log("Panel Ref ---------", panelRef.current?.scrollTop);
       setIsTop(true);
     }
   };
@@ -128,8 +136,8 @@ export const QuizBalance = () => {
     <Box
       bg={"#E7E6FF"}
       padding={[
-        "3rem 0.7rem 6rem",
-        "3rem 0.7rem 6rem",
+        "3rem 0.7rem 6.5rem",
+        "3rem 0.7rem 6.5rem",
         "4.5rem 1.5rem 1.5rem",
         "4.5rem 1.5rem 1.5rem",
       ]}
@@ -158,25 +166,13 @@ export const QuizBalance = () => {
             </Text>
           </Box>
           <Button
-            onClick={() =>
-              window.open(
-                `https://quizbalance.wisechamps.com?email=${user.email}`,
-                "_blank"
-              )
-            }
+            onClick={handleQuizBalanceBtnClick}
             bg={"#4E46E4"}
             color={"white"}
             fontSize={["12px", "13px", "14px", "15px"]}
             fontWeight={500}
             paddingInline={["10px", "10px", "20px", "20px"]}
             border={"2px solid transparent"}
-            _focus={{
-              bg: "#fff",
-              color: "#4E46E4",
-              outline: "none",
-              borderColor: "#4E46E4",
-              boxShadow: "0 0 0px 4px #4E46E450",
-            }}
             _hover={{
               bg: "#fff",
               color: "#4E46E4",
@@ -196,7 +192,7 @@ export const QuizBalance = () => {
         />
 
         {history && (
-          <Accordion allowToggle defaultIndex={[0]}>
+          <Accordion allowToggle>
             <AccordionItem
               border={"none"}
               borderRadius={"10px"}
@@ -417,8 +413,9 @@ export const QuizBalance = () => {
             </AccordionItem>
           </Accordion>
         )}
-
-        {/* <PlansAndPricing /> */}
+        <Box ref={quizBalanaceRef}>
+          <PlansAndPricing />
+        </Box>
       </Box>
     </Box>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import {
   Alert,
@@ -8,10 +9,8 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
 
-export const CreditsExhausted = () => {
-  const user = useSelector((state) => state.user);
+export const CreditsExhausted = ({ setTab }) => {
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
       <Alert
@@ -47,11 +46,7 @@ export const CreditsExhausted = () => {
             width={["100%", "100%", "max-content", "max-content"]}
             bg={"white"}
             border={"none"}
-            onClick={() =>
-              window.open(
-                `https://quizbalance.wisechamps.com?email=${user.email}`
-              )
-            }
+            onClick={() => setTab(4)}
           >
             Add Quiz Balance
           </Button>
