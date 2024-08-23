@@ -11,54 +11,83 @@ import {
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getError, getLoading, setLoading } from "../Redux/action";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import * as changeCase from "change-case";
 import { Loading } from "../Components/Loading/Loading";
+import { debounce } from "lodash";
 
 export const Address = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const currAddress =
+    useSelector((state) => state.user.address)?.split(",") || null;
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
   const [tempMode, setTempMode] = useState("");
-  const [address, setAddess] = useState({
-    pincode: "",
-    flat: "",
-    street: "",
-    landmark: "",
-    city: "",
-    state: "",
+  const [isEditing, setIsEditing] = useState(!currAddress);
+
+  const [address, setAddess] = useState(() => {
+    const pincode = currAddress?.[currAddress.length - 1]?.trim() || "";
+    const state = currAddress?.[currAddress.length - 2]?.trim() || "";
+    const city = currAddress?.[currAddress.length - 3]?.trim() || "";
+    const remainingAddress = currAddress
+      ?.slice(0, currAddress.length - 3)
+      .map((item) => item.trim());
+
+    const landmarkCount = remainingAddress?.length > 3 ? 1 : 0;
+    const flatCount = Math.min(2, remainingAddress?.length - landmarkCount);
+    const flat = remainingAddress?.slice(0, flatCount).join(", ") || "";
+    const street =
+      remainingAddress
+        ?.slice(flatCount, remainingAddress.length - landmarkCount)
+        .join(", ") || "";
+    const landmark =
+      landmarkCount !== 0
+        ? remainingAddress.slice(-landmarkCount).join(", ")
+        : "";
+
+    return {
+      pincode,
+      flat: flat,
+      street: street,
+      landmark: landmark,
+      city,
+      state,
+    };
   });
-  const [pincode, setPincode] = useState("");
+
   const [invalidPincode, setInvalidPincode] = useState(false);
 
-  const handleAddressFormChange = async (e) => {
-    e.preventDefault();
+  const handleAddressFormChange = (e) => {
     const name = e.target.name;
-    const value = e.target.value.trim();
+    const value = e.target.value;
+
+    setAddess((prev) => ({ ...prev, [name]: value }));
+
     if (name === "pincode" && value.length === 6) {
-      const url = `${import.meta.env.VITE_APP_PINCODE_API}=${value}`;
-      setPincode(value);
-      axios.get(url).then((res) => {
-        if (res.data.total !== 0) {
-          setInvalidPincode(false);
-          const state = changeCase.capitalCase(res.data.records[0]._statename);
-          const city = changeCase.capitalCase(res.data.records[0].districtname);
-          setAddess({ ...address, city: city, state: state });
-        } else {
-          setInvalidPincode(true);
-        }
-      });
+      debounceCheckPincode(value);
     } else if (name === "pincode" && value.length < 6) {
       setInvalidPincode(true);
     }
-    setAddess({ ...address, [name]: value });
   };
 
-  const handleAddressSubmit = async (email, addressData, pincode) => {
+  const debounceCheckPincode = debounce((value) => {
+    const url = `${import.meta.env.VITE_APP_PINCODE_API}=${value}`;
+    axios.get(url).then((res) => {
+      if (res.data.total !== 0) {
+        setInvalidPincode(false);
+        const state = changeCase.capitalCase(res.data.records[0]._statename);
+        const city = changeCase.capitalCase(res.data.records[0].districtname);
+        setAddess((prev) => ({ ...prev, city, state }));
+      } else {
+        setInvalidPincode(true);
+      }
+    });
+  }, 300);
+
+  const handleAddressSubmit = async (email, addressData) => {
     try {
-      if (pincode.length !== 6) {
+      if (addressData.pincode.length !== 6) {
         alert("Please Enter a valid Pincode");
         return;
       }
@@ -82,7 +111,7 @@ export const Address = () => {
       const body = {
         email: email,
         address: address,
-        pincode: Number(pincode),
+        pincode: Number(addressData.pincode),
       };
       const url = `https://backend.wisechamps.com/quiz/address`;
       const res = await axios.post(url, body);
@@ -97,9 +126,11 @@ export const Address = () => {
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("wisechamps_current_path", window.location.pathname);
-  }, [address.city, address.state, invalidPincode]);
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  useEffect(() => {}, [address.city, address.state, invalidPincode]);
 
   if (loading) {
     return <Loading />;
@@ -111,7 +142,7 @@ export const Address = () => {
 
   if (tempMode === "thankyou") {
     setTimeout(() => {
-      navigate("/");
+      window.location.reload();
     }, 2000);
     return (
       <>
@@ -260,6 +291,8 @@ export const Address = () => {
             onChange={handleAddressFormChange}
             fullWidth
             label={"Pincode"}
+            value={address.pincode}
+            disabled={!isEditing}
           />
           <Divider
             sx={{
@@ -276,6 +309,8 @@ export const Address = () => {
             onChange={handleAddressFormChange}
             fullWidth
             label={"Flat, House no., Building"}
+            value={address.flat}
+            disabled={!isEditing}
           />
           <Divider
             sx={{
@@ -291,6 +326,8 @@ export const Address = () => {
             onChange={handleAddressFormChange}
             fullWidth
             label={"Area, Street, Village, City"}
+            value={address.street}
+            disabled={!isEditing}
           />
           <Divider
             sx={{
@@ -305,6 +342,8 @@ export const Address = () => {
             onChange={handleAddressFormChange}
             fullWidth
             label={"Landmark"}
+            value={address.landmark}
+            disabled={!isEditing}
           />
           <Divider
             sx={{
@@ -322,6 +361,7 @@ export const Address = () => {
             onChange={handleAddressFormChange}
             fullWidth
             label={"District"}
+            disabled={!isEditing}
           />
           <Divider
             sx={{
@@ -339,23 +379,40 @@ export const Address = () => {
             onChange={handleAddressFormChange}
             fullWidth
             label={"State"}
+            disabled={!isEditing}
           />
           <Box height={8} />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            sx={{
-              mt: 1,
-              p: 1.2,
-              fontWeight: 600,
-            }}
-            onClick={() => handleAddressSubmit(user.email, address, pincode)}
-          >
-            Submit
-          </Button>
+          {isEditing ? (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{
+                mt: 1,
+                p: 1.2,
+                fontWeight: 600,
+              }}
+              onClick={() => handleAddressSubmit(user.email, address)}
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{
+                mt: 1,
+                p: 1.2,
+                fontWeight: 600,
+              }}
+              onClick={handleEditClick}
+            >
+              Change Address
+            </Button>
+          )}
         </FormControl>
       </Container>
     </Box>

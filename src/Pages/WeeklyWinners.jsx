@@ -153,7 +153,7 @@ export const WeeklyWinners = () => {
                     fontSize={["18px", "19px", "20px", "21px", "22px"]}
                     fontWeight={600}
                   >
-                    Top 5 Scorers
+                    Top 3 Scorers
                   </Text>
                 </Box>
                 <Divider m={"15px 0"} />
@@ -202,7 +202,7 @@ export const WeeklyWinners = () => {
                     fontSize={["18px", "19px", "20px", "21px", "22px"]}
                     fontWeight={600}
                   >
-                    Top 5 Percentage
+                    Top 3 Percentage
                   </Text>
                 </Box>
                 <Divider m={"15px 0"} />
