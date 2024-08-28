@@ -15,6 +15,7 @@ import { Link, Navigate } from "react-router-dom";
 import * as changeCase from "change-case";
 import { Loading } from "../Components/Loading/Loading";
 import { debounce } from "lodash";
+import logo from "/src/assets/logo.png";
 
 export const Address = () => {
   const dispatch = useDispatch();
@@ -160,7 +161,7 @@ export const Address = () => {
         >
           <Box sx={{ width: { xs: "140px", md: "170px" } }}>
             <img
-              src="/src/assets/logo.png"
+              src={logo}
               alt="Wisechamps"
               style={{
                 width: "inherit",

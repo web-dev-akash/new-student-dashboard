@@ -599,6 +599,7 @@ select {
   display: block;
   font-size: 12px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .btn-color-mode-switch > label.btn-color-mode-switch-inner:before {
