@@ -230,7 +230,7 @@ export const Address = () => {
       >
         <Box sx={{ width: { xs: "140px", md: "170px" } }}>
           <img
-            src="/src/assets/logo.png"
+            src={logo}
             alt="Wisechamps"
             style={{
               width: "inherit",
