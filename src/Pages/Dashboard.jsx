@@ -8,7 +8,7 @@ import { setAlert } from "../Redux/action";
 import { CarousalMain } from "../Components/Alerts/CarousalMain";
 import { Pricing } from "../Components/Pricing/Pricing";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
-// import { OQAD } from "../Components/OQAD/OQAD";
+import { OQAD } from "../Components/OQAD/OQAD";
 
 export const Dashboard = ({ setTab }) => {
   const dispatch = useDispatch();
@@ -126,7 +126,7 @@ export const Dashboard = ({ setTab }) => {
         <CarousalMain setTab={setTab} />
         <WeeklyQuiz />
         <Pricing setTab={setTab} />
-        {/* <OQAD /> */}
+        <OQAD />
       </Box>
     </Box>
   );

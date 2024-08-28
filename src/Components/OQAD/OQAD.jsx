@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Box,
   Button,
@@ -11,31 +12,48 @@ import {
 import { useEffect, useState } from "react";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
-import { useSelector } from "react-redux";
-import tick from "/src/assets/order_placed.gif";
+import { useDispatch, useSelector } from "react-redux";
+import tick from "/src/Lottie/correct.json";
 import { ConfettiComponent } from "../ConfettiComponent/ConfettiComponent";
+import Lottie from "lottie-react";
+import {
+  captureDailyQuestionAttempt,
+  getDailyQuestion,
+} from "../../Redux/action";
 
 export const OQAD = () => {
+  const dispatch = useDispatch();
+  const toast = useToast();
   const oqad = useSelector((state) => state.oqad);
   const user = useSelector((state) => state.user);
   const [selectedOption, setSelectedOption] = useState(null);
   const [correct, setCorrect] = useState(false);
   const [tempLoading, setTempLoading] = useState(false);
-  const toast = useToast();
 
-  const options = {
-    [oqad.options[0]]: "Option 1",
-    [oqad.options[1]]: "Option 2",
-    [oqad.options[2]]: "Option 3",
-    [oqad.options[3]]: "Option 4",
-  };
+  const options =
+    oqad?.status === 200
+      ? {
+          [oqad.options[0]]: "Option 1",
+          [oqad.options[1]]: "Option 2",
+          [oqad.options[2]]: "Option 3",
+          [oqad.options[3]]: "Option 4",
+        }
+      : null;
 
-  useEffect(() => {}, [correct]);
-
-  const handleSubmit = (selectedOption, contactId, questionId) => {
+  const handleSubmit = async (selectedOption, contactId, questionId) => {
     try {
       setCorrect(false);
       setTempLoading(true);
+
+      await dispatch(
+        captureDailyQuestionAttempt({
+          contactId,
+          questionId,
+          optionSelected: options[selectedOption],
+          correctAnswer: options[selectedOption] === oqad.answer,
+        })
+      );
+
       if (options[selectedOption] === oqad.answer) {
         setCorrect(true);
         toast({
@@ -54,7 +72,7 @@ export const OQAD = () => {
           position: "top",
         });
       }
-
+      await dispatch(getDailyQuestion(user.grade, user.id));
       setTempLoading(false);
     } catch (error) {
       console.log("Error is -----------", error);
@@ -68,9 +86,11 @@ export const OQAD = () => {
     }
   };
 
-  console.log("OQAD is :", oqad);
+  useEffect(() => {
+    dispatch(getDailyQuestion(user.grade, user.id));
+  }, []);
 
-  useEffect(() => {}, [oqad.status]);
+  useEffect(() => {}, [correct, oqad.status]);
 
   return (
     <Box
@@ -137,7 +157,7 @@ export const OQAD = () => {
             padding={"0 15px"}
           >
             {oqad.options.map((option) => (
-              <>
+              <Box key={option}>
                 <Text
                   onClick={() => setSelectedOption(option)}
                   bg={selectedOption === option ? "#5838fc40" : "white"}
@@ -152,7 +172,7 @@ export const OQAD = () => {
                 >
                   {option.toLowerCase()}
                 </Text>
-              </>
+              </Box>
             ))}
           </SimpleGrid>
           <Flex justify={"space-between"} mt={6} padding={"0 15px"} gap={4}>
@@ -160,7 +180,7 @@ export const OQAD = () => {
               flex={"50%"}
               type="reset"
               onClick={() => setSelectedOption(null)}
-              isDisabled={!selectedOption}
+              isDisabled={!selectedOption || tempLoading}
               bg={"#5838fc"}
               color={"white"}
             >
@@ -173,6 +193,8 @@ export const OQAD = () => {
               type="submit"
               isDisabled={!selectedOption}
               onClick={() => handleSubmit(selectedOption, user.id, oqad.id)}
+              isLoading={tempLoading}
+              loadingText={""}
             >
               Submit
             </Button>
@@ -180,16 +202,25 @@ export const OQAD = () => {
         </Box>
       ) : oqad.status === 409 ? (
         <Box
-          p={"0 10px 30px"}
+          p={"0 10px 20px"}
           display={"flex"}
+          flexDirection={["column", "column", "row", "row"]}
           alignItems={"center"}
           justifyContent={"center"}
-          gap={"10px"}
+          gap={["2px", "3px", "10px", "10px"]}
+          textAlign={"center"}
         >
-          <Text fontSize={"18px"} fontWeight={600}>
+          <Text fontSize={["14px", "14px", "18px", "18px"]} fontWeight={600}>
             You have answered today's question. Please come back tomorrow.
           </Text>
-          <Image src={tick} alt="✅" width={"60px"} />
+          <Lottie
+            animationData={tick}
+            loop={true}
+            autoPlay={false}
+            style={{
+              width: "40px",
+            }}
+          />
         </Box>
       ) : (
         <Box p={"0 10px 30px"} textAlign={"center"}>
