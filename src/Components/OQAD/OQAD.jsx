@@ -14,9 +14,13 @@ import { BsPatchQuestionFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import tick from "/src/Lottie/correct.json";
+import cross from "/src/Lottie/incorrect.json";
 import { ConfettiComponent } from "../ConfettiComponent/ConfettiComponent";
 import Lottie from "lottie-react";
-import { captureDailyQuestionAttempt } from "../../Redux/action";
+import {
+  captureDailyQuestionAttempt,
+  getDailyQuestion,
+} from "../../Redux/action";
 
 export const OQAD = () => {
   const dispatch = useDispatch();
@@ -28,7 +32,7 @@ export const OQAD = () => {
   const [tempLoading, setTempLoading] = useState(false);
 
   const options =
-    oqad?.status === 200
+    oqad?.status === 200 || oqad?.status === 409
       ? {
           [oqad.options[0]]: "Option 1",
           [oqad.options[1]]: "Option 2",
@@ -48,13 +52,14 @@ export const OQAD = () => {
           questionId,
           optionSelected: options[selectedOption],
           correctAnswer: options[selectedOption] === oqad.answer,
+          oqad,
         })
       );
 
       if (options[selectedOption] === oqad.answer) {
         setCorrect(true);
         toast({
-          title: "Correct Answer",
+          title: "Bravo! Your answer is correct",
           duration: 3000,
           status: "success",
           isClosable: true,
@@ -62,16 +67,17 @@ export const OQAD = () => {
         });
       } else {
         toast({
-          title: "Wrong Answer",
+          title: "Oops! Your answer is incorrect",
           duration: 3000,
           status: "error",
           isClosable: true,
           position: "top",
         });
       }
+      await dispatch(getDailyQuestion(user.grade, user.id));
       setTempLoading(false);
     } catch (error) {
-      console.log("Error is -----------", error);
+      setTempLoading(false);
       toast({
         title: "Something Went Wrong",
         duration: 1000,
@@ -120,7 +126,7 @@ export const OQAD = () => {
           <Box
             fontWeight={400}
             mb={4}
-            fontSize={["15px", "16px", "17px", "18px"]}
+            fontSize={["14px", "15px", "17px", "18px"]}
             display={"flex"}
             alignItems={"start"}
           >
@@ -173,50 +179,112 @@ export const OQAD = () => {
               type="reset"
               onClick={() => setSelectedOption(null)}
               isDisabled={!selectedOption || tempLoading}
-              bg={"#5838fc"}
-              color={"white"}
+              colorScheme="purple"
+              variant="outline"
             >
               Clear
             </Button>
             <Button
               flex={"50%"}
-              bg={"#5838fc"}
-              color={"white"}
               type="submit"
               isDisabled={!selectedOption}
               onClick={() => handleSubmit(selectedOption, user.id, oqad.id)}
               isLoading={tempLoading}
               loadingText={""}
+              colorScheme="purple"
+              variant="solid"
             >
               Submit
             </Button>
           </Flex>
         </Box>
       ) : oqad.status === 409 ? (
-        <Box
-          p={"0 10px 20px"}
-          display={"flex"}
-          flexDirection={["column", "column", "row", "row"]}
-          alignItems={"center"}
-          justifyContent={"center"}
-          gap={["2px", "3px", "10px", "10px"]}
-          textAlign={"center"}
-        >
-          <Text fontSize={["14px", "14px", "18px", "18px"]} fontWeight={600}>
-            You have answered today's question. Please come back tomorrow.
-          </Text>
-          <Lottie
-            animationData={tick}
-            loop={true}
-            autoPlay={false}
-            style={{
-              width: "40px",
-            }}
-          />
+        <Box p={"0 10px 30px"}>
+          <Box
+            fontWeight={400}
+            mb={4}
+            fontSize={["14px", "15px", "17px", "18px"]}
+            display={"flex"}
+            alignItems={"start"}
+          >
+            <Text as={"span"}>
+              <RiArrowRightSFill style={{ fontSize: "25px" }} />
+            </Text>
+            <Text>{oqad.question}</Text>
+          </Box>
+          <Box
+            padding={"0px 15px 25px"}
+            display={"flex"}
+            justifyContent={"center"}
+            maxWidth={"400px"}
+            margin={"0 auto"}
+          >
+            <Image
+              border={"1px solid #cccccc80"}
+              borderRadius={"10px"}
+              src={oqad.image}
+              alt="Question Image"
+            />
+          </Box>
+          <SimpleGrid
+            gridTemplateColumns={"repeat(2, 1fr)"}
+            gap={4}
+            padding={"0 15px"}
+          >
+            {oqad.options.map((option) => (
+              <Box key={option}>
+                <Box
+                  onClick={() => setSelectedOption(option)}
+                  bg={
+                    oqad.selected === options[option]
+                      ? oqad.answer
+                        ? "#B9F5D0"
+                        : "#FED7D7"
+                      : "white"
+                  }
+                  border={"1px solid #cccccc99"}
+                  padding={"10px"}
+                  borderRadius={"10px"}
+                  fontSize={["13px", "13px", "15px", "16px"]}
+                  transition={"0.2s ease-in-out"}
+                  textTransform={"capitalize"}
+                  textAlign={"center"}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  position={"relative"}
+                >
+                  <Text as={"span"}>{option.toLowerCase()}</Text>
+                  {oqad.selected === options[option] && oqad.answer ? (
+                    <Lottie
+                      animationData={tick}
+                      style={{
+                        width: "30px",
+                        position: "absolute",
+                        right: "2%",
+                      }}
+                    />
+                  ) : (
+                    oqad.selected === options[option] &&
+                    !oqad.answer && (
+                      <Lottie
+                        animationData={cross}
+                        style={{
+                          width: "35px",
+                          position: "absolute",
+                          right: "2%",
+                        }}
+                      />
+                    )
+                  )}
+                </Box>
+              </Box>
+            ))}
+          </SimpleGrid>
         </Box>
       ) : (
         <Box p={"0 10px 30px"} textAlign={"center"}>
-          <Text fontSize={"20px"} fontWeight={600}>
+          <Text fontSize={["15px", "16px", "20px", "20px"]} fontWeight={600}>
             No Question Available
           </Text>
         </Box>

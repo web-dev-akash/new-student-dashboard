@@ -288,36 +288,18 @@ select {
   background-color: #f44336;
 }
 
-.dashboard button {
+.dashboard #alerts button {
   border: 2px solid transparent !important;
   transition: 0.5s ease;
 }
 
-.dashboard button:hover,
-.dashboard button:focus {
+.dashboard #alerts button:hover,
+.dashboard #alerts button:focus {
   outline: none;
   color: black;
   border-color: rgb(94, 110, 255) !important;
   background-color: #fff;
   box-shadow: 0 0 0 5px rgb(94 110 255 / 30%);
-}
-
-#oqad button {
-  border: unset !important;
-}
-
-#oqad button:focus {
-  color: white !important;
-  border-color: unset !important;
-  background-color: #5838fc !important;
-  box-shadow: unset !important;
-}
-
-#oqad button:hover {
-  color: white !important;
-  border-color: unset !important;
-  background-color: #3200a8 !important;
-  box-shadow: unset !important;
 }
 
 .carousel .control-dots .dot {

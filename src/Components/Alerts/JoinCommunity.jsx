@@ -46,7 +46,7 @@ export const JoinCommunity = () => {
             width={["100%", "100%", "max-content", "max-content"]}
             bg={"white"}
             border={"none"}
-            padding={0}
+            padding={"10px"}
             onClick={() => {
               window.open(`https://chat.whatsapp.com/B8mYqAucdqW2EJverDWbrS`);
             }}

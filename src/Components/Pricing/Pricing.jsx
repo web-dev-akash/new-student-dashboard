@@ -174,6 +174,9 @@ export const Pricing = ({ setTab }) => {
           fontSize={["13px", "13px", "15px", "15px"]}
           fontWeight={400}
           width={"100%"}
+          _hover={{
+            bg: "#8A84E2",
+          }}
         >
           Add Quiz Balance
         </Button>

@@ -791,7 +791,7 @@ export const captureDailyQuestionAttempt =
     try {
       const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
       const url = `https://backend.wisechamps.com/question/attempt`;
-      const res = await axios.post(
+      await axios.post(
         url,
         {
           contactId,
@@ -806,15 +806,6 @@ export const captureDailyQuestionAttempt =
           },
         }
       );
-
-      if (res.data.status === 201) {
-        dispatch(
-          setOqad({
-            status: 409,
-            message: "Already Attempted today's Question",
-          })
-        );
-      }
     } catch (error) {
       dispatch(getError());
     }

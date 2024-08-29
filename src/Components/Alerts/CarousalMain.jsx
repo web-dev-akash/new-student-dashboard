@@ -20,6 +20,7 @@ export const CarousalMain = ({ setTab }) => {
       width={"100%"}
       borderRadius={"10px"}
       display={alert.length > 0 ? "block" : "none"}
+      id="alerts"
     >
       <Carousel
         transitionTime={500}
