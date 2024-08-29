@@ -807,18 +807,15 @@ export const captureDailyQuestionAttempt =
         }
       );
 
-      if (res.data.status === 200) {
+      if (res.data.status === 201) {
         dispatch(
           setOqad({
             status: 409,
             message: "Already Attempted today's Question",
           })
         );
-      } else {
-        dispatch(getError());
       }
     } catch (error) {
-      console.log("Error :", error);
       dispatch(getError());
     }
   };

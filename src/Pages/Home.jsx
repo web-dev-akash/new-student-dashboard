@@ -6,6 +6,7 @@ import "../styles/ProfileAvatar.modal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
+  getDailyQuestion,
   // getDailyQuestion,
   getOrders,
   getProducts,
@@ -22,7 +23,7 @@ export const Home = () => {
   const report = useSelector((state) => state.report);
   const winners = useSelector((state) => state.winners);
   const paymentHistory = useSelector((state) => state.paymentHistory);
-  // const oqad = useSelector((state) => state.oqad);
+  const oqad = useSelector((state) => state.oqad);
 
   useEffect(() => {
     if (orders?.length === 0) {
@@ -40,9 +41,9 @@ export const Home = () => {
     if (paymentHistory?.length === 0) {
       dispatch(getUserPaymentHistory(user.id));
     }
-    // if (!oqad || !oqad.status) {
-    //   dispatch(getDailyQuestion(user.grade, user.id));
-    // }
+    if (!oqad || !oqad.status) {
+      dispatch(getDailyQuestion(user.grade, user.id));
+    }
   }, []);
 
   return (

@@ -16,10 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import tick from "/src/Lottie/correct.json";
 import { ConfettiComponent } from "../ConfettiComponent/ConfettiComponent";
 import Lottie from "lottie-react";
-import {
-  captureDailyQuestionAttempt,
-  getDailyQuestion,
-} from "../../Redux/action";
+import { captureDailyQuestionAttempt } from "../../Redux/action";
 
 export const OQAD = () => {
   const dispatch = useDispatch();
@@ -72,7 +69,6 @@ export const OQAD = () => {
           position: "top",
         });
       }
-      await dispatch(getDailyQuestion(user.grade, user.id));
       setTempLoading(false);
     } catch (error) {
       console.log("Error is -----------", error);
@@ -85,10 +81,6 @@ export const OQAD = () => {
       });
     }
   };
-
-  useEffect(() => {
-    dispatch(getDailyQuestion(user.grade, user.id));
-  }, []);
 
   useEffect(() => {}, [correct, oqad.status]);
 
