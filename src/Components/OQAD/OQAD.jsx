@@ -277,7 +277,6 @@ export const OQAD = () => {
                   ) : oqad.selected === options[option] && !oqad.answer ? (
                     <Lottie
                       animationData={cross}
-                      alt={console.log(options[option])}
                       style={{
                         width: "35px",
                         position: "absolute",

@@ -444,7 +444,11 @@ export const QuizBalance = () => {
                   fontSize={"25px"}
                 />
                 Your quiz balance is carried forward to next grade if you buy
-                the <Text as={"span"}>₹1999</Text> plan
+                the{" "}
+                <Text as={"span"} fontWeight={700} color={"indigo"}>
+                  ₹1999
+                </Text>{" "}
+                plan
               </ListItem>
             </List>
           </Alert>
