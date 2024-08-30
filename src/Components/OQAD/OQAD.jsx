@@ -88,7 +88,7 @@ export const OQAD = () => {
     }
   };
 
-  useEffect(() => {}, [correct, oqad.status]);
+  useEffect(() => {}, [oqad.status]);
 
   return (
     <Box
@@ -264,13 +264,23 @@ export const OQAD = () => {
                         right: "2%",
                       }}
                     />
+                  ) : oqad.selected === options[option] && !oqad.answer ? (
+                    <Lottie
+                      animationData={cross}
+                      alt={console.log(options[option])}
+                      style={{
+                        width: "35px",
+                        position: "absolute",
+                        right: "2%",
+                      }}
+                    />
                   ) : (
-                    oqad.selected === options[option] &&
-                    !oqad.answer && (
+                    !oqad.answer &&
+                    options[option] === oqad.correctOption && (
                       <Lottie
-                        animationData={cross}
+                        animationData={tick}
                         style={{
-                          width: "35px",
+                          width: "30px",
                           position: "absolute",
                           right: "2%",
                         }}

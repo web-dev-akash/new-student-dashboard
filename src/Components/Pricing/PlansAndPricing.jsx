@@ -91,7 +91,7 @@ export const PlansAndPricing = () => {
           _hover={{
             transform: "scale(1.01)",
             zIndex: 99,
-            boxShadow: "0 0 0 2px #E5714D, 15px 15px 20px 2px #E5714D",
+            boxShadow: "0 0 0 2px #E5714D, 15px 15px 0 0 #E5714D",
           }}
           position={"relative"}
           boxShadow={"0 0 0 2px #E5714D, 12px 12px 0 0 #E5714D"}
@@ -184,7 +184,7 @@ export const PlansAndPricing = () => {
           _hover={{
             transform: "scale(1.01)",
             zIndex: 99,
-            boxShadow: "0 0 0 2px #49B86A, 15px 15px 20px 2px #49B86A",
+            boxShadow: "0 0 0 2px #49B86A, 15px 15px 0 0 #49B86A",
           }}
           position={"relative"}
           boxShadow={"0 0 0 2px #49B86A, 12px 12px 0 0 #49B86A"}
@@ -306,7 +306,7 @@ export const PlansAndPricing = () => {
           _hover={{
             transform: "scale(1.01)",
             zIndex: 99,
-            boxShadow: "0 0 0 2px #45439A, 15px 15px 20px 2px #45439A",
+            boxShadow: "0 0 0 2px #45439A, 15px 15px 0 0 #45439A",
           }}
           position={"relative"}
           boxShadow={"0 0 0 2px #45439A, 12px 12px 0 0 #45439A"}

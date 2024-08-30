@@ -1,9 +1,10 @@
-import { Box, Button, Image, Tag, Text } from "@chakra-ui/react";
+import { Box, Button, Divider, Image, Tag, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { LuChevronLeftCircle, LuChevronRightCircle } from "react-icons/lu";
 import previewImage from "/src/assets/preview.jpg";
 import { Link } from "react-router-dom";
+import { GiSecretBook } from "react-icons/gi";
 
 const months = {
   0: "Jan",
@@ -274,7 +275,37 @@ export const WeeklyQuiz = () => {
   }, [activeBtn]);
 
   return (
-    <Box position={"relative"} overflow={"hidden"}>
+    <Box
+      position={"relative"}
+      overflow={"hidden"}
+      mt={"15px"}
+      background="#fff"
+      borderRadius={"10px"}
+      padding={"1.2rem 0 1rem 0"}
+      boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
+    >
+      <Box
+        m={"0 0 0 1rem"}
+        fontWeight={700}
+        fontSize={["15px", "15px", "18px", "18px"]}
+        display={"flex"}
+        alignItems={"center"}
+        gap={"10px"}
+      >
+        <Text
+          fontSize={["25px", "25px", "30px", "32px", "35px"]}
+          style={{
+            background: "black",
+            color: "white",
+            padding: "10px",
+            borderRadius: "5px",
+          }}
+        >
+          <GiSecretBook />
+        </Text>
+        <Text>Quiz Topics</Text>
+      </Box>
+      <Divider border={"1.1px solid #5838fc"} marginBlock={"12px 2px"} />
       <Box
         padding={"20px 0"}
         display={"flex"}

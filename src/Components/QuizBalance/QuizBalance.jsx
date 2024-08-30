@@ -4,10 +4,14 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Alert,
   Box,
   Button,
   Divider,
   Fade,
+  List,
+  ListIcon,
+  ListItem,
   Tag,
   Text,
 } from "@chakra-ui/react";
@@ -20,6 +24,7 @@ import { useEffect, useRef, useState } from "react";
 import Lottie from "lottie-react";
 import scrollDown from "/src/Lottie/ScrollDown.json";
 import { PlansAndPricing } from "../Pricing/PlansAndPricing";
+import { MdCheckCircle } from "react-icons/md";
 
 export const QuizBalance = () => {
   const paymentHistory = useSelector((state) => state.paymentHistory);
@@ -415,6 +420,34 @@ export const QuizBalance = () => {
         )}
         <Box ref={quizBalanaceRef}>
           <PlansAndPricing />
+        </Box>
+
+        <Box mt={["20px", "25px", "30px", "30px"]}>
+          <Alert colorScheme="none">
+            <List
+              spacing={3}
+              fontWeight={[500, 500, 600, 600]}
+              fontSize={["14px", "15px", "16px", "17px"]}
+            >
+              <ListItem>
+                <ListIcon
+                  as={MdCheckCircle}
+                  color="purple.600"
+                  fontSize={"25px"}
+                />
+                Your quiz balance is deducted only when you attend a quiz
+              </ListItem>
+              <ListItem>
+                <ListIcon
+                  as={MdCheckCircle}
+                  color="purple.600"
+                  fontSize={"25px"}
+                />
+                Your quiz balance is carried forward to next grade if you buy
+                the <Text as={"span"}>₹1999</Text> plan
+              </ListItem>
+            </List>
+          </Alert>
         </Box>
       </Box>
     </Box>

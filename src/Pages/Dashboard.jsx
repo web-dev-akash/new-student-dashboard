@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../Redux/action";
 
 import { CarousalMain } from "../Components/Alerts/CarousalMain";
-import { Pricing } from "../Components/Pricing/Pricing";
+// import { Pricing } from "../Components/Pricing/Pricing";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
 import { OQAD } from "../Components/OQAD/OQAD";
 
@@ -125,7 +125,7 @@ export const Dashboard = ({ setTab }) => {
       <Box display={"grid"} gridTemplateColumns={"repeat(1, 1fr)"}>
         <CarousalMain setTab={setTab} />
         <WeeklyQuiz />
-        <Pricing setTab={setTab} />
+        {/* <Pricing setTab={setTab} /> */}
         <OQAD />
       </Box>
     </Box>
