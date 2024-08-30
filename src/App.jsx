@@ -13,8 +13,19 @@ import { Error } from "./Pages/Error";
 import { Heading, Text } from "@chakra-ui/react";
 import { Missed } from "./Pages/Missed";
 import { WeeklyWinners } from "./Pages/WeeklyWinners";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUrlQuery } from "./Redux/action";
 
 function App() {
+  const dispatch = useDispatch();
+  const query = new URL(window.location.href).hash;
+  useEffect(() => {
+    if (query) {
+      dispatch(setUrlQuery(query));
+    }
+  });
+
   return (
     <>
       <BrowserRouter>

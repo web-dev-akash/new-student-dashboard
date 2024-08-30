@@ -1,5 +1,6 @@
 import {
   GET_OQAD,
+  GET_URL_QUERY,
   GET_USER,
   GET_USER_ALERT,
   GET_USER_ERROR,
@@ -43,6 +44,7 @@ const initialState = {
   winners: {},
   paymentHistory: [],
   oqad: {},
+  query: "",
 };
 
 // const initialState = {
@@ -814,6 +816,12 @@ export const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         oqad: payload,
+      };
+    }
+    case GET_URL_QUERY: {
+      return {
+        ...state,
+        query: payload,
       };
     }
     default: {

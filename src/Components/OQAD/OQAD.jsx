@@ -9,7 +9,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,10 +26,12 @@ export const OQAD = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const oqad = useSelector((state) => state.oqad);
+  const query = useSelector((state) => state.query);
   const user = useSelector((state) => state.user);
   const [selectedOption, setSelectedOption] = useState(null);
   const [correct, setCorrect] = useState(false);
   const [tempLoading, setTempLoading] = useState(false);
+  const oqadRef = useRef(null);
 
   const options =
     oqad?.status === 200 || oqad?.status === 409
@@ -88,15 +90,23 @@ export const OQAD = () => {
     }
   };
 
-  useEffect(() => {}, [oqad.status]);
+  useEffect(() => {
+    if (query === "#oqad") {
+      oqadRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [oqad.status]);
 
   return (
     <Box
+      ref={oqadRef}
+      scrollMargin={"-100px !important"}
       id="oqad"
       mt={"15px"}
       bg={"white"}
       borderRadius={"10px"}
       shadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
+      minHeight={"400px"}
+      display={oqad.status !== 200 && oqad.status !== 409 ? "none" : "block"}
     >
       {correct && <ConfettiComponent />}
       <Box

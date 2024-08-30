@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { LuChevronLeftCircle, LuChevronRightCircle } from "react-icons/lu";
 import previewImage from "/src/assets/preview.jpg";
 import { Link } from "react-router-dom";
-import { GiSecretBook } from "react-icons/gi";
+import quizLogo from "/src/assets/quiz.png";
 
 const months = {
   0: "Jan",
@@ -293,15 +293,18 @@ export const WeeklyQuiz = () => {
         gap={"10px"}
       >
         <Text
-          fontSize={["25px", "25px", "30px", "32px", "35px"]}
           style={{
-            background: "black",
-            color: "white",
-            padding: "10px",
+            // border: "1px solid #5838fc",
+            background: "#5838fc60",
+            padding: "5px",
             borderRadius: "5px",
           }}
         >
-          <GiSecretBook />
+          <Image
+            src={quizLogo}
+            alt="📘"
+            width={["35px", "35px", "40px", "42px", "45px"]}
+          />
         </Text>
         <Text>Quiz Topics</Text>
       </Box>

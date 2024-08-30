@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   GET_OQAD,
+  GET_URL_QUERY,
   GET_USER,
   GET_USER_ALERT,
   GET_USER_ERROR,
@@ -68,6 +69,11 @@ export const setPaymentHistory = (payload) => ({
 
 export const setOqad = (payload) => ({
   type: GET_OQAD,
+  payload,
+});
+
+export const setUrlQuery = (payload) => ({
+  type: GET_URL_QUERY,
   payload,
 });
 
