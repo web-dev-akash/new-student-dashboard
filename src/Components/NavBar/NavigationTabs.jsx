@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
@@ -20,6 +20,7 @@ import { Report } from "../Report/Report";
 import { ContactUs } from "../ContactUs/ContactUs";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { QuizBalance } from "../QuizBalance/QuizBalance";
+import { useSelector } from "react-redux";
 
 const theme = extendTheme({
   fontFamily: {
@@ -28,6 +29,7 @@ const theme = extendTheme({
 });
 
 export const NavigationTabs = () => {
+  const query = useSelector((state) => state.query);
   const savedActiveTab = localStorage.getItem("wise_active_tab");
   const [activeTab, setActiveTab] = useState(
     savedActiveTab ? Number(savedActiveTab) : 0
@@ -37,6 +39,12 @@ export const NavigationTabs = () => {
     localStorage.setItem("wise_active_tab", newValue);
     setActiveTab(newValue);
   };
+
+  useEffect(() => {
+    if (query === "#buy_quiz") {
+      setActiveTab(4);
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

@@ -177,10 +177,9 @@ export const OQAD = () => {
                   fontSize={["13px", "13px", "15px", "16px"]}
                   transition={"0.2s ease-in-out"}
                   cursor={"pointer"}
-                  textTransform={"capitalize"}
                   textAlign={"center"}
                 >
-                  {option.toLowerCase()}
+                  {option}
                 </Text>
               </Box>
             ))}
@@ -261,14 +260,13 @@ export const OQAD = () => {
                   borderRadius={"10px"}
                   fontSize={["13px", "13px", "15px", "16px"]}
                   transition={"0.2s ease-in-out"}
-                  textTransform={"capitalize"}
                   textAlign={"center"}
                   display={"flex"}
                   justifyContent={"center"}
                   alignItems={"center"}
                   position={"relative"}
                 >
-                  <Text as={"span"}>{option.toLowerCase()}</Text>
+                  <Text as={"span"}>{option}</Text>
                   {oqad.selected === options[option] && oqad.answer ? (
                     <Lottie
                       animationData={tick}
