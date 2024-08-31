@@ -152,12 +152,14 @@ export const OQAD = () => {
             maxWidth={"400px"}
             margin={"0 auto"}
           >
-            <Image
-              border={"1px solid #cccccc80"}
-              borderRadius={"10px"}
-              src={oqad.image}
-              alt="Question Image"
-            />
+            {oqad.image && (
+              <Image
+                border={"1px solid #cccccc80"}
+                borderRadius={"10px"}
+                src={oqad.image}
+                alt="Question Image"
+              />
+            )}
           </Box>
           <SimpleGrid
             gridTemplateColumns={"repeat(2, 1fr)"}
@@ -229,12 +231,14 @@ export const OQAD = () => {
             maxWidth={"400px"}
             margin={"0 auto"}
           >
-            <Image
-              border={"1px solid #cccccc80"}
-              borderRadius={"10px"}
-              src={oqad.image}
-              alt="Question Image"
-            />
+            {oqad.image && (
+              <Image
+                border={"1px solid #cccccc80"}
+                borderRadius={"10px"}
+                src={oqad.image}
+                alt="Question Image"
+              />
+            )}
           </Box>
           <SimpleGrid
             gridTemplateColumns={"repeat(2, 1fr)"}
