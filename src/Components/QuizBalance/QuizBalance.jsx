@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
 import { FaRupeeSign } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../Loading/Loading";
 import { ClickBtn } from "../ClickBtn/ClickBtn";
 import { useEffect, useRef, useState } from "react";
@@ -25,10 +25,13 @@ import Lottie from "lottie-react";
 import scrollDown from "/src/Lottie/ScrollDown.json";
 import { PlansAndPricing } from "../Pricing/PlansAndPricing";
 import { MdCheckCircle } from "react-icons/md";
+import { getUserPaymentHistory } from "../../Redux/action";
 
 export const QuizBalance = () => {
+  const dispatch = useDispatch();
   const paymentHistory = useSelector((state) => state.paymentHistory);
   const quizzes = useSelector((state) => state.user.quizzes);
+  const user = useSelector((state) => state.user);
   const credits = useSelector((state) => state.user.credits);
   const [history, setHistory] = useState(null);
   const lottieRef = useRef(null);
@@ -96,7 +99,18 @@ export const QuizBalance = () => {
     });
   };
 
+  const handleScroll = () => {
+    if (panelRef.current?.scrollTop > 0) {
+      setIsTop(false);
+    } else {
+      setIsTop(true);
+    }
+  };
+
   useEffect(() => {
+    if (paymentHistory?.length === 0) {
+      dispatch(getUserPaymentHistory(user.id));
+    }
     const combinedArray = quizzes
       .map((quiz) => ({
         ...quiz,
@@ -114,15 +128,7 @@ export const QuizBalance = () => {
       );
     combinedArray.sort((a, b) => b.date - a.date);
     setHistory(combinedArray);
-  }, []);
-
-  const handleScroll = () => {
-    if (panelRef.current?.scrollTop > 0) {
-      setIsTop(false);
-    } else {
-      setIsTop(true);
-    }
-  };
+  }, [paymentHistory.length]);
 
   useEffect(() => {
     const panel = panelRef.current;

@@ -4,20 +4,27 @@ import "react-circular-progressbar/dist/styles.css";
 import incorrect from "/src/assets/incorrect.png";
 import { Table, TableContainer, Thead, Tr, Td, Tbody } from "@chakra-ui/react";
 import { AnimatedProgressProvider } from "./AnimatedProgressProvider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../Loading/Loading";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ClickBtn } from "../ClickBtn/ClickBtn";
+import { getReportDataNew } from "../../Redux/action";
 
 // eslint-disable-next-line no-unused-vars
 export const Report = () => {
+  const dispatch = useDispatch();
   const percentage = useSelector((state) => state.report.percentage);
   const sessions = useSelector((state) => state.report.sessions);
   const loading = useSelector((state) => state.loading);
+  const report = useSelector((state) => state.report);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
+    if (!report || !report.percentage || report.sessions?.length === 0) {
+      dispatch(getReportDataNew(user.email));
+    }
   }, []);
 
   if (loading || !sessions || sessions?.length === 0) {

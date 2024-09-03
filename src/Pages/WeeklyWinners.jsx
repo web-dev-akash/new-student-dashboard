@@ -10,7 +10,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { IoTrophySharp } from "react-icons/io5";
@@ -24,9 +24,12 @@ import place3 from "/src/assets/3rd.png";
 import place4 from "/src/assets/4th.png";
 import place5 from "/src/assets/5th.png";
 import { ConfettiComponent } from "../Components/ConfettiComponent/ConfettiComponent";
+import { getWinnersData } from "../Redux/action";
+import { Loading } from "../Components/Loading/Loading";
 
 export const WeeklyWinners = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const toast = useToast();
   const user = useSelector((state) => state.user);
   const winners = useSelector((state) => state.winners);
@@ -43,7 +46,7 @@ export const WeeklyWinners = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-    if (!alreadyShown) {
+    if (!alreadyShown && winners?.status === 200) {
       const arraysToCheck = [
         winners.topFiveUsers,
         winners.topFivePercentageUsers,
@@ -70,6 +73,16 @@ export const WeeklyWinners = () => {
       }
     }
   }, [isWinner]);
+
+  useEffect(() => {
+    if (!winners || !winners.status || winners.status !== 200) {
+      dispatch(getWinnersData(user.grade));
+    }
+  }, []);
+
+  if (!winners || !winners.status || winners.status !== 200) {
+    return <Loading />;
+  }
 
   return (
     <>

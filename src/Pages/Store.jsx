@@ -37,7 +37,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { GiTwoCoins } from "react-icons/gi";
 import preview from "../assets/preview.jpg";
-import { getError, getLoading } from "../Redux/action";
+import { getError, getLoading, getProducts } from "../Redux/action";
 import axios from "axios";
 import order_placed from "../assets/order_placed.gif";
 import { Loading } from "../Components/Loading/Loading";
@@ -109,6 +109,12 @@ export const Store = () => {
     return () => {
       panel?.removeEventListener("scroll", handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    if (products?.length === 0) {
+      dispatch(getProducts());
+    }
   }, []);
 
   if (tempMode === "thankyou") {

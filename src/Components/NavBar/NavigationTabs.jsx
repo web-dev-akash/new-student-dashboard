@@ -44,6 +44,9 @@ export const NavigationTabs = () => {
     if (query === "#buy_quiz") {
       setActiveTab(4);
     }
+    if (query === "#reports") {
+      setActiveTab(1);
+    }
   }, []);
 
   return (
