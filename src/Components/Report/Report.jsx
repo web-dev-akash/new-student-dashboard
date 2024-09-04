@@ -17,17 +17,16 @@ export const Report = () => {
   const percentage = useSelector((state) => state.report.percentage);
   const sessions = useSelector((state) => state.report.sessions);
   const loading = useSelector((state) => state.loading);
-  const report = useSelector((state) => state.report);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-    if (!report || !report.percentage || report.sessions?.length === 0) {
+    if (!sessions) {
       dispatch(getReportDataNew(user.email));
     }
   }, []);
 
-  if (loading || !sessions || sessions?.length === 0) {
+  if (loading || !sessions) {
     return <Loading />;
   }
 

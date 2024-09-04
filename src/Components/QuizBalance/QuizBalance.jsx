@@ -29,7 +29,10 @@ import { getUserPaymentHistory } from "../../Redux/action";
 
 export const QuizBalance = () => {
   const dispatch = useDispatch();
-  const paymentHistory = useSelector((state) => state.paymentHistory);
+  const paymentHistory = useSelector((state) => state.paymentHistory.data);
+  const paymentHistoryStatus = useSelector(
+    (state) => state.paymentHistory.status
+  );
   const quizzes = useSelector((state) => state.user.quizzes);
   const user = useSelector((state) => state.user);
   const credits = useSelector((state) => state.user.credits);
@@ -108,15 +111,19 @@ export const QuizBalance = () => {
   };
 
   useEffect(() => {
-    if (paymentHistory?.length === 0) {
+    if (paymentHistoryStatus === 0) {
       dispatch(getUserPaymentHistory(user.id));
     }
+  }, []);
+
+  useEffect(() => {
     const combinedArray = quizzes
       .map((quiz) => ({
         ...quiz,
-        date: quiz.Session_Date_Time
-          ? new Date(quiz.Session_Date_Time)
-          : new Date(quiz.createdTime),
+        date:
+          quiz.Session_Date_Time !== ""
+            ? new Date(quiz.Session_Date_Time)
+            : new Date(quiz.createdTime),
         type: "quiz",
       }))
       .concat(
@@ -128,7 +135,7 @@ export const QuizBalance = () => {
       );
     combinedArray.sort((a, b) => b.date - a.date);
     setHistory(combinedArray);
-  }, [paymentHistory.length]);
+  }, [paymentHistory]);
 
   useEffect(() => {
     const panel = panelRef.current;

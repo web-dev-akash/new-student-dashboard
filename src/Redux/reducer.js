@@ -42,7 +42,10 @@ const initialState = {
   alert: [],
   report: {},
   winners: {},
-  paymentHistory: [],
+  paymentHistory: {
+    status: 0,
+    data: [],
+  },
   oqad: {},
   query: "",
 };

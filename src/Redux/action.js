@@ -763,9 +763,12 @@ export const getUserPaymentHistory = (contactId) => async (dispatch) => {
         },
       }
     );
-    if (res.data.status === 200) {
-      dispatch(setPaymentHistory(res.data.paymentHistory));
-    }
+    dispatch(
+      setPaymentHistory({
+        status: res.data.status,
+        data: res.data.status === 200 ? res.data.paymentHistory : [],
+      })
+    );
   } catch (error) {
     console.log("Error :", error);
   }
