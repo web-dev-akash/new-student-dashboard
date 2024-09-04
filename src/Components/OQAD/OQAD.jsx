@@ -161,27 +161,25 @@ export const OQAD = () => {
               />
             )}
           </Box>
-          <SimpleGrid
-            gridTemplateColumns={"repeat(2, 1fr)"}
-            gap={4}
-            padding={"0 15px"}
-          >
+          <SimpleGrid columns={2} spacing={4} padding={"0 15px"}>
             {oqad.options.map((option) => (
-              <Box key={option}>
-                <Text
-                  onClick={() => setSelectedOption(option)}
-                  bg={selectedOption === option ? "#5838fc40" : "white"}
-                  border={"1px solid #cccccc99"}
-                  padding={"10px"}
-                  borderRadius={"10px"}
-                  fontSize={["13px", "13px", "15px", "16px"]}
-                  transition={"0.2s ease-in-out"}
-                  cursor={"pointer"}
-                  textAlign={"center"}
-                >
-                  {option}
-                </Text>
-              </Box>
+              <Text
+                key={option}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                onClick={() => setSelectedOption(option)}
+                bg={selectedOption === option ? "#5838fc40" : "white"}
+                border={"1px solid #cccccc99"}
+                padding={"10px"}
+                borderRadius={"10px"}
+                fontSize={["13px", "13px", "15px", "16px"]}
+                transition={"0.2s ease-in-out"}
+                cursor={"pointer"}
+                textAlign={"center"}
+              >
+                {option}
+              </Text>
             ))}
           </SimpleGrid>
           <Flex justify={"space-between"} mt={6} padding={"0 15px"} gap={4}>
@@ -245,29 +243,49 @@ export const OQAD = () => {
             padding={"0 15px"}
           >
             {oqad.options.map((option) => (
-              <Box key={option}>
-                <Box
-                  onClick={() => setSelectedOption(option)}
-                  bg={
-                    oqad.selected === options[option]
-                      ? oqad.answer
-                        ? "#B9F5D0"
-                        : "#FED7D7"
-                      : "white"
-                  }
-                  border={"1px solid #cccccc99"}
-                  padding={"10px"}
-                  borderRadius={"10px"}
-                  fontSize={["13px", "13px", "15px", "16px"]}
-                  transition={"0.2s ease-in-out"}
-                  textAlign={"center"}
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  position={"relative"}
-                >
-                  <Text as={"span"}>{option}</Text>
-                  {oqad.selected === options[option] && oqad.answer ? (
+              <Box
+                key={option}
+                onClick={() => setSelectedOption(option)}
+                bg={
+                  oqad.selected === options[option]
+                    ? oqad.answer
+                      ? "#B9F5D0"
+                      : "#FED7D7"
+                    : "white"
+                }
+                border={"1px solid #cccccc99"}
+                padding={"10px"}
+                borderRadius={"10px"}
+                fontSize={["13px", "13px", "15px", "16px"]}
+                transition={"0.2s ease-in-out"}
+                textAlign={"center"}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                position={"relative"}
+              >
+                <Text as={"span"}>{option}</Text>
+                {oqad.selected === options[option] && oqad.answer ? (
+                  <Lottie
+                    animationData={tick}
+                    style={{
+                      width: "30px",
+                      position: "absolute",
+                      right: "2%",
+                    }}
+                  />
+                ) : oqad.selected === options[option] && !oqad.answer ? (
+                  <Lottie
+                    animationData={cross}
+                    style={{
+                      width: "35px",
+                      position: "absolute",
+                      right: "2%",
+                    }}
+                  />
+                ) : (
+                  !oqad.answer &&
+                  options[option] === oqad.correctOption && (
                     <Lottie
                       animationData={tick}
                       style={{
@@ -276,29 +294,8 @@ export const OQAD = () => {
                         right: "2%",
                       }}
                     />
-                  ) : oqad.selected === options[option] && !oqad.answer ? (
-                    <Lottie
-                      animationData={cross}
-                      style={{
-                        width: "35px",
-                        position: "absolute",
-                        right: "2%",
-                      }}
-                    />
-                  ) : (
-                    !oqad.answer &&
-                    options[option] === oqad.correctOption && (
-                      <Lottie
-                        animationData={tick}
-                        style={{
-                          width: "30px",
-                          position: "absolute",
-                          right: "2%",
-                        }}
-                      />
-                    )
-                  )}
-                </Box>
+                  )
+                )}
               </Box>
             ))}
           </SimpleGrid>
