@@ -701,9 +701,12 @@ export const getOrders = (contactId) => async (dispatch) => {
       },
     };
     const res = await axios.post(url, { contactId: contactId }, config);
-    if (res.data.status === 200) {
-      dispatch(setOrders(res.data.orders));
-    }
+    dispatch(
+      setOrders({
+        status: res.data.status,
+        data: res.data.status === 200 ? res.data.orders : [],
+      })
+    );
   } catch (error) {
     console.log("Error :", error);
   }

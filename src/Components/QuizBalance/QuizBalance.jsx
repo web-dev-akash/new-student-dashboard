@@ -146,7 +146,9 @@ export const QuizBalance = () => {
     };
   }, [history]);
 
-  if (!quizzes || !quizzes.length) {
+  console.log(history);
+
+  if (!history) {
     return <Loading />;
   }
 
@@ -209,7 +211,7 @@ export const QuizBalance = () => {
           borderRadius={"2px"}
         />
 
-        {history && (
+        {history?.length > 0 && (
           <Accordion allowToggle>
             <AccordionItem
               border={"none"}

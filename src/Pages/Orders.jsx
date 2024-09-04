@@ -8,12 +8,13 @@ import { FaGifts } from "react-icons/fa";
 
 export const Orders = () => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.orders);
+  const orders = useSelector((state) => state.orders.data);
+  const orderStatus = useSelector((state) => state.orders.status);
   const { id } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (orders?.length === 0) {
+    if (orderStatus === 0 || orderStatus >= 400) {
       dispatch(getOrders(id));
     }
   }, []);

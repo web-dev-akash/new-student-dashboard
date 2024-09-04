@@ -38,7 +38,10 @@ const initialState = {
   },
   mode: "",
   products: [],
-  orders: [],
+  orders: {
+    status: 0,
+    data: [],
+  },
   alert: [],
   report: {},
   winners: {},

@@ -21,7 +21,17 @@ import { UserSystemStatics } from "../MoreActions/UserSystemStatics";
 import { RiCloseLine } from "react-icons/ri";
 import { ListItemContent } from "@mui/joy";
 import Compressor from "compressorjs";
-import { setMode } from "../../Redux/action";
+import {
+  setAlert,
+  setMode,
+  setOqad,
+  setOrders,
+  setPaymentHistory,
+  setReport,
+  setUrlQuery,
+  setUser,
+  setWinners,
+} from "../../Redux/action";
 import { Link } from "react-router-dom";
 export const ProfileAvatar = () => {
   const studentName = useSelector((state) => state.user.studentName);
@@ -72,6 +82,44 @@ export const ProfileAvatar = () => {
   const handleUserLogout = async () => {
     localStorage.removeItem("wise_email");
     localStorage.removeItem("wise_pass");
+    dispatch(
+      setUser({
+        email: "",
+        phone: "",
+        name: "",
+        credits: 0,
+        coins: 0,
+        grade: 0,
+        id: "",
+        studentName: "",
+        address: null,
+        referrals: [],
+        quizzes: [],
+        age: 0,
+        category: "",
+        coinsHistory: [],
+        weeklyQuizzes: [],
+        newUser: false,
+        difficulty: false,
+      })
+    );
+    dispatch(
+      setOrders({
+        status: 0,
+        data: [],
+      })
+    );
+    dispatch(setAlert([]));
+    dispatch(setReport({}));
+    dispatch(setWinners({}));
+    dispatch(
+      setPaymentHistory({
+        status: 0,
+        data: [],
+      })
+    );
+    dispatch(setOqad({}));
+    dispatch(setUrlQuery(""));
     dispatch(setMode(""));
   };
 
