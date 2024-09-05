@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { Box, Fade } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { Box } from "@chakra-ui/react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setAlert } from "../Redux/action";
@@ -113,16 +113,6 @@ export const Dashboard = ({ setTab }) => {
       timersRef.current.forEach((timer) => clearTimeout(timer));
     };
   }, [alert]);
-
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      setShowStory(true);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
 
   return (
     <Box
