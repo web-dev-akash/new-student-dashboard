@@ -33,7 +33,7 @@ export const CarousalMain = ({ setTab }) => {
         showStatus={false}
         showThumbs={false}
         centerSlidePercentage={100}
-        interval={3000}
+        interval={4500}
         stopOnHover={true}
       >
         {alert.length > 0
