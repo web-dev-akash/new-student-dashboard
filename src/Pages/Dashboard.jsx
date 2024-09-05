@@ -10,7 +10,6 @@ import { CarousalMain } from "../Components/Alerts/CarousalMain";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
 import { OQAD } from "../Components/OQAD/OQAD";
 // import { StoriesComponent } from "../Components/Stories/StoriesComponent";
-// import { Grow } from "@mui/material";
 
 export const Dashboard = ({ setTab }) => {
   const dispatch = useDispatch();
@@ -130,7 +129,7 @@ export const Dashboard = ({ setTab }) => {
         <WeeklyQuiz />
         {/* <Pricing setTab={setTab} /> */}
         <OQAD />
-        {/* <Fade in={showStory}>
+        {/* <Fade in={showStory} unmountOnExit >
           <StoriesComponent showStory={showStory} setShowStory={setShowStory} />
         </Fade> */}
       </Box>
