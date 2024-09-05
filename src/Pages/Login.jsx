@@ -47,6 +47,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const mode = useSelector((state) => state.mode);
+  const query = useSelector((state) => state.query);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
   const [loginData, setLoginData] = useState({
@@ -131,6 +132,9 @@ export const Login = () => {
 
   if (mode === "nouser") {
     return <Navigate to={"/nouser"} />;
+  }
+  if (query === "/test-series" && mode === "user") {
+    return <Navigate to={"/test-series"} />;
   }
 
   if (mode === "user") {

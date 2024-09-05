@@ -38,8 +38,11 @@ export const TestSeries = () => {
             fontWeight={500}
           >
             Introducing Test Series & Doubt Sessions on Maths, Science and
-            English of worth ₹1000 at just ₹500. Buy now & get 50% OFF. Offer
-            valid till 7th August
+            English of worth{" "}
+            <Text as={"span"} textDecoration={"line-through"}>
+              ₹1000
+            </Text>{" "}
+            at just ₹500. Buy now & get 50% OFF. Offer valid till 7th September
           </Text>
           <Button
             fontSize={"13px"}

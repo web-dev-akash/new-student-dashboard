@@ -21,9 +21,15 @@ import { TestSeriesPlans } from "./Pages/TestSeriesPlans";
 function App() {
   const dispatch = useDispatch();
   const query = new URL(window.location.href).hash;
+  const path = new URL(window.location.href).pathname;
+
+  console.log("Path is ", path);
+
   useEffect(() => {
     if (query) {
       dispatch(setUrlQuery(query));
+    } else if (path) {
+      dispatch(setUrlQuery(path));
     }
   });
 

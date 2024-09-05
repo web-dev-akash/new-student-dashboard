@@ -211,7 +211,7 @@ export const TestSeriesPlans = () => {
                 fontSize={["13px", "13px", "14px", "15px", "16px"]}
                 mb={"15px"}
               >
-                Validity : 9th Aug - 15th Oct
+                Validity : 9th Sep - 15th Oct
               </Text>
               <Button
                 width={"100%"}
@@ -329,7 +329,7 @@ export const TestSeriesPlans = () => {
                   fontWeight={600}
                   fontSize={["13px", "13px", "14px", "15px", "16px"]}
                 >
-                  Validity : 9th Aug - 15th Oct
+                  Validity : 9th Sep - 15th Oct
                 </Text>
               </Box>
               <Button
@@ -449,7 +449,7 @@ export const TestSeriesPlans = () => {
                   fontWeight={600}
                   fontSize={["13px", "13px", "14px", "15px", "16px"]}
                 >
-                  Validity : 9th Aug - 15th Oct
+                  Validity : 9th Sep - 15th Oct
                 </Text>
               </Box>
               <Button
