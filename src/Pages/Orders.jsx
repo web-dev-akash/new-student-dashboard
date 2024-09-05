@@ -5,6 +5,7 @@ import { getOrders } from "../Redux/action";
 import preview from "../assets/preview.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGifts } from "react-icons/fa";
+import logo from "/images/logo.png";
 
 export const Orders = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export const Orders = () => {
         >
           <header>
             <Image
-              src="/images/logo.png"
+              src={logo}
               alt="Wisechamps"
               width={["140px", "140px", "170px", "170px"]}
               onClick={() => navigate("/")}

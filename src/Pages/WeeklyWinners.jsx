@@ -26,6 +26,7 @@ import place5 from "/src/assets/5th.png";
 import { ConfettiComponent } from "../Components/ConfettiComponent/ConfettiComponent";
 import { getWinnersData } from "../Redux/action";
 import { Loading } from "../Components/Loading/Loading";
+import logo from "/images/logo.png";
 
 export const WeeklyWinners = () => {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ export const WeeklyWinners = () => {
         >
           <header>
             <Image
-              src="/images/logo.png"
+              src={logo}
               alt="Wisechamps"
               width={["140px", "140px", "170px", "170px"]}
               onClick={() => navigate("/")}

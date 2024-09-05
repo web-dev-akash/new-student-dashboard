@@ -16,6 +16,7 @@ import { WeeklyWinners } from "./Pages/WeeklyWinners";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUrlQuery } from "./Redux/action";
+import { TestSeriesPlans } from "./Pages/TestSeriesPlans";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,16 @@ function App() {
               <PrivateRouter>
                 <Box id={"preset"}>
                   <Home />
+                </Box>
+              </PrivateRouter>
+            }
+          ></Route>
+          <Route
+            path="/test-series"
+            element={
+              <PrivateRouter>
+                <Box id={"preset"}>
+                  <TestSeriesPlans />
                 </Box>
               </PrivateRouter>
             }

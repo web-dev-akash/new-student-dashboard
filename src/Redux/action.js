@@ -586,6 +586,9 @@ export const fetchUser = (email) => async (dispatch) => {
     };
     const res = await axios.post(url, { email }, config);
     const alertObj = [];
+
+    alertObj.push("test");
+
     if (res.data.credits === 0) {
       alertObj.push("credits");
     }

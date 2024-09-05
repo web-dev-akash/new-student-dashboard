@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { Box } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { Box, Fade } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setAlert } from "../Redux/action";
@@ -9,9 +9,12 @@ import { CarousalMain } from "../Components/Alerts/CarousalMain";
 // import { Pricing } from "../Components/Pricing/Pricing";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
 import { OQAD } from "../Components/OQAD/OQAD";
+// import { StoriesComponent } from "../Components/Stories/StoriesComponent";
+// import { Grow } from "@mui/material";
 
 export const Dashboard = ({ setTab }) => {
   const dispatch = useDispatch();
+  // const [showStory, setShowStory] = useState(false);
   const weeklyQuizzes = useSelector((state) => state.user.weeklyQuizzes);
   const alert = useSelector((state) => state.alert);
   const newUser = useSelector((state) => state.user.newUser);
@@ -111,6 +114,16 @@ export const Dashboard = ({ setTab }) => {
     };
   }, [alert]);
 
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      setShowStory(true);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
     <Box
       className="dashboard"
@@ -127,6 +140,9 @@ export const Dashboard = ({ setTab }) => {
         <WeeklyQuiz />
         {/* <Pricing setTab={setTab} /> */}
         <OQAD />
+        {/* <Fade in={showStory}>
+          <StoriesComponent showStory={showStory} setShowStory={setShowStory} />
+        </Fade> */}
       </Box>
     </Box>
   );
