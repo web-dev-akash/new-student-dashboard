@@ -1,5 +1,6 @@
 import {
   GET_OQAD,
+  GET_TEST_SERIES,
   GET_URL_QUERY,
   GET_USER,
   GET_USER_ALERT,
@@ -35,6 +36,11 @@ const initialState = {
     weeklyQuizzes: [],
     newUser: false,
     difficulty: false,
+    testSeries: {
+      Maths: false,
+      Science: false,
+      English: false,
+    },
   },
   mode: "",
   products: [],
@@ -51,6 +57,20 @@ const initialState = {
   },
   oqad: {},
   query: "",
+  testSeries: {
+    Maths: {
+      status: 0,
+      data: [],
+    },
+    English: {
+      status: 0,
+      data: [],
+    },
+    Science: {
+      status: 0,
+      data: [],
+    },
+  },
 };
 
 // const initialState = {
@@ -828,6 +848,12 @@ export const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         query: payload,
+      };
+    }
+    case GET_TEST_SERIES: {
+      return {
+        ...state,
+        testSeries: payload,
       };
     }
     default: {

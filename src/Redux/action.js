@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   GET_OQAD,
+  GET_TEST_SERIES,
   GET_URL_QUERY,
   GET_USER,
   GET_USER_ALERT,
@@ -74,6 +75,11 @@ export const setOqad = (payload) => ({
 
 export const setUrlQuery = (payload) => ({
   type: GET_URL_QUERY,
+  payload,
+});
+
+export const setTestSeriesData = (payload) => ({
+  type: GET_TEST_SERIES,
   payload,
 });
 
@@ -637,6 +643,11 @@ export const fetchUser = (email) => async (dispatch) => {
             weeklyQuizzes: res.data.weeklyQuizzes,
             newUser: res.data.newUser,
             difficulty: res.data.difficulty,
+            testSeries: {
+              Maths: res.data.testSeries.Maths,
+              Science: res.data.testSeries.Science,
+              English: res.data.testSeries.English,
+            },
           })
         );
         dispatch(setOrders(dummyUserData.orders));
@@ -664,6 +675,11 @@ export const fetchUser = (email) => async (dispatch) => {
           weeklyQuizzes: res.data.weeklyQuizzes,
           newUser: res.data.newUser,
           difficulty: res.data.difficulty,
+          testSeries: {
+            Maths: res.data.testSeries.Maths,
+            Science: res.data.testSeries.Science,
+            English: res.data.testSeries.English,
+          },
         })
       );
     }
@@ -854,5 +870,26 @@ export const updateDifficultyLevel =
       return {
         status: error.status || 500,
       };
+    }
+  };
+
+export const getTestSeriesByGrade =
+  (data, grade, subject) => async (dispatch) => {
+    try {
+      const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+      const url = `https://backend.wisechamps.com/student/test-series`;
+      const res = await axios.post(
+        url,
+        { grade, subject },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      dispatch(setTestSeriesData({ ...data, [subject]: res.data }));
+    } catch (error) {
+      console.log("Error :", error);
     }
   };

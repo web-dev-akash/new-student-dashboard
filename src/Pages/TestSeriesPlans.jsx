@@ -202,7 +202,7 @@ export const TestSeriesPlans = () => {
                     whiteSpace={"nowrap"}
                     fontSize={["13px", "13px", "14px", "15px", "16px"]}
                   >
-                    15 Doubt Session
+                    10 Doubt Session
                   </Text>
                 </Box>
               </Box>
@@ -315,7 +315,7 @@ export const TestSeriesPlans = () => {
                     whiteSpace={"nowrap"}
                     fontSize={["13px", "13px", "14px", "15px", "16px"]}
                   >
-                    15 Doubt Session
+                    10 Doubt Session
                   </Text>
                 </Box>
               </Box>
@@ -435,7 +435,7 @@ export const TestSeriesPlans = () => {
                     whiteSpace={"nowrap"}
                     fontSize={["13px", "13px", "14px", "15px", "16px"]}
                   >
-                    15 Doubt Session
+                    10 Doubt Session
                   </Text>
                 </Box>
               </Box>
