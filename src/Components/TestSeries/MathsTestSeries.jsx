@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { LuChevronLeftCircle, LuChevronRightCircle } from "react-icons/lu";
 import previewImage from "/src/assets/preview.jpg";
 import { Link } from "react-router-dom";
-import quizLogo from "/src/assets/quiz.png";
+import testLogo from "/src/assets/test_logo.gif";
 
 const months = {
   0: "January",
@@ -56,22 +56,23 @@ export const MathsTestSeries = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const sessionDateOnly = new Date(
-      sessionDate.getFullYear(),
-      sessionDate.getMonth(),
-      sessionDate.getDate()
-    );
-    const todayDateOnly = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
+    const dayOfWeek = today.getDay();
+    const startOfWeek = new Date(today);
+    const endOfWeek = new Date(today);
+
+    startOfWeek.setDate(
+      today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1)
     );
 
-    if (sessionDateOnly < todayDateOnly) {
+    startOfWeek.setHours(0, 0, 0, 0);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    if (sessionDate < startOfWeek) {
       return "linkedin";
     }
 
-    if (sessionDateOnly > todayDateOnly) {
+    if (sessionDate > endOfWeek) {
       return "purple";
     }
 
@@ -88,16 +89,23 @@ export const MathsTestSeries = () => {
       const currentItem = itemRefs.current[prevIndex]?.current;
       const itemWidth = currentItem ? currentItem.clientWidth : 0;
       const containerWidth = container ? container.clientWidth : 0;
+
       const maxScrollLeft = container
         ? container.scrollWidth - containerWidth
         : 0;
-      const newScrollLeft = (prevIndex + 1) * itemWidth;
+
+      const newScrollLeft = prevIndex * itemWidth;
+
+      if (index >= mathsTestSeries.length - 1) {
+        return mathsTestSeries.length - 1;
+      }
+
       if (newScrollLeft > maxScrollLeft) {
         setIsAtEnd(true);
         return prevIndex;
-      } else {
-        return prevIndex + 1;
       }
+
+      return prevIndex + 1;
     });
   };
 
@@ -123,38 +131,33 @@ export const MathsTestSeries = () => {
       mt={"15px"}
       background="#fff"
       borderRadius={"10px"}
-      padding={"1.2rem 0 1rem 0"}
+      padding={"10px 0"}
       boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
     >
       <Box
-        m={"0 0 0 1rem"}
         fontWeight={700}
         fontSize={["15px", "15px", "18px", "18px"]}
         display={"flex"}
         alignItems={"center"}
-        gap={"10px"}
+        m={"0 0 0 10px"}
+        gap={"5px"}
       >
-        <Text
-          style={{
-            // border: "1px solid #5838fc",
-            background: "#5838fc60",
-            padding: "5px",
-            borderRadius: "5px",
-          }}
-        >
+        <Text>
           <Image
-            src={quizLogo}
+            mixBlendMode={"multiply"}
+            src={testLogo}
             alt="📘"
-            width={["35px", "35px", "40px", "42px", "45px"]}
+            width={["55px", "55px", "60px", "65px", "70px"]}
           />
         </Text>
         <Text>Maths Test Series</Text>
       </Box>
-      <Divider border={"1.1px solid #5838fc"} marginBlock={"12px 2px"} />
+      <Divider border={"1.1px solid #5838fc"} marginBlock={"5px 2px"} />
       <Box
-        padding={"20px 0"}
+        padding={"20px"}
         display={"flex"}
         alignItems={"center"}
+        justifyContent={"space-evenly"}
         gap={["12px", "12px", "15px", "15px"]}
         flexWrap={"nowrap"}
         overflowX={"auto"}
@@ -165,7 +168,17 @@ export const MathsTestSeries = () => {
         id="quizScroller"
       >
         {mathsTestSeries.map(
-          ({ Activate_Date, Survey_Link, id, Test_Image, Name }, idx) => {
+          (
+            {
+              Activate_Date,
+              Survey_Link,
+              id,
+              Test_Image,
+              Name,
+              Recording_Link,
+            },
+            idx
+          ) => {
             if (!itemRefs.current[idx]) {
               itemRefs.current[idx] = React.createRef();
             }
@@ -182,7 +195,7 @@ export const MathsTestSeries = () => {
                 position={"relative"}
                 boxShadow={
                   getColorScheme(Activate_Date) === "whatsapp"
-                    ? "0 0 0 2px rgba(218,102,123,1), 8px 8px 0 0 rgba(218,102,123,1)"
+                    ? "0 0 0 2px #8B80F9, 8px 8px 0 0 #8B80F9"
                     : "rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"
                 }
               >
@@ -214,8 +227,9 @@ export const MathsTestSeries = () => {
                 </Box>
                 <Box position={"relative"}>
                   <Image
-                    src={Test_Image ? Test_Image : previewImage}
-                    alt=""
+                    src={Test_Image}
+                    fallbackSrc={previewImage}
+                    alt={Name}
                     width={"100%"}
                     maxWidth={"100%"}
                     maxHeight={Test_Image ? "180px" : "172.5px"}
@@ -242,36 +256,53 @@ export const MathsTestSeries = () => {
                   )}
                 </Box>
 
-                <Box
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"space-between"}
-                  gap={"10px"}
+                <Link
+                  style={{
+                    width: "100%",
+                  }}
+                  to={`/dashboard/missed?link=${encodeURIComponent(
+                    Survey_Link
+                  )}`}
                 >
-                  {
-                    <Link
-                      style={{
-                        width: "100%",
-                      }}
-                      to={`/dashboard/missed?link=${encodeURIComponent(
-                        Survey_Link
-                      )}`}
+                  <Button
+                    id={
+                      Survey_Link &&
+                      getSessionStatus(Activate_Date) === "active"
+                        ? "submit-btn"
+                        : "submit-btn-active"
+                    }
+                    fontSize={"12px"}
+                    loadingText={""}
+                    isDisabled={
+                      !Survey_Link ||
+                      getSessionStatus(Activate_Date) === "inactive"
+                    }
+                    padding={"0 !important"}
+                  >
+                    Take Mock Test
+                  </Button>
+                </Link>
+
+                {Recording_Link && (
+                  <Link
+                    style={{
+                      width: "100%",
+                    }}
+                    to={Recording_Link}
+                    target="_blank"
+                  >
+                    <Button
+                      id={"submit-btn"}
+                      fontSize={"12px"}
+                      loadingText={""}
+                      isDisabled={!Recording_Link}
+                      padding={"0 !important"}
+                      mt={"8px"}
                     >
-                      <Button
-                        id={Survey_Link ? "submit-btn" : "submit-btn-active"}
-                        fontSize={"12px"}
-                        loadingText={""}
-                        isDisabled={
-                          !Survey_Link ||
-                          getSessionStatus(Activate_Date) === "inactive"
-                        }
-                        padding={"0 !important"}
-                      >
-                        Take Mock Test
-                      </Button>
-                    </Link>
-                  }
-                </Box>
+                      Doubt Session Recording
+                    </Button>
+                  </Link>
+                )}
               </Box>
             );
           }

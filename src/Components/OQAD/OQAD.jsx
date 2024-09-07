@@ -10,7 +10,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import { BsPatchQuestionFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import tick from "/src/Lottie/correct.json";
@@ -21,6 +20,7 @@ import {
   captureDailyQuestionAttempt,
   getDailyQuestion,
 } from "../../Redux/action";
+import questionLogo from "/src/assets/question.gif";
 
 export const OQAD = () => {
   const dispatch = useDispatch();
@@ -111,26 +111,23 @@ export const OQAD = () => {
       {correct && <ConfettiComponent />}
       <Box
         fontWeight={700}
-        padding={"1.2rem 0 0 1.2rem"}
+        padding={"10px 0 0 5px"}
         fontSize={["15px", "15px", "18px", "18px"]}
         display={"flex"}
         alignItems={"center"}
-        gap={"10px"}
+        gap={"5px"}
       >
-        <Text
-          fontSize={["25px", "25px", "30px", "32px", "35px"]}
-          style={{
-            background: "black",
-            color: "white",
-            padding: "10px",
-            borderRadius: "5px",
-          }}
-        >
-          <BsPatchQuestionFill />
+        <Text>
+          <Image
+            mixBlendMode={"multiply"}
+            src={questionLogo}
+            alt="📘"
+            width={["60px", "60px", "65px", "70px", "75px"]}
+          />
         </Text>
         <Text>Question of the Day</Text>
       </Box>
-      <Divider border={"1.1px solid #5838fc"} marginBlock={"12px 20px"} />
+      <Divider border={"1.1px solid #5838fc"} marginBlock={"5px 20px"} />
       {oqad.status === 200 ? (
         <Box p={"0 10px 30px"}>
           <Box

@@ -1,10 +1,15 @@
 import { Box, ChakraProvider, Image, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 export const Missed = () => {
   const link = new URLSearchParams(window.location.search).get("link");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   return (
     <ChakraProvider disableGlobalStyle>
@@ -48,14 +53,21 @@ export const Missed = () => {
             </Text>
           </Link>
         </Box>
-        <Box minHeight={"110vh"} mt={"-40px"} height={"100%"}>
+        <Box
+          minHeight={"100vh"}
+          mt={"-40px"}
+          height={"100%"}
+          overflow={"hidden"}
+          width={"100%"}
+          display={"flex"}
+          justifyContent={"center"}
+        >
           <iframe
             id="vevox"
             name="vevox"
             style={{
-              minHeight: "110vh",
-              minWidth: "100vw",
-              maxWidth: "100%",
+              minHeight: "calc(100vh + 40px)",
+              maxWidth: "1275px",
             }}
             width={"100%"}
             height={"100%"}

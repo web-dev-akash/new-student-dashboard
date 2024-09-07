@@ -380,6 +380,11 @@ const initialState = {
 //     ],
 //     newUser: true,
 //     difficulty: true,
+//     testSeries: {
+//       Maths: true,
+//       Science: true,
+//       English: true,
+//     },
 //   },
 //   mode: "user",
 //   products: [
@@ -443,35 +448,41 @@ const initialState = {
 //       Product_Stock: 20,
 //     },
 //   ],
-//   orders: [
-//     {
-//       Order_Status: "Placed",
-//       Expected_Delivery_Date: "",
-//       Product_Name: "Colored Pen Set of 5",
-//       Order_Id: "4878003000018753001",
-//       Product_Image_URL: "https://m.media-amazon.com/images/I/81aTYb7hYvL.jpg",
-//       Order_Date: "2024-04-02",
-//       Unit_Price: 200,
-//     },
-//     {
-//       Order_Status: "Processed",
-//       Expected_Delivery_Date: "2024-04-13",
-//       Product_Name: "Product 1",
-//       Order_Id: "4878003000018753002",
-//       Product_Image_URL: "https://m.media-amazon.com/images/I/81aTYb7hYvL.jpg",
-//       Order_Date: "2024-04-02",
-//       Unit_Price: 200,
-//     },
-//     {
-//       Order_Status: "Delivered",
-//       Expected_Delivery_Date: "2024-04-08",
-//       Product_Name: "Live Quiz Annual Subscription Basic",
-//       Order_Id: "4878003000018753003",
-//       Product_Image_URL: "https://m.media-amazon.com/images/I/41mX1tTEFmL.jpg",
-//       Order_Date: "2024-04-01",
-//       Unit_Price: 1500,
-//     },
-//   ],
+//   orders: {
+//     status: 0,
+//     data: [
+//       {
+//         Order_Status: "Placed",
+//         Expected_Delivery_Date: "",
+//         Product_Name: "Colored Pen Set of 5",
+//         Order_Id: "4878003000018753001",
+//         Product_Image_URL:
+//           "https://m.media-amazon.com/images/I/81aTYb7hYvL.jpg",
+//         Order_Date: "2024-04-02",
+//         Unit_Price: 200,
+//       },
+//       {
+//         Order_Status: "Processed",
+//         Expected_Delivery_Date: "2024-04-13",
+//         Product_Name: "Product 1",
+//         Order_Id: "4878003000018753002",
+//         Product_Image_URL:
+//           "https://m.media-amazon.com/images/I/81aTYb7hYvL.jpg",
+//         Order_Date: "2024-04-02",
+//         Unit_Price: 200,
+//       },
+//       {
+//         Order_Status: "Delivered",
+//         Expected_Delivery_Date: "2024-04-08",
+//         Product_Name: "Live Quiz Annual Subscription Basic",
+//         Order_Id: "4878003000018753003",
+//         Product_Image_URL:
+//           "https://m.media-amazon.com/images/I/41mX1tTEFmL.jpg",
+//         Order_Date: "2024-04-01",
+//         Unit_Price: 1500,
+//       },
+//     ],
+//   },
 //   report: {
 //     mode: "user",
 //     name: "",
@@ -544,7 +555,7 @@ const initialState = {
 //       },
 //     ],
 //   },
-//   alert: ["special"],
+//   alert: ["test"],
 //   winners: {
 //     status: 200,
 //     topFiveUsers: [
@@ -733,32 +744,106 @@ const initialState = {
 //       },
 //     ],
 //   },
-//   paymentHistory: [
-//     {
-//       Payment_Date: "2024-04-12",
-//       Credits: 200,
-//       Amount: 1999,
-//       id: "4878003000015099001",
-//     },
-//     {
-//       Payment_Date: "2024-04-10",
-//       Credits: 1,
-//       Amount: 39,
-//       id: "4878003000008932116",
-//     },
-//     {
-//       Payment_Date: "2024-04-15",
-//       Credits: 1,
-//       Amount: 39,
-//       id: "4878003000008992001",
-//     },
-//   ],
+//   paymentHistory: {
+//     status: 0,
+//     data: [
+//       {
+//         Payment_Date: "2024-04-12",
+//         Credits: 200,
+//         Amount: 1999,
+//         id: "4878003000015099001",
+//       },
+//       {
+//         Payment_Date: "2024-04-10",
+//         Credits: 1,
+//         Amount: 39,
+//         id: "4878003000008932116",
+//       },
+//       {
+//         Payment_Date: "2024-04-15",
+//         Credits: 1,
+//         Amount: 39,
+//         id: "4878003000008992001",
+//       },
+//     ],
+//   },
 //   oqad: {
 //     status: 200,
 //     question: "This is a test question",
 //     answer: "Option 1",
 //     options: ["A", "B", "C", "D"],
 //     image: "/src/assets/preview.jpg",
+//   },
+//   query: "",
+//   testSeries: {
+//     Maths: {
+//       status: 200,
+//       data: [
+//         {
+//           Activate_Date: "2024-08-26",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727320",
+//           Name: "Test1",
+//         },
+//         {
+//           Activate_Date: "2024-09-02",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727321",
+//           Name: "Test1",
+//           Recording_Link: "https://youtu.be/nVEw3gW2RQc?si=tO1txw1QA7dxgIqq",
+//         },
+//         {
+//           Activate_Date: "2024-09-09",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727327",
+//           Name: "Test1",
+//         },
+//         {
+//           Activate_Date: "2024-09-16",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727322",
+//           Name: "Test1",
+//         },
+//         {
+//           Activate_Date: "2024-09-23",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727323",
+//           Name: "Test1",
+//         },
+//         {
+//           Activate_Date: "2024-09-30",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727324",
+//           Name: "Test1",
+//         },
+//       ],
+//     },
+//     English: {
+//       status: 204,
+//       data: [],
+//     },
+//     Science: {
+//       status: 204,
+//       data: [],
+//     },
 //   },
 // };
 

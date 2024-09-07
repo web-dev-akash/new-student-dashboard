@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { LuChevronLeftCircle, LuChevronRightCircle } from "react-icons/lu";
 import previewImage from "/src/assets/preview.jpg";
 import { Link } from "react-router-dom";
-import quizLogo from "/src/assets/quiz.png";
+import quizLogo from "/src/assets/quiz.gif";
 
 const months = {
   0: "Jan",
@@ -124,13 +124,18 @@ export const WeeklyQuiz = () => {
       const maxScrollLeft = container
         ? container.scrollWidth - containerWidth
         : 0;
-      const newScrollLeft = (prevIndex + 1) * itemWidth;
+      const newScrollLeft = prevIndex * itemWidth;
+
+      if (index >= weeklyQuizzes.length - 1) {
+        return weeklyQuizzes.length - 1;
+      }
+
       if (newScrollLeft > maxScrollLeft) {
         setIsAtEnd(true);
         return prevIndex;
-      } else {
-        return prevIndex + 1;
       }
+
+      return prevIndex + 1;
     });
   };
 
@@ -281,36 +286,30 @@ export const WeeklyQuiz = () => {
       mt={"15px"}
       background="#fff"
       borderRadius={"10px"}
-      padding={"1.2rem 0 1rem 0"}
+      padding={"10px 0"}
       boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
     >
       <Box
-        m={"0 0 0 1rem"}
         fontWeight={700}
         fontSize={["15px", "15px", "18px", "18px"]}
         display={"flex"}
         alignItems={"center"}
-        gap={"10px"}
+        m={"0 0 0 10px"}
+        gap={"5px"}
       >
-        <Text
-          style={{
-            // border: "1px solid #5838fc",
-            background: "#5838fc60",
-            padding: "5px",
-            borderRadius: "5px",
-          }}
-        >
+        <Text>
           <Image
+            mixBlendMode={"multiply"}
             src={quizLogo}
             alt="📘"
-            width={["35px", "35px", "40px", "42px", "45px"]}
+            width={["55px", "55px", "60px", "65px", "70px"]}
           />
         </Text>
         <Text>Quiz Topics</Text>
       </Box>
-      <Divider border={"1.1px solid #5838fc"} marginBlock={"12px 2px"} />
+      <Divider border={"1.1px solid #5838fc"} marginBlock={"5px 2px"} />
       <Box
-        padding={"20px 0"}
+        padding={"20px"}
         display={"flex"}
         alignItems={"center"}
         gap={["12px", "12px", "15px", "15px"]}
@@ -384,8 +383,9 @@ export const WeeklyQuiz = () => {
                 </Box>
                 <Box position={"relative"}>
                   <Image
-                    src={Session_Image_Link ? Session_Image_Link : previewImage}
-                    alt=""
+                    src={Session_Image_Link}
+                    fallbackSrc={previewImage}
+                    alt={Session_Name}
                     width={"100%"}
                     maxWidth={"100%"}
                     maxHeight={Session_Image_Link ? "180px" : "172.5px"}
