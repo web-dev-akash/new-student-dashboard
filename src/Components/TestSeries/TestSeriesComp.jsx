@@ -206,7 +206,7 @@ export const TestSeriesComp = () => {
                   getColorScheme(Activate_Date) === "whatsapp" &&
                   (allSubjects[Subject] || Free)
                     ? "0 0 0 2px #8B80F9, 8px 8px 0 0 #8B80F9"
-                    : "rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"
+                    : "rgba(0, 0, 0, 0.2) 0px 0px 20px 0px"
                 }
               >
                 {!allSubjects[Subject] && !Free && (
@@ -219,7 +219,11 @@ export const TestSeriesComp = () => {
                       zIndex={998}
                       textAlign={"center"}
                     >
-                      <Card id="paid-card">
+                      <Card
+                        id="paid-card"
+                        minWidth={["260px", "260px", "270px", "270px"]}
+                        padding={["95px 0"]}
+                      >
                         <Text mb={3}>
                           Buy {Subject} Test Series <br /> to Continue..
                         </Text>
