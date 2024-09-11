@@ -1,82 +1,65 @@
+/* eslint-disable no-unused-vars */
 import { Box, Button, Divider, Image, Tag, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { LuChevronLeftCircle, LuChevronRightCircle } from "react-icons/lu";
 import previewImage from "/src/assets/preview.jpg";
 import { Link } from "react-router-dom";
-import testLogo from "/src/assets/test_logo.gif";
+import doubtLogo from "/src/assets/doubt_logo.gif";
+import moment from "moment/moment";
 
 const months = {
-  0: "January",
-  1: "February",
-  2: "March",
-  3: "April",
+  0: "Jan",
+  1: "Feb",
+  2: "Mar",
+  3: "Apr",
   4: "May",
-  5: "June",
-  6: "July",
-  7: "August",
-  8: "September",
-  9: "October",
-  10: "November",
-  11: "December",
+  5: "Jun",
+  6: "Jul",
+  7: "Aug",
+  8: "Sep",
+  9: "Oct",
+  10: "Nov",
+  11: "Dec",
 };
 
-export const MathsTestSeries = () => {
-  const mathsTestSeries = useSelector((state) => state.testSeries.Maths.data);
+export const TestSeriesDoubtSessionComp = () => {
+  const maths = useSelector((state) => state.user.testSeries.Maths);
+  const science = useSelector((state) => state.user.testSeries.Science);
+  const english = useSelector((state) => state.user.testSeries.English);
+
+  const allSubjects = {
+    Maths: maths,
+    Science: science,
+    English: english,
+  };
+
+  const [status, setStatus] = useState("inactive");
+
+  const doubtSessions = useSelector((state) => state.doubtSession.data);
+  const doubtSessionStatus = useSelector((state) => state.doubtSession.status);
+
   const [index, setIndex] = useState(0);
   const containerRef = useRef(null);
   const itemRefs = useRef([]);
   const [isAtStart, setIsAtStart] = useState(false);
   const [isAtEnd, setIsAtEnd] = useState(false);
 
-  const getSessionStatus = (sessionDateTime) => {
-    const now = new Date();
-    const sessionDate = new Date(sessionDateTime);
+  const [finalSessions, setFinalSesisons] = useState([]);
 
-    const currentDate = now.setHours(0, 0, 0, 0);
-    const sessionDateOnly = sessionDate.setHours(0, 0, 0, 0);
+  const getSessionStatus = (dateTimeStr) => {
+    const inputTime = new Date(dateTimeStr);
 
-    if (currentDate >= sessionDateOnly) {
+    const currentTime = new Date();
+
+    const activeStart = new Date(inputTime.getTime() - 5 * 60 * 1000);
+    const activeEnd = new Date(inputTime.getTime() + 60 * 60 * 1000);
+
+    if (currentTime >= activeStart && currentTime <= activeEnd) {
       return "active";
     }
+
     return "inactive";
-  };
-
-  function formatDateTime(Session_Date_Time) {
-    const dateObj = new Date(Session_Date_Time);
-    const day = dateObj.getDate();
-    const month = months[dateObj.getMonth()];
-
-    const formattedDateTime = `${day} ${month}`;
-    return formattedDateTime;
-  }
-
-  const getColorScheme = (Session_Date_Time) => {
-    const sessionDate = new Date(Session_Date_Time);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const dayOfWeek = today.getDay();
-    const startOfWeek = new Date(today);
-    const endOfWeek = new Date(today);
-
-    startOfWeek.setDate(
-      today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1)
-    );
-
-    startOfWeek.setHours(0, 0, 0, 0);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
-    endOfWeek.setHours(23, 59, 59, 999);
-
-    if (sessionDate < startOfWeek) {
-      return "linkedin";
-    }
-
-    if (sessionDate > endOfWeek) {
-      return "purple";
-    }
-
-    return "whatsapp";
   };
 
   const handlePrev = () => {
@@ -96,8 +79,8 @@ export const MathsTestSeries = () => {
 
       const newScrollLeft = prevIndex * itemWidth;
 
-      if (index >= mathsTestSeries.length - 1) {
-        return mathsTestSeries.length - 1;
+      if (index >= doubtSessions.length - 1) {
+        return doubtSessions.length - 1;
       }
 
       if (newScrollLeft > maxScrollLeft) {
@@ -108,6 +91,43 @@ export const MathsTestSeries = () => {
       return prevIndex + 1;
     });
   };
+
+  const formatDateTime = (Session_Date_Time) => {
+    const dateObj = new Date(Session_Date_Time);
+    const day = dateObj.getDate();
+    const month = months[dateObj.getMonth()];
+    let hours = dateObj.getHours();
+    const minutes = dateObj.getMinutes();
+    const period = hours >= 12 ? "PM" : "AM";
+
+    if (hours > 12) {
+      hours -= 12;
+    }
+
+    if (hours === 0) {
+      hours = 12;
+    }
+
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const formattedDateTime = `${day} ${month}, ${hours}:${formattedMinutes} ${period}`;
+    return formattedDateTime;
+  };
+
+  useEffect(() => {
+    const updateButtonStatus = () => {
+      const dateTimeStr =
+        doubtSessions[0]?.Session_Date_Time ||
+        `${moment("YYYY-MM-DD")}T17:00:00+05:30`;
+      const newStatus = getSessionStatus(dateTimeStr);
+      setStatus(newStatus);
+    };
+
+    updateButtonStatus();
+
+    const intervalId = setInterval(updateButtonStatus, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     if (itemRefs.current.length === 0 || !containerRef.current) return;
@@ -124,6 +144,13 @@ export const MathsTestSeries = () => {
     }
   }, [index]);
 
+  useEffect(() => {
+    const filteredDoubtSessions = doubtSessions.filter(
+      (session) => allSubjects[session.Subject]
+    );
+    setFinalSesisons(filteredDoubtSessions);
+  }, [doubtSessionStatus]);
+
   return (
     <Box
       position={"relative"}
@@ -133,6 +160,7 @@ export const MathsTestSeries = () => {
       borderRadius={"10px"}
       padding={"10px 0"}
       boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
+      display={finalSessions.length === 0 ? "none" : "block"}
     >
       <Box
         fontWeight={700}
@@ -145,12 +173,12 @@ export const MathsTestSeries = () => {
         <Text>
           <Image
             mixBlendMode={"multiply"}
-            src={testLogo}
+            src={doubtLogo}
             alt="📘"
             width={["55px", "55px", "60px", "65px", "70px"]}
           />
         </Text>
-        <Text>Maths Test Series</Text>
+        <Text>Test Series Doubt Sessions</Text>
       </Box>
       <Divider border={"1.1px solid #5838fc"} marginBlock={"5px 2px"} />
       <Box
@@ -167,16 +195,9 @@ export const MathsTestSeries = () => {
         ref={containerRef}
         id="quizScroller"
       >
-        {mathsTestSeries.map(
+        {finalSessions.map(
           (
-            {
-              Activate_Date,
-              Survey_Link,
-              id,
-              Test_Image,
-              Name,
-              Recording_Link,
-            },
+            { Zoom_Link, id, Recording_Link, Subject, Name, Session_Date_Time },
             idx
           ) => {
             if (!itemRefs.current[idx]) {
@@ -193,11 +214,7 @@ export const MathsTestSeries = () => {
                 scrollSnapAlign={"center"}
                 minWidth={"260px"}
                 position={"relative"}
-                boxShadow={
-                  getColorScheme(Activate_Date) === "whatsapp"
-                    ? "0 0 0 2px #8B80F9, 8px 8px 0 0 #8B80F9"
-                    : "rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"
-                }
+                boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
               >
                 <Box
                   display={"flex"}
@@ -208,81 +225,68 @@ export const MathsTestSeries = () => {
                     borderRadius={"50px"}
                     padding={"5px 10px"}
                     size={["sm", "sm", "md", "md"]}
-                    colorScheme={getColorScheme(Activate_Date)}
+                    colorScheme={"whatsapp"}
                     fontSize={["10px", "10px", "13px", "13px"]}
                     fontWeight={500}
                   >
-                    Maths
+                    {Subject}
                   </Tag>
                   <Tag
                     borderRadius={"50px"}
                     padding={"5px 10px"}
                     size={["sm", "sm", "md", "md"]}
-                    colorScheme={getColorScheme(Activate_Date)}
+                    colorScheme={"whatsapp"}
                     fontSize={["10px", "10px", "13px", "13px"]}
                     fontWeight={500}
                   >
-                    {formatDateTime(Activate_Date)}
+                    {formatDateTime(Session_Date_Time)}
                   </Tag>
                 </Box>
                 <Box position={"relative"}>
                   <Image
-                    src={Test_Image}
-                    fallbackSrc={previewImage}
+                    src={previewImage}
                     alt={Name}
                     width={"100%"}
                     maxWidth={"100%"}
-                    maxHeight={Test_Image ? "180px" : "172.5px"}
+                    maxHeight={"172.5px"}
                     borderRadius={"10px"}
                     objectFit={"cover"}
                     m={"10px 0"}
                     border={"1px solid #cccccc80"}
                   />
-                  {!Test_Image && (
-                    <Text
-                      position={"absolute"}
-                      top={"80%"}
-                      left={"50%"}
-                      transform={"translate(-50%, -50%)"}
-                      zIndex={9}
-                      fontSize={"14px"}
-                      fontWeight={700}
-                      textAlign={"center"}
-                      minWidth={"200px"}
-                      textTransform={"uppercase"}
-                    >
-                      {Name}
-                    </Text>
-                  )}
+                  <Text
+                    position={"absolute"}
+                    top={"80%"}
+                    left={"50%"}
+                    transform={"translate(-50%, -50%)"}
+                    zIndex={9}
+                    fontSize={"14px"}
+                    fontWeight={700}
+                    textAlign={"center"}
+                    minWidth={"200px"}
+                    textTransform={"uppercase"}
+                  >
+                    {Name}
+                  </Text>
                 </Box>
 
-                <Link
-                  style={{
-                    width: "100%",
-                  }}
-                  to={`/dashboard/missed?link=${encodeURIComponent(
-                    Survey_Link
-                  )}`}
+                <Button
+                  id={
+                    Zoom_Link &&
+                    getSessionStatus(Session_Date_Time) === "active"
+                      ? "submit-btn"
+                      : "submit-btn-active"
+                  }
+                  fontSize={"12px"}
+                  loadingText={""}
+                  isDisabled={
+                    !Zoom_Link ||
+                    getSessionStatus(Session_Date_Time) === "inactive"
+                  }
+                  padding={"0 !important"}
                 >
-                  <Button
-                    id={
-                      Survey_Link &&
-                      getSessionStatus(Activate_Date) === "active"
-                        ? "submit-btn"
-                        : "submit-btn-active"
-                    }
-                    fontSize={"12px"}
-                    loadingText={""}
-                    isDisabled={
-                      !Survey_Link ||
-                      getSessionStatus(Activate_Date) === "inactive"
-                    }
-                    padding={"0 !important"}
-                  >
-                    Take Mock Test
-                  </Button>
-                </Link>
-
+                  Join Now
+                </Button>
                 {Recording_Link && (
                   <Link
                     style={{

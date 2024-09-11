@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_OQAD,
   GET_TEST_SERIES,
+  GET_TEST_SERIES_DOUBT_SESSION,
   GET_URL_QUERY,
   GET_USER,
   GET_USER_ALERT,
@@ -80,6 +81,11 @@ export const setUrlQuery = (payload) => ({
 
 export const setTestSeriesData = (payload) => ({
   type: GET_TEST_SERIES,
+  payload,
+});
+
+export const setTestSeriesDoubtSession = (payload) => ({
+  type: GET_TEST_SERIES_DOUBT_SESSION,
   payload,
 });
 
@@ -873,23 +879,38 @@ export const updateDifficultyLevel =
     }
   };
 
-export const getTestSeriesByGrade =
-  (data, grade, subject) => async (dispatch) => {
-    try {
-      const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
-      const url = `https://backend.wisechamps.com/student/test-series`;
-      const res = await axios.post(
-        url,
-        { grade, subject },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      dispatch(setTestSeriesData({ ...data, [subject]: res.data }));
-    } catch (error) {
-      console.log("Error :", error);
-    }
-  };
+export const getTestSeriesByGrade = (grade) => async (dispatch) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = `https://backend.wisechamps.com/student/test-series`;
+    const res = await axios.post(
+      url,
+      { grade },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+    dispatch(setTestSeriesData(res.data));
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+export const getTestSeriesDoubtSessions = () => async (dispatch) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = `https://backend.wisechamps.com/student/test-series/doubt-session`;
+    const res = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    dispatch(setTestSeriesDoubtSession(res.data));
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};

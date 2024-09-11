@@ -133,8 +133,8 @@ export const Login = () => {
   if (mode === "nouser") {
     return <Navigate to={"/nouser"} />;
   }
-  if (query === "/test-series" && mode === "user") {
-    return <Navigate to={"/test-series"} />;
+  if (query !== "/login" && query.includes("/") && mode === "user") {
+    return <Navigate to={query} />;
   }
 
   if (mode === "user") {

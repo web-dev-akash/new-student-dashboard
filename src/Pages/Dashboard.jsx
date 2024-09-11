@@ -9,7 +9,8 @@ import { CarousalMain } from "../Components/Alerts/CarousalMain";
 // import { Pricing } from "../Components/Pricing/Pricing";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
 import { OQAD } from "../Components/OQAD/OQAD";
-import { MathsTestSeries } from "../Components/TestSeries/MathsTestSeries";
+import { TestSeriesComp } from "../Components/TestSeries/TestSeriesComp";
+// import { TestSeriesDoubtSessionComp } from "../Components/TestSeries/TestSeriesDoubtSessionComp";
 // import { StoriesComponent } from "../Components/Stories/StoriesComponent";
 
 export const Dashboard = ({ setTab }) => {
@@ -19,20 +20,6 @@ export const Dashboard = ({ setTab }) => {
   const alert = useSelector((state) => state.alert);
   const newUser = useSelector((state) => state.user.newUser);
   const timersRef = useRef([]);
-
-  const maths = useSelector((state) => state.user.testSeries.Maths);
-  const science = useSelector((state) => state.user.testSeries.Science);
-  const english = useSelector((state) => state.user.testSeries.English);
-
-  const mathsTestSeriesStatus = useSelector(
-    (state) => state.testSeries.Maths.status
-  );
-  const scienceTestSeriesStatus = useSelector(
-    (state) => state.testSeries.Science.status
-  );
-  const englishTestSeriesStatus = useSelector(
-    (state) => state.testSeries.English.status
-  );
 
   useEffect(() => {
     const now = new Date();
@@ -142,9 +129,8 @@ export const Dashboard = ({ setTab }) => {
       <Box display={"grid"} gridTemplateColumns={"repeat(1, 1fr)"}>
         <CarousalMain setTab={setTab} />
         <WeeklyQuiz />
-        {/* {maths && mathsTestSeriesStatus === 200 && <MathsTestSeries />}
-        {english && englishTestSeriesStatus === 200 && <MathsTestSeries />}
-        {science && scienceTestSeriesStatus === 200 && <MathsTestSeries />} */}
+        <TestSeriesComp />
+        {/* <TestSeriesDoubtSessionComp /> */}
         {/* <Pricing setTab={setTab} /> */}
         <OQAD />
         {/* <Fade in={showStory} unmountOnExit >

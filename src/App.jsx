@@ -20,14 +20,15 @@ import { TestSeriesPlans } from "./Pages/TestSeriesPlans";
 
 function App() {
   const dispatch = useDispatch();
-  const query = new URL(window.location.href).hash;
+  const hash = new URL(window.location.href).hash;
   const path = new URL(window.location.href).pathname;
-
-  console.log("Path is ", path);
+  const query = new URLSearchParams(window.location.search).get("link");
 
   useEffect(() => {
-    if (query) {
-      dispatch(setUrlQuery(query));
+    if (hash) {
+      dispatch(setUrlQuery(hash));
+    } else if (path && query) {
+      dispatch(setUrlQuery(`${path}?link=${encodeURIComponent(query)}`));
     } else if (path) {
       dispatch(setUrlQuery(path));
     }

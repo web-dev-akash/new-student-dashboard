@@ -5,7 +5,11 @@ import "../styles/NavigationTabs.modal.css";
 import "../styles/ProfileAvatar.modal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDailyQuestion, getTestSeriesByGrade } from "../Redux/action";
+import {
+  getDailyQuestion,
+  getTestSeriesByGrade,
+  getTestSeriesDoubtSessions,
+} from "../Redux/action";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -17,27 +21,21 @@ export const Home = () => {
   const science = useSelector((state) => state.user.testSeries.Science);
   const english = useSelector((state) => state.user.testSeries.English);
 
-  const mathsTestSeries = useSelector((state) => state.testSeries.Maths);
-  const scienceTestSeries = useSelector((state) => state.testSeries.Science);
-  const englishTestSeries = useSelector((state) => state.testSeries.English);
-
-  console.log("Data 1 is :", maths, science, english);
-  console.log("Data 2 is :", testSeries);
+  const testSeriesDoubtSession = useSelector((state) => state.doubtSession);
 
   useEffect(() => {
     if (!oqad || !oqad.status) {
       dispatch(getDailyQuestion(user.grade, user.id));
     }
-    if (maths && mathsTestSeries.status === 0) {
-      dispatch(getTestSeriesByGrade(testSeries, user.grade, "Maths"));
+
+    if (testSeries.status === 0) {
+      dispatch(getTestSeriesByGrade(user.grade));
     }
-    if (english && englishTestSeries.status === 0) {
-      dispatch(getTestSeriesByGrade(testSeries, user.grade, "English"));
+
+    if ((maths || english || science) && testSeriesDoubtSession.status === 0) {
+      dispatch(getTestSeriesDoubtSessions(testSeries));
     }
-    if (science && scienceTestSeries.status === 0) {
-      dispatch(getTestSeriesByGrade(testSeries, user.grade, "Science"));
-    }
-  }, []);
+  }, [testSeries.Maths]);
 
   return (
     <Box>

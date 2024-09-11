@@ -12,6 +12,7 @@ import { JoinCommunity } from "./JoinCommunity";
 import { IntroLuckyDrawMeeting } from "./IntroLuckyDrawMeeting";
 import { QuizInProgress } from "./QuizInProgress";
 import { TestSeries } from "./TestSeries";
+import { TestSeriesDoubtSession } from "./TestSeriesDoubtSession";
 
 export const CarousalMain = ({ setTab }) => {
   const alert = useSelector((state) => state.alert);
@@ -64,6 +65,9 @@ export const CarousalMain = ({ setTab }) => {
               }
               if (alert === "test") {
                 return <TestSeries key={index} />;
+              }
+              if (alert === "testDoubt") {
+                return <TestSeriesDoubtSession key={index} />;
               }
               return null;
             })

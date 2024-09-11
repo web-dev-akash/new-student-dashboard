@@ -28,6 +28,8 @@ import {
   setOrders,
   setPaymentHistory,
   setReport,
+  setTestSeriesData,
+  setTestSeriesDoubtSession,
   setUrlQuery,
   setUser,
   setWinners,
@@ -120,6 +122,18 @@ export const ProfileAvatar = () => {
     );
     dispatch(setOqad({}));
     dispatch(setUrlQuery(""));
+    dispatch(
+      setTestSeriesData({
+        status: 0,
+        data: [],
+      })
+    );
+    dispatch(
+      setTestSeriesDoubtSession({
+        status: 0,
+        data: [],
+      })
+    );
     dispatch(setMode(""));
   };
 

@@ -312,6 +312,7 @@ export const WeeklyQuiz = () => {
         padding={"20px"}
         display={"flex"}
         alignItems={"center"}
+        justifyContent={"space-evenly"}
         gap={["12px", "12px", "15px", "15px"]}
         flexWrap={"nowrap"}
         overflowX={"auto"}
@@ -384,32 +385,44 @@ export const WeeklyQuiz = () => {
                 <Box position={"relative"}>
                   <Image
                     src={Session_Image_Link}
-                    fallbackSrc={previewImage}
                     alt={Session_Name}
                     width={"100%"}
                     maxWidth={"100%"}
-                    maxHeight={Session_Image_Link ? "180px" : "172.5px"}
+                    maxHeight={"180px"}
                     borderRadius={"10px"}
                     objectFit={"cover"}
                     m={"10px 0"}
                     border={"1px solid #cccccc80"}
+                    fallback={
+                      <Box>
+                        <Image
+                          src={previewImage}
+                          alt={Session_Name}
+                          width={"100%"}
+                          maxWidth={"100%"}
+                          maxHeight={"172.5px"}
+                          borderRadius={"10px"}
+                          objectFit={"cover"}
+                          m={"10px 0"}
+                          border={"1px solid #cccccc80"}
+                        />
+                        <Text
+                          position={"absolute"}
+                          top={"80%"}
+                          left={"50%"}
+                          transform={"translate(-50%, -50%)"}
+                          zIndex={9}
+                          fontSize={"14px"}
+                          fontWeight={700}
+                          textAlign={"center"}
+                          minWidth={"200px"}
+                          textTransform={"uppercase"}
+                        >
+                          {Session_Name}
+                        </Text>
+                      </Box>
+                    }
                   />
-                  {!Session_Image_Link && (
-                    <Text
-                      position={"absolute"}
-                      top={"80%"}
-                      left={"50%"}
-                      transform={"translate(-50%, -50%)"}
-                      zIndex={9}
-                      fontSize={"14px"}
-                      fontWeight={700}
-                      textAlign={"center"}
-                      minWidth={"200px"}
-                      textTransform={"uppercase"}
-                    >
-                      {Session_Name}
-                    </Text>
-                  )}
                 </Box>
                 <Box
                   display={"flex"}

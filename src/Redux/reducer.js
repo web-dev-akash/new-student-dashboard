@@ -1,6 +1,7 @@
 import {
   GET_OQAD,
   GET_TEST_SERIES,
+  GET_TEST_SERIES_DOUBT_SESSION,
   GET_URL_QUERY,
   GET_USER,
   GET_USER_ALERT,
@@ -55,22 +56,16 @@ const initialState = {
     status: 0,
     data: [],
   },
+  testSeries: {
+    status: 0,
+    data: [],
+  },
+  doubtSession: {
+    status: 0,
+    data: [],
+  },
   oqad: {},
   query: "",
-  testSeries: {
-    Maths: {
-      status: 0,
-      data: [],
-    },
-    English: {
-      status: 0,
-      data: [],
-    },
-    Science: {
-      status: 0,
-      data: [],
-    },
-  },
 };
 
 // const initialState = {
@@ -383,7 +378,7 @@ const initialState = {
 //     testSeries: {
 //       Maths: true,
 //       Science: true,
-//       English: true,
+//       English: false,
 //     },
 //   },
 //   mode: "user",
@@ -555,7 +550,7 @@ const initialState = {
 //       },
 //     ],
 //   },
-//   alert: ["test"],
+//   alert: ["test", "testDoubt"],
 //   winners: {
 //     status: 200,
 //     topFiveUsers: [
@@ -776,6 +771,20 @@ const initialState = {
 //   },
 //   query: "",
 //   testSeries: {
+//     doubtSession: {
+//       status: 200,
+//       data: [
+//         {
+//           Zoom_Link: "https://google.com",
+//           Time: "5 PM",
+//           id: "4878003000029948340",
+//           Recording_Link: null,
+//           Day: "Monday",
+//           Subject: "Maths",
+//           Name: "Maths Doubt Session 1",
+//         },
+//       ],
+//     },
 //     Maths: {
 //       status: 200,
 //       data: [
@@ -787,6 +796,73 @@ const initialState = {
 //             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
 //           id: "4878003000029727320",
 //           Name: "Test1",
+//           Subject: "Maths",
+//         },
+//         {
+//           Activate_Date: "2024-09-02",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727321",
+//           Recording_Link: "https://youtu.be/nVEw3gW2RQc?si=tO1txw1QA7dxgIqq",
+//           Name: "Test1",
+//           Subject: "Maths",
+//         },
+//         {
+//           Activate_Date: "2024-09-09",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727327",
+//           Name: "Test1",
+//           Subject: "Maths",
+//         },
+//         {
+//           Activate_Date: "2024-09-16",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727322",
+//           Name: "Test1",
+//           Subject: "Maths",
+//         },
+//         {
+//           Activate_Date: "2024-09-23",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727323",
+//           Name: "Test1",
+//           Subject: "Maths",
+//         },
+//         {
+//           Activate_Date: "2024-09-30",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727324",
+//           Name: "Test1",
+//           Subject: "Maths",
+//         },
+//       ],
+//     },
+//     English: {
+//       status: 200,
+//       data: [
+//         {
+//           Activate_Date: "2024-08-26",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727320",
+//           Name: "Test1",
+//           Subject: "English",
 //         },
 //         {
 //           Activate_Date: "2024-09-02",
@@ -797,6 +873,7 @@ const initialState = {
 //           id: "4878003000029727321",
 //           Name: "Test1",
 //           Recording_Link: "https://youtu.be/nVEw3gW2RQc?si=tO1txw1QA7dxgIqq",
+//           Subject: "English",
 //         },
 //         {
 //           Activate_Date: "2024-09-09",
@@ -806,6 +883,7 @@ const initialState = {
 //             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
 //           id: "4878003000029727327",
 //           Name: "Test1",
+//           Subject: "English",
 //         },
 //         {
 //           Activate_Date: "2024-09-16",
@@ -815,6 +893,7 @@ const initialState = {
 //             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
 //           id: "4878003000029727322",
 //           Name: "Test1",
+//           Subject: "English",
 //         },
 //         {
 //           Activate_Date: "2024-09-23",
@@ -824,6 +903,7 @@ const initialState = {
 //             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
 //           id: "4878003000029727323",
 //           Name: "Test1",
+//           Subject: "English",
 //         },
 //         {
 //           Activate_Date: "2024-09-30",
@@ -833,16 +913,75 @@ const initialState = {
 //             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
 //           id: "4878003000029727324",
 //           Name: "Test1",
+//           Subject: "English",
 //         },
 //       ],
 //     },
-//     English: {
-//       status: 204,
-//       data: [],
-//     },
 //     Science: {
-//       status: 204,
-//       data: [],
+//       status: 200,
+//       data: [
+//         {
+//           Activate_Date: "2024-08-26",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727320",
+//           Name: "Test1",
+//           Subject: "Science",
+//         },
+//         {
+//           Activate_Date: "2024-09-02",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727321",
+//           Name: "Test1",
+//           Recording_Link: "https://youtu.be/nVEw3gW2RQc?si=tO1txw1QA7dxgIqq",
+//           Subject: "Science",
+//         },
+//         {
+//           Activate_Date: "2024-09-09",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727327",
+//           Name: "Test1",
+//           Subject: "Science",
+//         },
+//         {
+//           Activate_Date: "2024-09-16",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727322",
+//           Name: "Test1",
+//           Subject: "Science",
+//         },
+//         {
+//           Activate_Date: "2024-09-23",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727323",
+//           Name: "Test1",
+//           Subject: "Science",
+//         },
+//         {
+//           Activate_Date: "2024-09-30",
+//           Survey_Link:
+//             "https://vevox.app/#/m/138672184/survey/d04e52ad-a4d1-4b2f-a5e7-0717f652cd12",
+//           Test_Image:
+//             "https://lh3.googleusercontent.com/d/1lLXucbuQQ9PUfVEbbfwNQpcrf14joaji?authuser=1/view",
+//           id: "4878003000029727324",
+//           Name: "Test1",
+//           Subject: "Science",
+//         },
+//       ],
 //     },
 //   },
 // };
@@ -939,6 +1078,12 @@ export const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         testSeries: payload,
+      };
+    }
+    case GET_TEST_SERIES_DOUBT_SESSION: {
+      return {
+        ...state,
+        doubtSession: payload,
       };
     }
     default: {
