@@ -8,42 +8,68 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
-const doubtSessionLink = {
-  Maths: import.meta.env.VITE_APP_MATH_DOUBT_ZOOM_LINK,
-  English: import.meta.env.VITE_APP_ENGLISH_DOUBT_ZOOM_LINK,
-  Science: import.meta.env.VITE_APP_SCIENCE_DOUBT_ZOOM_LINK,
-};
 
 export const TestSeriesDoubtSession = () => {
   const maths = useSelector((state) => state.user.testSeries.Maths);
   const science = useSelector((state) => state.user.testSeries.Science);
   const english = useSelector((state) => state.user.testSeries.English);
+  const doubtSessions = useSelector((state) => state.doubtSession.data);
+  const doubtSessionStatus = useSelector((state) => state.doubtSession.status);
+
   const [subject, setSubject] = useState(null);
   const [time, setTime] = useState(null);
-  const doubtSession = useSelector((state) => state.testSeries.doubtSession);
+  const [joiningLink, setJoiningLink] = useState(null);
 
-  const doubtSessionDay = (subject) => {
-    const { data } = doubtSession;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].Subject === subject) {
-        setSubject(data[i].Subject);
-        setTime(data[i].Time);
-      }
-    }
+  const allSubjects = {
+    Maths: maths,
+    Science: science,
+    English: english,
   };
 
-  useEffect(() => {
-    if (maths) {
-      doubtSessionDay("Maths");
-    } else if (english) {
-      doubtSessionDay("English");
-    } else if (science) {
-      doubtSessionDay("Science");
+  function formatDateTime(Session_Date_Time) {
+    const dateObj = new Date(Session_Date_Time);
+    let hours = dateObj.getHours();
+    const minutes = dateObj.getMinutes();
+    const period = hours >= 12 ? "PM" : "AM";
+
+    if (hours > 12) {
+      hours -= 12;
     }
-  }, []);
+
+    if (hours === 0) {
+      hours = 12;
+    }
+
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    return `${hours}:${formattedMinutes} ${period}`;
+  }
+
+  useEffect(() => {
+    const filteredDoubtSessions = doubtSessions.filter(
+      (session) => allSubjects[session.Subject]
+    );
+
+    const sortedDoubtSessions = filteredDoubtSessions.sort(
+      (a, b) => new Date(a.Session_Date_Time) - new Date(b.Session_Date_Time)
+    );
+
+    const currentSession = sortedDoubtSessions.filter(
+      (item) =>
+        moment(item.Session_Date_Time).format("YYYY-MM-DD") ===
+        moment().format("YYYY-MM-DD")
+    );
+
+    const dateTimeStr =
+      currentSession?.[0]?.Session_Date_Time ??
+      `${moment().format("YYYY-MM-DD")}T17:00:00+05:30`;
+
+    setTime(formatDateTime(dateTimeStr));
+    setSubject(currentSession?.[0].Subject);
+    setJoiningLink(currentSession?.[0].Zoom_Link);
+  }, [doubtSessionStatus]);
 
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
@@ -74,7 +100,7 @@ export const TestSeriesDoubtSession = () => {
             width={"100%"}
             fontWeight={500}
           >
-            Click the JOIN QUIZ NOW button to join today's quiz.
+            Click the JOIN NOW button to join today's doubt session.
           </Text>
           <Button
             fontSize={"13px"}
@@ -82,9 +108,9 @@ export const TestSeriesDoubtSession = () => {
             width={["100%", "100%", "max-content", "max-content"]}
             bg={"white"}
             border={"none"}
-            onClick={() => window.open(doubtSessionLink[subject], "_blank")}
+            onClick={() => window.open(joiningLink, "_blank")}
           >
-            Join Quiz Now
+            Join Now
           </Button>
         </AlertDescription>
       </Alert>

@@ -2,7 +2,6 @@
 import { Box } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { setAlert } from "../Redux/action";
 
 import { CarousalMain } from "../Components/Alerts/CarousalMain";
@@ -10,7 +9,7 @@ import { CarousalMain } from "../Components/Alerts/CarousalMain";
 import { WeeklyQuiz } from "../Components/WeeklyQuiz/WeeklyQuiz";
 import { OQAD } from "../Components/OQAD/OQAD";
 import { TestSeriesComp } from "../Components/TestSeries/TestSeriesComp";
-// import { TestSeriesDoubtSessionComp } from "../Components/TestSeries/TestSeriesDoubtSessionComp";
+import { TestSeriesDoubtSessionComp } from "../Components/TestSeries/TestSeriesDoubtSessionComp";
 // import { StoriesComponent } from "../Components/Stories/StoriesComponent";
 
 export const Dashboard = ({ setTab }) => {
@@ -125,6 +124,8 @@ export const Dashboard = ({ setTab }) => {
         "5.5rem 1.5rem 1.5rem",
         "5.5rem 1.5rem 1.5rem",
       ]}
+      // height={showStory ? "50vh" : "100%"}
+      // overflow={showStory ? "hidden" : "auto"}
     >
       <Box display={"grid"} gridTemplateColumns={"repeat(1, 1fr)"}>
         <CarousalMain setTab={setTab} />
@@ -133,8 +134,8 @@ export const Dashboard = ({ setTab }) => {
         {/* <TestSeriesDoubtSessionComp /> */}
         {/* <Pricing setTab={setTab} /> */}
         <OQAD />
-        {/* <Fade in={showStory} unmountOnExit >
-          <StoriesComponent showStory={showStory} setShowStory={setShowStory} />
+        {/* <Fade in={showStory} unmountOnExit id="story">
+          <StoriesComponent setShowStory={setShowStory} />
         </Fade> */}
       </Box>
     </Box>

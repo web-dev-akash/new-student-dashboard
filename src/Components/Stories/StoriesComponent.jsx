@@ -1,12 +1,7 @@
-import { Box, Button } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { Box } from "@chakra-ui/react";
 import Stories from "react-insta-stories";
 
-export const StoriesComponent = ({ setShowStory, showStory }) => {
-  const handleButtonClick = () => {
-    alert("Testing Success");
-  };
-
+export const StoriesComponent = ({ setShowStory }) => {
   const stories = [
     {
       content: ({ action, isPaused }) => {
@@ -20,9 +15,8 @@ export const StoriesComponent = ({ setShowStory, showStory }) => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <h1>🌝</h1>
+            <h1>😁</h1>
             <h1>{isPaused ? "Paused" : "Playing"}</h1>
-            <Button onClick={handleButtonClick}>Testing</Button>
           </Box>
         );
       },
@@ -41,7 +35,6 @@ export const StoriesComponent = ({ setShowStory, showStory }) => {
           >
             <h1>🌝</h1>
             <h1>{isPaused ? "Paused" : "Playing"}</h1>
-            <Button onClick={handleButtonClick}>Testing</Button>
           </Box>
         );
       },
@@ -58,9 +51,8 @@ export const StoriesComponent = ({ setShowStory, showStory }) => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <h1>🌝</h1>
+            <h1>😎</h1>
             <h1>{isPaused ? "Paused" : "Playing"}</h1>
-            <Button onClick={handleButtonClick}>Testing</Button>
           </Box>
         );
       },
@@ -78,7 +70,6 @@ export const StoriesComponent = ({ setShowStory, showStory }) => {
       overflow={"hidden"}
     >
       <Stories
-        currentIndex={showStory ? 0 : 0}
         stories={stories}
         defaultInterval={3000}
         width={"100%"}

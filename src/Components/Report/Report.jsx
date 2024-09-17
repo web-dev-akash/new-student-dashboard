@@ -9,7 +9,7 @@ import { Loading } from "../Loading/Loading";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ClickBtn } from "../ClickBtn/ClickBtn";
-import { getReportDataNew } from "../../Redux/action";
+import { getReportDataNew, updateAnalysisToSheet } from "../../Redux/action";
 
 // eslint-disable-next-line no-unused-vars
 export const Report = () => {
@@ -23,6 +23,7 @@ export const Report = () => {
     window.scrollTo({ top: 0 });
     if (!sessions) {
       dispatch(getReportDataNew(user.email));
+      updateAnalysisToSheet(user.email, "Report Viewed");
     }
   }, []);
 

@@ -1,12 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { Box, Button, Divider, Image, Tag, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LuChevronLeftCircle, LuChevronRightCircle } from "react-icons/lu";
 import previewImage from "/src/assets/preview.jpg";
 import { Link } from "react-router-dom";
 import doubtLogo from "/src/assets/doubt_logo.gif";
-import moment from "moment/moment";
+
+import mathsBG from "/src/assets/maths_bg.webp";
+import scienceBG from "/src/assets/science_bg.webp";
+import englishBG from "/src/assets/english_bg.webp";
+
+import moment from "moment";
+import { setAlert } from "../../Redux/action";
 
 const months = {
   0: "Jan",
@@ -23,7 +29,15 @@ const months = {
   11: "Dec",
 };
 
+const bgImage = {
+  Maths: mathsBG,
+  Science: scienceBG,
+  English: englishBG,
+};
+
 export const TestSeriesDoubtSessionComp = () => {
+  const dispatch = useDispatch();
+  const alerts = useSelector((state) => state.alert);
   const maths = useSelector((state) => state.user.testSeries.Maths);
   const science = useSelector((state) => state.user.testSeries.Science);
   const english = useSelector((state) => state.user.testSeries.English);
@@ -92,6 +106,33 @@ export const TestSeriesDoubtSessionComp = () => {
     });
   };
 
+  const getColorScheme = (Session_Date_Time) => {
+    const sessionDate = new Date(Session_Date_Time);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const sessionDateOnly = new Date(
+      sessionDate.getFullYear(),
+      sessionDate.getMonth(),
+      sessionDate.getDate()
+    );
+    const todayDateOnly = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+
+    if (sessionDateOnly < todayDateOnly) {
+      return "linkedin";
+    }
+
+    if (sessionDateOnly > todayDateOnly) {
+      return "purple";
+    }
+
+    return "whatsapp";
+  };
+
   const formatDateTime = (Session_Date_Time) => {
     const dateObj = new Date(Session_Date_Time);
     const day = dateObj.getDate();
@@ -114,10 +155,25 @@ export const TestSeriesDoubtSessionComp = () => {
   };
 
   useEffect(() => {
+    const filteredDoubtSessions = doubtSessions.filter(
+      (session) => allSubjects[session.Subject]
+    );
+
+    const sortedDoubtSessions = filteredDoubtSessions.sort(
+      (a, b) => new Date(a.Session_Date_Time) - new Date(b.Session_Date_Time)
+    );
+
+    setFinalSesisons(sortedDoubtSessions);
+
     const updateButtonStatus = () => {
+      const currentSession = sortedDoubtSessions.filter(
+        (item) =>
+          moment(item.Session_Date_Time).format("YYYY-MM-DD") ===
+          moment().format("YYYY-MM-DD")
+      );
       const dateTimeStr =
-        doubtSessions[0]?.Session_Date_Time ||
-        `${moment("YYYY-MM-DD")}T17:00:00+05:30`;
+        currentSession?.[0]?.Session_Date_Time ??
+        `${moment().format("YYYY-MM-DD")}T17:00:00+05:30`;
       const newStatus = getSessionStatus(dateTimeStr);
       setStatus(newStatus);
     };
@@ -127,7 +183,7 @@ export const TestSeriesDoubtSessionComp = () => {
     const intervalId = setInterval(updateButtonStatus, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [doubtSessionStatus]);
 
   useEffect(() => {
     if (itemRefs.current.length === 0 || !containerRef.current) return;
@@ -145,11 +201,17 @@ export const TestSeriesDoubtSessionComp = () => {
   }, [index]);
 
   useEffect(() => {
-    const filteredDoubtSessions = doubtSessions.filter(
-      (session) => allSubjects[session.Subject]
-    );
-    setFinalSesisons(filteredDoubtSessions);
-  }, [doubtSessionStatus]);
+    if (status === "active") {
+      if (!alerts.includes("testDoubt")) {
+        dispatch(setAlert(["testDoubt", ...alerts]));
+      }
+    } else {
+      if (alerts.includes("testDoubt")) {
+        const newAlerts = alerts.filter((alert) => alert !== "testDoubt");
+        dispatch(setAlert(newAlerts));
+      }
+    }
+  }, [status]);
 
   return (
     <Box
@@ -214,7 +276,11 @@ export const TestSeriesDoubtSessionComp = () => {
                 scrollSnapAlign={"center"}
                 minWidth={"260px"}
                 position={"relative"}
-                boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
+                boxShadow={
+                  getColorScheme(Session_Date_Time) === "whatsapp"
+                    ? "0 0 0 2px #8B80F9, 8px 8px 0 0 #8B80F9"
+                    : "rgba(0, 0, 0, 0.2) 0px 0px 20px 0px"
+                }
               >
                 <Box
                   display={"flex"}
@@ -225,7 +291,7 @@ export const TestSeriesDoubtSessionComp = () => {
                     borderRadius={"50px"}
                     padding={"5px 10px"}
                     size={["sm", "sm", "md", "md"]}
-                    colorScheme={"whatsapp"}
+                    colorScheme={getColorScheme(Session_Date_Time)}
                     fontSize={["10px", "10px", "13px", "13px"]}
                     fontWeight={500}
                   >
@@ -235,7 +301,7 @@ export const TestSeriesDoubtSessionComp = () => {
                     borderRadius={"50px"}
                     padding={"5px 10px"}
                     size={["sm", "sm", "md", "md"]}
-                    colorScheme={"whatsapp"}
+                    colorScheme={getColorScheme(Session_Date_Time)}
                     fontSize={["10px", "10px", "13px", "13px"]}
                     fontWeight={500}
                   >
@@ -244,7 +310,7 @@ export const TestSeriesDoubtSessionComp = () => {
                 </Box>
                 <Box position={"relative"}>
                   <Image
-                    src={previewImage}
+                    src={bgImage[Subject]}
                     alt={Name}
                     width={"100%"}
                     maxWidth={"100%"}
@@ -253,40 +319,74 @@ export const TestSeriesDoubtSessionComp = () => {
                     objectFit={"cover"}
                     m={"10px 0"}
                     border={"1px solid #cccccc80"}
+                    fallback={
+                      <Box position={"relative"}>
+                        <Image
+                          src={previewImage}
+                          alt={Name}
+                          width={"100%"}
+                          maxWidth={"100%"}
+                          maxHeight={"172.5px"}
+                          borderRadius={"10px"}
+                          objectFit={"cover"}
+                          m={"10px 0"}
+                          border={"1px solid #cccccc80"}
+                        />
+                        <Text
+                          position={"absolute"}
+                          top={"80%"}
+                          left={"50%"}
+                          transform={"translate(-50%, -50%)"}
+                          zIndex={9}
+                          fontSize={"14px"}
+                          fontWeight={700}
+                          textAlign={"center"}
+                          minWidth={"200px"}
+                          textTransform={"uppercase"}
+                        >
+                          {Name}
+                        </Text>
+                      </Box>
+                    }
                   />
-                  <Text
-                    position={"absolute"}
-                    top={"80%"}
-                    left={"50%"}
-                    transform={"translate(-50%, -50%)"}
-                    zIndex={9}
-                    fontSize={"14px"}
-                    fontWeight={700}
-                    textAlign={"center"}
-                    minWidth={"200px"}
-                    textTransform={"uppercase"}
-                  >
-                    {Name}
-                  </Text>
+                  {bgImage[Subject] && (
+                    <Text
+                      position={"absolute"}
+                      top={"50%"}
+                      left={"50%"}
+                      transform={"translate(-50%, -50%)"}
+                      zIndex={9}
+                      fontSize={"14px"}
+                      fontWeight={700}
+                      textAlign={"center"}
+                      maxWidth={"100px"}
+                      textTransform={"uppercase"}
+                    >
+                      {Name}
+                    </Text>
+                  )}
                 </Box>
 
-                <Button
-                  id={
-                    Zoom_Link &&
-                    getSessionStatus(Session_Date_Time) === "active"
-                      ? "submit-btn"
-                      : "submit-btn-active"
-                  }
-                  fontSize={"12px"}
-                  loadingText={""}
-                  isDisabled={
-                    !Zoom_Link ||
-                    getSessionStatus(Session_Date_Time) === "inactive"
-                  }
-                  padding={"0 !important"}
-                >
-                  Join Now
-                </Button>
+                {!Recording_Link && (
+                  <Button
+                    id={
+                      Zoom_Link &&
+                      getSessionStatus(Session_Date_Time) === "active"
+                        ? "submit-btn"
+                        : "submit-btn-active"
+                    }
+                    fontSize={"12px"}
+                    loadingText={""}
+                    isDisabled={
+                      !Zoom_Link ||
+                      getSessionStatus(Session_Date_Time) === "inactive"
+                    }
+                    padding={"0 !important"}
+                    onClick={() => window.open(Zoom_Link, "blank")}
+                  >
+                    Join Now
+                  </Button>
+                )}
                 {Recording_Link && (
                   <Link
                     style={{
@@ -298,8 +398,6 @@ export const TestSeriesDoubtSessionComp = () => {
                     <Button
                       id={"submit-btn"}
                       fontSize={"12px"}
-                      loadingText={""}
-                      isDisabled={!Recording_Link}
                       padding={"0 !important"}
                       mt={"8px"}
                     >

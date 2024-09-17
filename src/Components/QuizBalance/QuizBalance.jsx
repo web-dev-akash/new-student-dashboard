@@ -146,8 +146,6 @@ export const QuizBalance = () => {
     };
   }, [history]);
 
-  console.log(history);
-
   if (!history) {
     return <Loading />;
   }

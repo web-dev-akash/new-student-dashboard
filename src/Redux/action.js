@@ -914,3 +914,22 @@ export const getTestSeriesDoubtSessions = () => async (dispatch) => {
     console.log("Error :", error);
   }
 };
+
+export const updateAnalysisToSheet = async (email, description) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = "https://backend.wisechamps.com/student/update-analysis-sheet";
+    await axios.post(
+      url,
+      { email, description },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};

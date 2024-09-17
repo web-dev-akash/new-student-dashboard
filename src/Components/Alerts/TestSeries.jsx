@@ -42,7 +42,7 @@ export const TestSeries = () => {
             <Text as={"span"} textDecoration={"line-through"}>
               ₹1000
             </Text>{" "}
-            at just ₹500. Buy now & get 50% OFF. Offer valid till 15th September
+            at just ₹500. Buy now & get 50% OFF.
           </Text>
           <Button
             fontSize={"13px"}
