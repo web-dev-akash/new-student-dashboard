@@ -17,10 +17,6 @@ export const Home = () => {
   const oqad = useSelector((state) => state.oqad);
   const testSeries = useSelector((state) => state.testSeries);
 
-  const maths = useSelector((state) => state.user.testSeries.Maths);
-  const science = useSelector((state) => state.user.testSeries.Science);
-  const english = useSelector((state) => state.user.testSeries.English);
-
   const testSeriesDoubtSession = useSelector((state) => state.doubtSession);
 
   useEffect(() => {
@@ -32,10 +28,10 @@ export const Home = () => {
       dispatch(getTestSeriesByGrade(user.grade));
     }
 
-    if ((maths || english || science) && testSeriesDoubtSession.status === 0) {
-      dispatch(getTestSeriesDoubtSessions(testSeries));
+    if (testSeriesDoubtSession.status === 0) {
+      dispatch(getTestSeriesDoubtSessions(user.grade));
     }
-  }, [testSeries.Maths]);
+  }, []);
 
   return (
     <Box>

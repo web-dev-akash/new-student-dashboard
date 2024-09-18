@@ -899,16 +899,22 @@ export const getTestSeriesByGrade = (grade) => async (dispatch) => {
   }
 };
 
-export const getTestSeriesDoubtSessions = () => async (dispatch) => {
+export const getTestSeriesDoubtSessions = (grade) => async (dispatch) => {
   try {
     const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
     const url = `https://backend.wisechamps.com/student/test-series/doubt-session`;
-    const res = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
+    const res = await axios.post(
+      url,
+      {
+        grade: grade,
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
     dispatch(setTestSeriesDoubtSession(res.data));
   } catch (error) {
     console.log("Error :", error);
