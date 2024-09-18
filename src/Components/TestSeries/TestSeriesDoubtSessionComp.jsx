@@ -7,9 +7,9 @@ import previewImage from "/src/assets/preview.jpg";
 import { Link } from "react-router-dom";
 import doubtLogo from "/src/assets/doubt_logo.gif";
 
-import mathsBG from "/src/assets/maths_bg.webp";
-import scienceBG from "/src/assets/science_bg.webp";
-import englishBG from "/src/assets/english_bg.webp";
+import mathsBG from "/src/assets/maths_doubt_session.png";
+import scienceBG from "/src/assets/science_doubt_session.png";
+import englishBG from "/src/assets/english_doubt_session.png";
 
 import moment from "moment";
 import { setAlert } from "../../Redux/action";
@@ -49,6 +49,7 @@ export const TestSeriesDoubtSessionComp = () => {
   };
 
   const [status, setStatus] = useState("inactive");
+  const [error, setError] = useState(false);
 
   const doubtSessions = useSelector((state) => state.doubtSession.data);
   const doubtSessionStatus = useSelector((state) => state.doubtSession.status);
@@ -319,6 +320,8 @@ export const TestSeriesDoubtSessionComp = () => {
                     objectFit={"cover"}
                     m={"10px 0"}
                     border={"1px solid #cccccc80"}
+                    onError={() => setError(true)}
+                    onLoad={() => setError(false)}
                     fallback={
                       <Box position={"relative"}>
                         <Image
@@ -349,18 +352,21 @@ export const TestSeriesDoubtSessionComp = () => {
                       </Box>
                     }
                   />
-                  {bgImage[Subject] && (
+                  {!error && (
                     <Text
                       position={"absolute"}
                       top={"50%"}
                       left={"50%"}
                       transform={"translate(-50%, -50%)"}
                       zIndex={9}
-                      fontSize={"14px"}
-                      fontWeight={700}
+                      fontSize={"20px"}
+                      fontWeight={Subject === "Science" ? 800 : 700}
+                      letterSpacing={2}
+                      lineHeight={1.3}
                       textAlign={"center"}
-                      maxWidth={"100px"}
+                      minWidth={"180px"}
                       textTransform={"uppercase"}
+                      color={Subject === "Science" ? "#131C40" : "#fff"}
                     >
                       {Name}
                     </Text>

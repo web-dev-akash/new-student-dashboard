@@ -5,6 +5,9 @@ import { LuChevronLeftCircle, LuChevronRightCircle } from "react-icons/lu";
 import previewImage from "/src/assets/preview.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import mathLogo from "/src/assets/math_logo.gif";
+import mathsBG from "/src/assets/maths_mock_test.png";
+import scienceBG from "/src/assets/science_mock_test.png";
+import englishBG from "/src/assets/english_mock_test.png";
 
 const months = {
   0: "January",
@@ -19,6 +22,33 @@ const months = {
   9: "October",
   10: "November",
   11: "December",
+};
+
+const bgImage = {
+  Maths: mathsBG,
+  Science: scienceBG,
+  English: englishBG,
+};
+
+const styles = {
+  Maths: {
+    fontSize: "18px",
+    left: "54%",
+    minWidth: "140px",
+    transform: "translate(-50%, -50%) rotate(7deg)",
+  },
+  English: {
+    fontSize: "21px",
+    left: "50%",
+    minWidth: "170px",
+    transform: "translate(-50%, -50%)",
+  },
+  Science: {
+    fontSize: "23px",
+    left: "50%",
+    minWidth: "190px",
+    transform: "translate(-50%, -50%)",
+  },
 };
 
 export const TestSeriesComp = () => {
@@ -184,10 +214,7 @@ export const TestSeriesComp = () => {
         id="quizScroller"
       >
         {testSeries.map(
-          (
-            { Activate_Date, Survey_Link, id, Test_Image, Name, Subject, Free },
-            idx
-          ) => {
+          ({ Activate_Date, Survey_Link, id, Name, Subject, Free }, idx) => {
             if (!itemRefs.current[idx]) {
               itemRefs.current[idx] = React.createRef();
             }
@@ -268,7 +295,7 @@ export const TestSeriesComp = () => {
                 </Box>
                 <Box position={"relative"}>
                   <Image
-                    src={Test_Image}
+                    src={bgImage[Subject]}
                     alt={Name}
                     width={"100%"}
                     maxWidth={"100%"}
@@ -307,6 +334,20 @@ export const TestSeriesComp = () => {
                       </Box>
                     }
                   />
+                  <Text
+                    style={styles[Subject]}
+                    position={"absolute"}
+                    top={"52%"}
+                    zIndex={9}
+                    fontWeight={800}
+                    letterSpacing={2}
+                    lineHeight={1.3}
+                    textAlign={"center"}
+                    textTransform={"uppercase"}
+                    color={"#210203"}
+                  >
+                    {Name}
+                  </Text>
                 </Box>
 
                 <Link

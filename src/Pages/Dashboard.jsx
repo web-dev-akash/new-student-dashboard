@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { Box } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { Box, Fade } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../Redux/action";
 
@@ -131,7 +131,7 @@ export const Dashboard = ({ setTab }) => {
         <CarousalMain setTab={setTab} />
         <WeeklyQuiz />
         <TestSeriesComp />
-        {/* <TestSeriesDoubtSessionComp /> */}
+        <TestSeriesDoubtSessionComp />
         {/* <Pricing setTab={setTab} /> */}
         <OQAD />
         {/* <Fade in={showStory} unmountOnExit id="story">
