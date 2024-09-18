@@ -166,22 +166,23 @@ export const TestSeriesDoubtSessionComp = () => {
 
     setFinalSesisons(sortedDoubtSessions);
 
+    let intervalId;
     const updateButtonStatus = () => {
+      console.log("------Running-----");
       const currentSession = sortedDoubtSessions.filter(
         (item) =>
           moment(item.Session_Date_Time).format("YYYY-MM-DD") ===
           moment().format("YYYY-MM-DD")
       );
-      const dateTimeStr =
-        currentSession?.[0]?.Session_Date_Time ??
-        `${moment().format("YYYY-MM-DD")}T17:00:00+05:30`;
-      const newStatus = getSessionStatus(dateTimeStr);
-      setStatus(newStatus);
+      const dateTimeStr = currentSession?.[0]?.Session_Date_Time;
+      if (dateTimeStr) {
+        const newStatus = getSessionStatus(dateTimeStr);
+        setStatus(newStatus);
+        intervalId = setInterval(updateButtonStatus, 1000);
+      }
     };
 
     updateButtonStatus();
-
-    const intervalId = setInterval(updateButtonStatus, 1000);
 
     return () => clearInterval(intervalId);
   }, [doubtSessionStatus]);

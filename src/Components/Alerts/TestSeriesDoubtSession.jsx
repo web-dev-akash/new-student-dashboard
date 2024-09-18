@@ -66,10 +66,16 @@ export const TestSeriesDoubtSession = () => {
       currentSession?.[0]?.Session_Date_Time ??
       `${moment().format("YYYY-MM-DD")}T17:00:00+05:30`;
 
-    setTime(formatDateTime(dateTimeStr));
-    setSubject(currentSession?.[0].Subject);
-    setJoiningLink(currentSession?.[0].Zoom_Link);
+    if (currentSession?.[0]) {
+      setTime(formatDateTime(dateTimeStr));
+      setSubject(currentSession?.[0].Subject);
+      setJoiningLink(currentSession?.[0].Zoom_Link);
+    }
   }, [doubtSessionStatus]);
+
+  if (!time || !subject || !joiningLink) {
+    return null;
+  }
 
   return (
     <Box display={"flex"} justifyContent={"center"} textAlign={"left"}>
