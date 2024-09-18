@@ -499,9 +499,9 @@ export const WeeklyQuiz = () => {
         bg={"none"}
         fontSize={"28px"}
         position={"absolute"}
-        top={"50%"}
+        top={"55%"}
         transform={"translateY(-50%)"}
-        left={"-10px"}
+        left={"-15px"}
         outline={"none"}
         padding={"0"}
         cursor={"pointer"}
@@ -517,9 +517,9 @@ export const WeeklyQuiz = () => {
         bg={"none"}
         fontSize={"28px"}
         position={"absolute"}
-        top={"50%"}
+        top={"55%"}
         transform={"translateY(-50%)"}
-        right={"-10px"}
+        right={"-15px"}
         outline={"none"}
         padding={"0"}
         cursor={"pointer"}
