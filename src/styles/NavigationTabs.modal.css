@@ -3,8 +3,9 @@
 }
 
 .tab-div .tabs-mobile {
+  border-radius: 10px;
   text-wrap: nowrap;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   flex-direction: column;
   gap: 1px;

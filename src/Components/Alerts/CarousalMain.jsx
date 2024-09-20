@@ -13,16 +13,23 @@ import { IntroLuckyDrawMeeting } from "./IntroLuckyDrawMeeting";
 import { QuizInProgress } from "./QuizInProgress";
 import { TestSeries } from "./TestSeries";
 import { TestSeriesDoubtSession } from "./TestSeriesDoubtSession";
+import { ViewStories } from "./ViewStories";
 
-export const CarousalMain = ({ setTab }) => {
+export const CarousalMain = ({ setTab, setShowStory }) => {
   const alert = useSelector((state) => state.alert);
   return (
     <Box
       overflow={"hidden"}
-      width={"100%"}
+      width={"90%"}
+      margin={"0 auto"}
       borderRadius={"10px"}
       display={alert.length > 0 ? "block" : "none"}
       id="alerts"
+      position={"relative"}
+      zIndex={10}
+      sx={{
+        boxShadow: "0 0 30px 1px #00000090",
+      }}
     >
       <Carousel
         transitionTime={500}
@@ -72,6 +79,7 @@ export const CarousalMain = ({ setTab }) => {
               return null;
             })
           : null}
+        <ViewStories setShowStory={setShowStory} />
       </Carousel>
     </Box>
   );

@@ -24,6 +24,7 @@
     "compressorjs": "^1.2.1",
     "dotenv": "^16.4.5",
     "framer-motion": "^11.3.5",
+    "gsap": "^3.12.5",
     "ldrs": "^1.0.2",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.0",

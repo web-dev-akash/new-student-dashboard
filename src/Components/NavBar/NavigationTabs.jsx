@@ -64,25 +64,25 @@ export const NavigationTabs = () => {
           disableUnderline
           tabFlex={1}
           sx={{
-            width: "97%",
-            maxWidth: { md: "550px", lg: "600px" },
+            width: "100%",
+            maxWidth: { md: "500px", lg: "600px" },
             position: "fixed",
-            bottom: { xs: 15, md: "auto" },
-            top: { xs: "auto", md: "10px" },
+            bottom: { xs: 0, md: "auto" },
+            top: { xs: "auto", md: "7px" },
             left: "50%",
             transform: "translateX(-50%)",
             p: 0.7,
-            gap: 0.5,
-            borderRadius: "15px",
+            gap: { xs: 0.5, md: 1.5 },
+            borderRadius: { xs: "15px 15px 0 0", md: "15px" },
+            border: { md: "1px solid #5838fc" },
             bgcolor: "white",
             boxShadow: {
-              xs: "0 20px 50px 45px rgba(0,0,0, 0.7)",
+              xs: "0 0 25px 5px rgba(0,0,0, 0.7)",
               md: "none",
             },
-            border: { md: "1px solid #5838fc" },
             zIndex: 1001,
-            minHeight: { xs: "60px", md: "40px" },
-            maxHeight: { md: "55px" },
+            minHeight: { xs: "60px", md: "60px" },
+            maxHeight: { md: "60px" },
           }}
         >
           <Tab className="tabs-mobile" disableIndicator>
