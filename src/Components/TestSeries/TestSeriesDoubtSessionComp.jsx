@@ -166,25 +166,38 @@ export const TestSeriesDoubtSessionComp = () => {
 
     setFinalSesisons(sortedDoubtSessions);
 
-    let intervalId;
+    let timeoutId;
+
     const updateButtonStatus = () => {
-      console.log("------Running-----");
-      const currentSession = sortedDoubtSessions.filter(
+      const currentSession = sortedDoubtSessions.find(
         (item) =>
           moment(item.Session_Date_Time).format("YYYY-MM-DD") ===
           moment().format("YYYY-MM-DD")
       );
-      const dateTimeStr = currentSession?.[0]?.Session_Date_Time;
-      if (dateTimeStr) {
-        const newStatus = getSessionStatus(dateTimeStr);
-        setStatus(newStatus);
-        intervalId = setInterval(updateButtonStatus, 1000);
+
+      if (currentSession) {
+        const dateTimeStr = currentSession.Session_Date_Time;
+        const sessionTime = moment(dateTimeStr);
+        const now = moment();
+        const timeUntilSessionStart = sessionTime.diff(now, "milliseconds");
+        const timeUntilFiveMinutesBefore =
+          timeUntilSessionStart - 5 * 60 * 1000;
+
+        if (timeUntilFiveMinutesBefore > 0) {
+          timeoutId = setTimeout(() => {
+            const newStatus = getSessionStatus(dateTimeStr);
+            setStatus(newStatus);
+          }, timeUntilFiveMinutesBefore);
+        } else {
+          const newStatus = getSessionStatus(dateTimeStr);
+          setStatus(newStatus);
+        }
       }
     };
 
     updateButtonStatus();
 
-    return () => clearInterval(intervalId);
+    return () => clearTimeout(timeoutId);
   }, [doubtSessionStatus]);
 
   useEffect(() => {

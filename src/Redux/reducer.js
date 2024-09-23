@@ -1,5 +1,6 @@
 import {
   GET_OQAD,
+  GET_STORIES,
   GET_TEST_SERIES,
   GET_TEST_SERIES_DOUBT_SESSION,
   GET_URL_QUERY,
@@ -65,6 +66,11 @@ const initialState = {
     data: [],
   },
   oqad: {},
+  story: {
+    status: 0,
+    solution: "",
+    quote: "",
+  },
   query: "",
 };
 
@@ -1084,6 +1090,12 @@ export const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         doubtSession: payload,
+      };
+    }
+    case GET_STORIES: {
+      return {
+        ...state,
+        story: payload,
       };
     }
     default: {

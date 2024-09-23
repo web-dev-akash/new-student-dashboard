@@ -17,6 +17,7 @@ export const AddressUpdate = () => {
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
+        status="info"
         colorScheme={"purple"}
         borderRadius={"10px"}
         position={"relative"}

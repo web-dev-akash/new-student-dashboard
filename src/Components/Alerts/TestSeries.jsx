@@ -17,6 +17,7 @@ export const TestSeries = () => {
         flexDirection={"column"}
         alignItems={"flex-start"}
         variant="subtle"
+        status="info"
         colorScheme={"pink"}
         borderRadius={"10px"}
         position={"relative"}

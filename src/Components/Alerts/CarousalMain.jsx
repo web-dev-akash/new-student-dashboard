@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
@@ -20,16 +21,21 @@ export const CarousalMain = ({ setTab, setShowStory }) => {
   return (
     <Box
       overflow={"hidden"}
-      width={"90%"}
+      width={"100%"}
       margin={"0 auto"}
       borderRadius={"10px"}
       display={alert.length > 0 ? "block" : "none"}
       id="alerts"
       position={"relative"}
       zIndex={10}
-      sx={{
-        boxShadow: "0 0 30px 1px #00000090",
-      }}
+      // sx={{
+      //   "& ul > li > div > div": {
+      //     color: "black",
+      //     backdropFilter: "blur(5px) saturate(200%)",
+      //     "-webkit-backdrop-filter": "blur(5px) saturate(200%)",
+      //     backgroundColor: "rgba(255, 255, 255, 0.5)",
+      //   },
+      // }}
     >
       <Carousel
         transitionTime={500}
@@ -79,7 +85,6 @@ export const CarousalMain = ({ setTab, setShowStory }) => {
               return null;
             })
           : null}
-        <ViewStories setShowStory={setShowStory} />
       </Carousel>
     </Box>
   );

@@ -47,9 +47,10 @@ export const PlansAndPricing = () => {
           position: "top",
           status: "error",
         });
-        setTempLoading(null);
+        setPrice(null);
         return;
       }
+      setPrice(amountParam);
       const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
       const url = `https://backend.wisechamps.com/payment_links`;
       const res = await axios.post(
@@ -106,7 +107,6 @@ export const PlansAndPricing = () => {
             status: "success",
           });
           handlePayment(email, `${Math.round(+price - +price * 0.2)}`);
-          // console.log(price, email, `${Math.round(+price - +price * 0.2)}`);
         } else {
           setPrice(null);
           setValidCoupon(false);
@@ -220,41 +220,6 @@ export const PlansAndPricing = () => {
             )}
           </ModalFooter>
         </ModalContent>
-        {/* <Grow in={open} {...{ timeout: 500 }}>
-          <Box sx={style}>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              sx={{ fontSize: { xs: 20, md: 23 }, fontWeight: 600 }}
-            >
-              Apply Discount Coupon
-            </Typography>
-            <Typography
-              id="modal-modal-description"
-              sx={{ mt: 1, fontSize: { xs: 15, md: 18 } }}
-            >
-              If you have a valid discount coupon then apply it and get upto 20%
-              OFF.
-            </Typography>
-            <Box mt={2}>
-              <Button
-                sx={{ padding: "6px 30px" }}
-                variant="contained"
-                onClick={() => handlePayment(email, price)}
-              >
-                Yes
-              </Button>
-              <Button
-                sx={{ padding: "6px 30px", ml: "10px" }}
-                variant="outlined"
-                onClick={handleClose}
-              >
-                No
-              </Button>
-            </Box>
-          </Box>
-        </Grow> */}
       </Modal>
       <Box>
         <SimpleGrid
@@ -331,9 +296,10 @@ export const PlansAndPricing = () => {
                 lineHeight={1.3}
               >
                 <Text>
-                  {validCoupon
+                  {/* {validCoupon
                     ? `₹${Math.round(+price - +price * 0.2)}`
-                    : "₹499"}
+                    : "₹499"} */}
+                  ₹499
                 </Text>{" "}
                 <Text fontSize={["14px", "14px", "15px", "16px", "18px"]}>
                   25 Sessions
@@ -361,8 +327,9 @@ export const PlansAndPricing = () => {
                 boxShadow: "0 0 0 5px #E5714D30",
               }}
               onClick={() => {
-                onOpen();
-                setPrice("499");
+                // onOpen();
+                // setPrice("499");
+                handlePayment(email, "499");
               }}
               isLoading={price === "499"}
               loadingText={""}
@@ -454,13 +421,6 @@ export const PlansAndPricing = () => {
               >
                 Validity 6 Months
               </Text>
-              {/* <Tag
-                colorScheme="purple"
-                size={["md", "md", "md", "md", "lg"]}
-                fontWeight={700}
-              >
-                POPULAR
-              </Tag> */}
               <Image
                 src={popular}
                 alt="Popular"
@@ -485,8 +445,7 @@ export const PlansAndPricing = () => {
                 boxShadow: "0 0 0 5px #49B86A30",
               }}
               onClick={() => handlePayment(email, "999")}
-              // mb={"5px"}
-              isLoading={tempLoading === "999"}
+              isLoading={price === "999"}
               loadingText={""}
             >
               Buy Now
@@ -577,13 +536,6 @@ export const PlansAndPricing = () => {
               >
                 Validity 2 Years
               </Text>
-              {/* <Tag
-                colorScheme="purple"
-                size={["md", "md", "md", "md", "lg"]}
-                fontWeight={700}
-              >
-                BEST PRICE
-              </Tag> */}
               <Image
                 src={bestprice}
                 alt="Best Price"
@@ -591,7 +543,6 @@ export const PlansAndPricing = () => {
                 position={"absolute"}
                 right={"-15px"}
                 bottom={"0px"}
-                // transform={"scaleX(-1)"}
               />
             </Box>
             <Button
@@ -608,8 +559,7 @@ export const PlansAndPricing = () => {
                 boxShadow: "0 0 0 5px #45439A30",
               }}
               onClick={() => handlePayment(email, "1999")}
-              // mb={"5px"}
-              isLoading={tempLoading === "1999"}
+              isLoading={price === "1999"}
               loadingText={""}
             >
               Buy Now

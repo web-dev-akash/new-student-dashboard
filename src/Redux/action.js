@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   GET_OQAD,
+  GET_STORIES,
   GET_TEST_SERIES,
   GET_TEST_SERIES_DOUBT_SESSION,
   GET_URL_QUERY,
@@ -86,6 +87,11 @@ export const setTestSeriesData = (payload) => ({
 
 export const setTestSeriesDoubtSession = (payload) => ({
   type: GET_TEST_SERIES_DOUBT_SESSION,
+  payload,
+});
+
+export const setStory = (payload) => ({
+  type: GET_STORIES,
   payload,
 });
 
@@ -935,6 +941,26 @@ export const updateAnalysisToSheet = async (email, description) => {
         },
       }
     );
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+export const getStoriesData = async (grade) => async (dispatch) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = "https://backend.wisechamps.com/student/story";
+    const res = await axios.post(
+      url,
+      { grade },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+    dispatch(setStory(res.data));
   } catch (error) {
     console.log("Error :", error);
   }
