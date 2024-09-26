@@ -3,8 +3,9 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Box, Image } from "@chakra-ui/react";
 import { WithSeeMore } from "react-insta-stories";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ripples } from "ldrs";
+import { getStoriesData } from "../../Redux/action";
 const StoriesLazy = React.lazy(() => import("react-insta-stories"));
 
 ripples.register();
@@ -13,17 +14,8 @@ export const StoriesComponent = ({ setShowStory }) => {
   const currentStories = useSelector((state) => state.story);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
   const stories = [
-    // {
-    //   url: "https://img.freepik.com/free-vector/university-background-flat-style_23-2147760408.jpg?t=st=1726905396~exp=1726908996~hmac=9163be58e80a64fd99a2db22d019d44724b9515b8a23486ef9a124c72e778319&w=826",
-    //   duration: 6000,
-    //   seeMore: ({ close }) => {
-    //     return <div onClick={close}>Hello, click to close this.</div>;
-    //   },
-    //   seeMoreCollapsed: () => {
-    //     return <div>Join Now</div>;
-    //   },
-    // },
     {
       url: `https://picsum.photos/${viewportWidth}/${viewportHeight}`,
       seeMoreCollapsed: ({ toggleMore, action }) => (
@@ -59,6 +51,18 @@ export const StoriesComponent = ({ setShowStory }) => {
       element.webkitRequestFullscreen();
     } else if (element.msRequestFullscreen) {
       element.msRequestFullscreen();
+    }
+  };
+
+  const exitFullScreen = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
     }
   };
 
@@ -101,7 +105,10 @@ export const StoriesComponent = ({ setShowStory }) => {
           defaultInterval={8000}
           width={"100%"}
           height={"100%"}
-          onAllStoriesEnd={() => setShowStory(false)}
+          onAllStoriesEnd={() => {
+            exitFullScreen();
+            setShowStory(false);
+          }}
         />
       </Suspense>
     </Box>
@@ -114,4 +121,5 @@ const customSeeMore = {
   bottom: 20,
   position: "relative",
   color: "white",
+  cursor: "pointer",
 };

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
   getDailyQuestion,
+  getStoriesData,
   getTestSeriesByGrade,
   getTestSeriesDoubtSessions,
 } from "../Redux/action";
@@ -16,6 +17,7 @@ export const Home = () => {
   const user = useSelector((state) => state.user);
   const oqad = useSelector((state) => state.oqad);
   const testSeries = useSelector((state) => state.testSeries);
+  const currentStories = useSelector((state) => state.story);
 
   const testSeriesDoubtSession = useSelector((state) => state.doubtSession);
 
@@ -30,6 +32,10 @@ export const Home = () => {
 
     if (testSeriesDoubtSession.status === 0) {
       dispatch(getTestSeriesDoubtSessions(user.grade));
+    }
+
+    if (currentStories.status === 0) {
+      dispatch(getStoriesData(user.grade));
     }
   }, []);
 

@@ -39,7 +39,7 @@ export const TestSeriesPlans = () => {
     {
       question: "What is the schedule for doubt sessions?",
       answer:
-        "English: Monday and Thursday at 5 PM\nScience: Tuesday and Saturday at 5 PM\nMath: Wednesday and Friday at 5 PM\nDoubt sessions will be live, but recordings will also be available if you cannot attend.",
+        "English: Monday and Thursday at 8 PM\nScience: Tuesday and Saturday at 8 PM\nMath: Wednesday and Friday at 8 PM\nDoubt sessions will be live, but recordings will also be available if you cannot attend.",
     },
     {
       question: "What subjects will be covered in the mock tests?",
@@ -57,6 +57,14 @@ export const TestSeriesPlans = () => {
         "Yes, answer keys and detailed explanations will be provided for all mock tests to help students understand their mistakes and improve their knowledge.",
     },
   ]);
+
+  const renderAnswerWithLineBreaks = (answer) => {
+    return answer.split("\n").map((text, index) => (
+      <Text key={index} mb={1}>
+        {text}
+      </Text>
+    ));
+  };
 
   const handlePayment = async (emailParam, amountParam, subjectParam) => {
     try {
@@ -229,7 +237,7 @@ export const TestSeriesPlans = () => {
                       mb={2}
                       fontSize={["13px", "13px", "14px", "15px"]}
                     >
-                      {item.answer}
+                      {renderAnswerWithLineBreaks(item.answer)}
                     </Text>
                   </Box>
                 ))}

@@ -404,7 +404,9 @@ export const TestSeriesDoubtSessionComp = () => {
                     padding={"0 !important"}
                     onClick={() => window.open(Zoom_Link, "blank")}
                   >
-                    Join Now
+                    {getColorScheme(Session_Date_Time) === "linkedin"
+                      ? "No Recording Avaiable"
+                      : "Join Now"}
                   </Button>
                 )}
                 {Recording_Link && (
@@ -419,7 +421,6 @@ export const TestSeriesDoubtSessionComp = () => {
                       id={"submit-btn"}
                       fontSize={"12px"}
                       padding={"0 !important"}
-                      mt={"8px"}
                     >
                       Doubt Session Recording
                     </Button>

@@ -169,9 +169,9 @@ export const Dashboard = ({ setTab }) => {
         <TestSeriesDoubtSessionComp />
         {/* <Pricing setTab={setTab} /> */}
         <OQAD />
-        {/* <Fade in={showStory} unmountOnExit id="story">
+        <Fade in={showStory} unmountOnExit id="story">
           <StoriesComponent setShowStory={setShowStory} />
-        </Fade> */}
+        </Fade>
       </Box>
     </Box>
   );

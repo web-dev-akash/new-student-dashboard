@@ -946,7 +946,7 @@ export const updateAnalysisToSheet = async (email, description) => {
   }
 };
 
-export const getStoriesData = async (grade) => async (dispatch) => {
+export const getStoriesData = (grade) => async (dispatch) => {
   try {
     const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
     const url = "https://backend.wisechamps.com/student/story";
