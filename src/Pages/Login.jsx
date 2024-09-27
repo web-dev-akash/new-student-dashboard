@@ -50,11 +50,12 @@ export const Login = () => {
   const query = useSelector((state) => state.query);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
+  const localEmail = localStorage.getItem("wise_email");
+
   const [loginData, setLoginData] = useState({
-    email: "",
+    email: localEmail || "",
     // phone: "",
   });
-  const localEmail = localStorage.getItem("wise_email");
   // const [loginWithPhone, setLoginWithPhone] = useState(false);
   // const [otp, setOtp] = useState("");
   // const [showOTPInput, setShowOTPInput] = useState(false);

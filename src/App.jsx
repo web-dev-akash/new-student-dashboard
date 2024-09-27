@@ -23,6 +23,7 @@ function App() {
   const hash = new URL(window.location.href).hash;
   const path = new URL(window.location.href).pathname;
   const query = new URLSearchParams(window.location.search).get("link");
+  const queryEmail = new URLSearchParams(window.location.search).get("email");
 
   useEffect(() => {
     if (hash) {
@@ -31,6 +32,9 @@ function App() {
       dispatch(setUrlQuery(`${path}?link=${encodeURIComponent(query)}`));
     } else if (path) {
       dispatch(setUrlQuery(path));
+    }
+    if (queryEmail) {
+      localStorage.setItem("wise_email", queryEmail);
     }
   });
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Box, Fade, Image } from "@chakra-ui/react";
+import { Box, Fade, Image, useToast } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../Redux/action";
@@ -12,14 +12,36 @@ import { OQAD } from "../Components/OQAD/OQAD";
 import { TestSeriesComp } from "../Components/TestSeries/TestSeriesComp";
 import { TestSeriesDoubtSessionComp } from "../Components/TestSeries/TestSeriesDoubtSessionComp";
 import { StoriesComponent } from "../Components/Stories/StoriesComponent";
+import logo from "/images/icon.png";
 
 export const Dashboard = ({ setTab }) => {
   const dispatch = useDispatch();
   const [showStory, setShowStory] = useState(false);
   const weeklyQuizzes = useSelector((state) => state.user.weeklyQuizzes);
   const alert = useSelector((state) => state.alert);
+  const email = useSelector((state) => state.user.email);
   const newUser = useSelector((state) => state.user.newUser);
   const timersRef = useRef([]);
+
+  const showReminderNotification = () => {
+    if (window.Notification.permission === "granted") {
+      const notification = new Notification(
+        `Maths Quiz Starting in 5 minutes`,
+        {
+          body: "Join now",
+          icon: logo,
+          tag: "reminder",
+          requireInteraction: true,
+          silent: false,
+        }
+      );
+
+      notification.onclick = (e) => {
+        e.preventDefault();
+        window.open(`https://students.wisechamps.com?email=${email}`, "_blank");
+      };
+    }
+  };
 
   useEffect(() => {
     const now = new Date();
@@ -109,6 +131,8 @@ export const Dashboard = ({ setTab }) => {
         }, seventyMinutesAfter - now)
       );
     }
+
+    showReminderNotification();
 
     return () => {
       timersRef.current.forEach((timer) => clearTimeout(timer));

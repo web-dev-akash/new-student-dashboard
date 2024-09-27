@@ -11,6 +11,7 @@ import {
   getTestSeriesByGrade,
   getTestSeriesDoubtSessions,
 } from "../Redux/action";
+import { requestForToken } from "../firebase";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,17 @@ export const Home = () => {
   const currentStories = useSelector((state) => state.story);
 
   const testSeriesDoubtSession = useSelector((state) => state.doubtSession);
+
+  const getToken = async () => {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      const token = await requestForToken();
+      if (token) {
+        // localStorage.setItem("FCM_TOKEN", token);
+        // sendTokenForUser(token)
+      }
+    }
+  };
 
   useEffect(() => {
     if (!oqad || !oqad.status) {
@@ -37,6 +49,8 @@ export const Home = () => {
     if (currentStories.status === 0) {
       dispatch(getStoriesData(user.grade));
     }
+
+    getToken();
   }, []);
 
   return (
