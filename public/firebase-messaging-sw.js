@@ -21,9 +21,9 @@ onBackgroundMessage(messaging, (payload) => {
     payload
   );
 
-  const notificationTitle = "Background Message Title";
+  const notificationTitle = "Background Message Title 1";
   const notificationOptions = {
-    body: "Background Message body.",
+    body: "Background Message body 1",
     icon: "/images/icon.png",
   };
 
