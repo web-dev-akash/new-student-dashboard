@@ -660,6 +660,7 @@ export const fetchUser = (email) => async (dispatch) => {
               Science: res.data.testSeries.Science,
               English: res.data.testSeries.English,
             },
+            FCM_TOKEN: res.data.FCM_TOKEN,
           })
         );
         dispatch(setOrders(dummyUserData.orders));
@@ -692,6 +693,7 @@ export const fetchUser = (email) => async (dispatch) => {
             Science: res.data.testSeries.Science,
             English: res.data.testSeries.English,
           },
+          FCM_TOKEN: res.data.FCM_TOKEN,
         })
       );
     }
@@ -961,6 +963,25 @@ export const getStoriesData = (grade) => async (dispatch) => {
       }
     );
     dispatch(setStory(res.data));
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+export const updatePushTokenToZoho = async (email, token) => {
+  try {
+    const authToken = import.meta.env.VITE_APP_AUTH_TOKEN;
+    const url = "https://backend.wisechamps.com/student/update-fcm-token";
+    await axios.post(
+      url,
+      { email, token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
   } catch (error) {
     console.log("Error :", error);
   }

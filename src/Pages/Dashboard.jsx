@@ -23,26 +23,6 @@ export const Dashboard = ({ setTab }) => {
   const newUser = useSelector((state) => state.user.newUser);
   const timersRef = useRef([]);
 
-  const showReminderNotification = () => {
-    if (window.Notification.permission === "granted") {
-      const notification = new Notification(
-        `Maths Quiz Starting in 5 minutes`,
-        {
-          body: "Join now",
-          icon: logo,
-          tag: "reminder",
-          requireInteraction: true,
-          silent: false,
-        }
-      );
-
-      notification.onclick = (e) => {
-        e.preventDefault();
-        window.open(`https://students.wisechamps.com?email=${email}`, "_blank");
-      };
-    }
-  };
-
   useEffect(() => {
     const now = new Date();
     const initialIndex = weeklyQuizzes.findIndex((quiz) => {
@@ -131,8 +111,6 @@ export const Dashboard = ({ setTab }) => {
         }, seventyMinutesAfter - now)
       );
     }
-
-    showReminderNotification();
 
     return () => {
       timersRef.current.forEach((timer) => clearTimeout(timer));

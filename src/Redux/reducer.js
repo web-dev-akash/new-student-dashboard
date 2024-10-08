@@ -43,6 +43,7 @@ const initialState = {
       Science: false,
       English: false,
     },
+    FCM_TOKEN: null,
   },
   mode: "",
   products: [],

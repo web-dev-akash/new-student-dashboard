@@ -10,8 +10,10 @@ import {
   getStoriesData,
   getTestSeriesByGrade,
   getTestSeriesDoubtSessions,
+  updatePushTokenToZoho,
 } from "../Redux/action";
-import { requestForToken } from "../firebase";
+import { messaging, requestForToken } from "../firebase";
+import { onMessage } from "firebase/messaging";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -19,19 +21,48 @@ export const Home = () => {
   const oqad = useSelector((state) => state.oqad);
   const testSeries = useSelector((state) => state.testSeries);
   const currentStories = useSelector((state) => state.story);
-
   const testSeriesDoubtSession = useSelector((state) => state.doubtSession);
+  const tokenLocal = localStorage.getItem("FCM_TOKEN") || null;
 
-  const getToken = async () => {
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      const token = await requestForToken();
-      if (token) {
-        // localStorage.setItem("FCM_TOKEN", token);
-        // sendTokenForUser(token)
+  const getToken = () => {
+    Notification.requestPermission().then((perm) => {
+      if (perm === "granted") {
+        if (!tokenLocal) {
+          navigator.serviceWorker.ready.then((registration) => {
+            requestForToken(registration).then((token) => {
+              if (token) {
+                localStorage.setItem("FCM_TOKEN", token);
+                updatePushTokenToZoho(user.email, token).then((res) => {
+                  console.log("Updated in DB", res);
+                });
+              } else {
+                console.log("Error Generating Token");
+              }
+            });
+          });
+        }
       }
-    }
+    });
   };
+
+  onMessage(messaging, ({ notification }) => {
+    console.log("Foreground Notification", notification);
+    const notify = new Notification(notification.title, {
+      body: notification.body,
+      icon: "/images/icon.png",
+      tag: "reminder",
+      requireInteraction: true,
+      silent: false,
+    });
+
+    notify.onclick = (e) => {
+      e.preventDefault();
+      window.open(
+        `https://students.wisechamps.com?email=${user.email}`,
+        "_blank"
+      );
+    };
+  });
 
   useEffect(() => {
     if (!oqad || !oqad.status) {
