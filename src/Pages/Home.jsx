@@ -47,13 +47,19 @@ export const Home = () => {
 
   onMessage(messaging, ({ notification }) => {
     console.log("Foreground Notification", notification);
-    const notify = new Notification(notification.title, {
+    const notificationTitle = notification.title;
+    const notificationOptions = {
       body: notification.body,
-      icon: "/images/icon.png",
-      tag: "reminder",
-      requireInteraction: true,
-      silent: false,
-    });
+      icon: notification.image,
+      tag: notification.tag,
+      renotify: notification.renotify,
+      dir: notification.dir,
+      vibrate: notification.vibrate,
+      silent: notification.silent,
+      actions: notification.actions,
+      requireInteraction: notification.requireInteraction,
+    };
+    const notify = new Notification(notificationTitle, notificationOptions);
 
     notify.onclick = (e) => {
       e.preventDefault();
