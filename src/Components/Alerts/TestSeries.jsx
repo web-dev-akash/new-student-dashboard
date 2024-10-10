@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Alert,
   AlertDescription,
@@ -38,12 +39,12 @@ export const TestSeries = () => {
             width={"100%"}
             fontWeight={500}
           >
-            Introducing Test Series & Doubt Sessions on Maths, Science and
-            English of worth{" "}
+            Introducing Test Series for Maths, Science, and English - originally
+            worth{" "}
             <Text as={"span"} textDecoration={"line-through"}>
-              ₹1000
+              ₹1000,
             </Text>{" "}
-            at just ₹500. Buy now & get 50% OFF.
+            <b>now just ₹199! That's 80% OFF </b>- grab it now!
           </Text>
           <Button
             fontSize={"13px"}

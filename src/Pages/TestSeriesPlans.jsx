@@ -23,7 +23,8 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "/images/logo.png";
-import { MdCheckCircle } from "react-icons/md";
+import { FcFaq } from "react-icons/fc";
+import { ImCross } from "react-icons/im";
 
 export const TestSeriesPlans = () => {
   const toast = useToast();
@@ -34,22 +35,12 @@ export const TestSeriesPlans = () => {
     {
       question: "What is the structure of the 5-week mock test course?",
       answer:
-        "The course runs for 5 weeks. Every Sunday, students will receive access to one new mock test each for English, Math, and Science. Students can complete these tests at their own pace and then attend live doubt sessions with expert teachers to solve their queries.",
-    },
-    {
-      question: "What is the schedule for doubt sessions?",
-      answer:
-        "English: Monday and Thursday at 8 PM\nScience: Tuesday and Saturday at 8 PM\nMath: Wednesday and Friday at 8 PM\nDoubt sessions will be live, but recordings will also be available if you cannot attend.",
+        "The course runs for 5 weeks. Every Sunday, students will receive access to one new mock test each for English, Math, and Science. Students can complete these tests at their own pace.",
     },
     {
       question: "What subjects will be covered in the mock tests?",
       answer:
         "The mock tests will cover subjects such as Math, Science, English, and Logical Reasoning, depending on the specific Olympiad course the student registers for.",
-    },
-    {
-      question: "When will the tests and recordings be available?",
-      answer:
-        "Tests and recordings will be made available on students' dashboards starting from September 10th. Students can access and complete the tests and view doubt session recordings at their convenience till Dec 15th.",
     },
     {
       question: "Will answer keys and explanations be provided?",
@@ -170,13 +161,16 @@ export const TestSeriesPlans = () => {
               fontWeight={[500, 500, 600, 600]}
               fontSize={["14px", "15px", "16px", "17px"]}
             >
-              <ListItem>
+              <ListItem sx={{ alignItems: "center", display: "flex" }}>
                 <ListIcon
-                  as={MdCheckCircle}
+                  as={ImCross}
                   color="red.500"
-                  fontSize={"25px"}
+                  fontSize={"30px"}
+                  border={"2px solid red"}
+                  padding={"5px"}
+                  borderRadius={"50%"}
                 />
-                Recordings will be provided for all the doubt sessions.
+                No Doubt Sessions will be provided
               </ListItem>
             </List>
           </Alert>
@@ -203,8 +197,12 @@ export const TestSeriesPlans = () => {
                   fontSize={["13px", "13px", "14px", "15px"]}
                   padding={"3px 0"}
                   fontWeight={600}
+                  display={"flex"}
+                  alignItems={"center"}
+                  gap={"5px"}
                 >
-                  Frequently Asked Questions about Mock Test Course
+                  <FcFaq fontSize={"35px"} />
+                  Frequently Asked Questions
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
@@ -288,7 +286,7 @@ export const TestSeriesPlans = () => {
                 right={"7px"}
                 borderRadius={"50px"}
               >
-                50% OFF
+                80% OFF
               </Tag>
               <Box
                 display={"flex"}
@@ -323,14 +321,14 @@ export const TestSeriesPlans = () => {
                     textDecoration={"line-through"}
                     lineHeight={0.4}
                   >
-                    ₹1000
+                    ₹999
                   </Text>
-                  <Text>₹500</Text>
+                  <Text>₹199</Text>
                   <Text
                     whiteSpace={"nowrap"}
                     fontSize={["13px", "13px", "14px", "15px", "16px"]}
                   >
-                    10 Doubt Session
+                    No Doubt Session
                   </Text>
                 </Box>
               </Box>
@@ -354,7 +352,7 @@ export const TestSeriesPlans = () => {
                   border: "2px solid #FFA69E",
                   boxShadow: "0 0 0 5px #FFA69E30",
                 }}
-                onClick={() => handlePayment(email, "500", "Maths")}
+                onClick={() => handlePayment(email, "199", "Maths")}
                 isLoading={tempLoading === "Maths"}
                 loadingText={""}
               >
@@ -401,7 +399,7 @@ export const TestSeriesPlans = () => {
                 right={"7px"}
                 borderRadius={"50px"}
               >
-                50% OFF
+                80% OFF
               </Tag>
               <Box
                 display={"flex"}
@@ -436,14 +434,14 @@ export const TestSeriesPlans = () => {
                     textDecoration={"line-through"}
                     lineHeight={0.4}
                   >
-                    ₹1000
+                    ₹999
                   </Text>
-                  <Text>₹500</Text>{" "}
+                  <Text>₹199</Text>{" "}
                   <Text
                     whiteSpace={"nowrap"}
                     fontSize={["13px", "13px", "14px", "15px", "16px"]}
                   >
-                    10 Doubt Session
+                    No Doubt Session
                   </Text>
                 </Box>
               </Box>
@@ -473,7 +471,7 @@ export const TestSeriesPlans = () => {
                   border: "2px solid #49B86A",
                   boxShadow: "0 0 0 5px #49B86A30",
                 }}
-                onClick={() => handlePayment(email, "500", "English")}
+                onClick={() => handlePayment(email, "199", "English")}
                 // mb={"5px"}
                 isLoading={tempLoading === "English"}
                 loadingText={""}
@@ -521,7 +519,7 @@ export const TestSeriesPlans = () => {
                 right={"7px"}
                 borderRadius={"50px"}
               >
-                50% OFF
+                80% OFF
               </Tag>
               <Box
                 display={"flex"}
@@ -556,14 +554,14 @@ export const TestSeriesPlans = () => {
                     textDecoration={"line-through"}
                     lineHeight={0.4}
                   >
-                    ₹1000
+                    ₹999
                   </Text>
-                  <Text>₹500</Text>{" "}
+                  <Text>₹199</Text>{" "}
                   <Text
                     whiteSpace={"nowrap"}
                     fontSize={["13px", "13px", "14px", "15px", "16px"]}
                   >
-                    10 Doubt Session
+                    No Doubt Session
                   </Text>
                 </Box>
               </Box>
@@ -593,7 +591,7 @@ export const TestSeriesPlans = () => {
                   border: "2px solid #a480f2",
                   boxShadow: "0 0 0 5px #a480f230",
                 }}
-                onClick={() => handlePayment(email, "500", "Science")}
+                onClick={() => handlePayment(email, "199", "Science")}
                 isLoading={tempLoading === "Science"}
                 loadingText={""}
               >
