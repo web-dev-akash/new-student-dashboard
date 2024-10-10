@@ -45,30 +45,55 @@ export const Home = () => {
     });
   };
 
-  onMessage(messaging, ({ notification }) => {
-    console.log("Foreground Notification", notification);
-    const notificationTitle = notification.title;
-    const notificationOptions = {
-      body: notification.body,
-      icon: notification.image,
-      tag: notification.tag,
-      renotify: notification.renotify,
-      dir: notification.dir,
-      vibrate: notification.vibrate,
-      silent: notification.silent,
-      actions: notification.actions,
-      requireInteraction: notification.requireInteraction,
-    };
-    const notify = new Notification(notificationTitle, notificationOptions);
+  useEffect(() => {
+    const setupListener = async () => {
+      const m = await messaging();
+      if (!m) return;
 
-    notify.onclick = (e) => {
-      e.preventDefault();
-      window.open(
-        `https://students.wisechamps.com?email=${user.email}`,
-        "_blank"
-      );
+      const unsubscribe = onMessage(m, (payload) => {
+        if (Notification.permission !== "granted") return;
+
+        console.log("Foreground push notification received:", payload);
+        const link = payload.fcmOptions?.link || payload.data?.link;
+        const notificationTitle = payload.data.title;
+        const notificationOptions = {
+          body: payload.data.body,
+          icon: "https://lh3.googleusercontent.com/d/1uh8c7Vk_ktqRnwr2o9OBs3_Uyj7BG4nv?authuser=1/view",
+          tag: "reminder",
+          renotify: true,
+          dir: "rtl",
+          vibrate: [200, 100, 200],
+          requireInteraction: true,
+          silent: false,
+          data: link ? { url: link } : undefined,
+          badge:
+            "https://lh3.googleusercontent.com/d/1tfdKKaHEYRvFjG2dkFeIf64U1ulpNiIq?authuser=1/view",
+        };
+        const notify = new Notification(notificationTitle, notificationOptions);
+
+        notify.onclick = (e) => {
+          e.preventDefault();
+          const link = event.target?.data?.url;
+          if (link) {
+            window.open(`${link}?email=${user.email}`);
+          } else {
+            console.log("No link found in the notification payload");
+          }
+        };
+      });
+      return unsubscribe;
     };
-  });
+
+    let unsubscribe = null;
+
+    setupListener().then((unsub) => {
+      if (unsub) {
+        unsubscribe = unsub;
+      }
+    });
+
+    return () => unsubscribe?.();
+  }, []);
 
   useEffect(() => {
     if (!oqad || !oqad.status) {

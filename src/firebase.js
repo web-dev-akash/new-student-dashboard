@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getApp, getApps, initializeApp } from "firebase/app";
+import { getMessaging, getToken, isSupported } from "firebase/messaging";
 
 export const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -13,24 +13,27 @@ export const firebaseConfig = {
 
 export const FIREBASE_VAPID_KEY = import.meta.env.VITE_VAPID_KEY;
 
-const app = initializeApp(firebaseConfig);
-export const messaging = getMessaging(app);
+export const app =
+  getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
+export const messaging = async () => {
+  const supported = await isSupported();
+  return supported ? getMessaging(app) : null;
+};
 
 export const requestForToken = async (registration) => {
-  return await getToken(messaging, {
-    vapidKey: FIREBASE_VAPID_KEY,
-    serviceWorkerRegistration: registration,
-  })
-    .then((currentToken) => {
-      if (currentToken) {
-        return currentToken;
-      } else {
-        alert("Need Permission to Send Reminders");
-        return null;
-      }
-    })
-    .catch((err) => {
-      alert("An error occurred while retrieving token - " + err);
-      return null;
-    });
+  try {
+    const fcmMessaging = await messaging();
+    if (fcmMessaging) {
+      const token = await getToken(fcmMessaging, {
+        vapidKey: FIREBASE_VAPID_KEY,
+        serviceWorkerRegistration: registration,
+      });
+      return token;
+    }
+    return null;
+  } catch (err) {
+    console.error("An error occurred while fetching the token:", err);
+    return null;
+  }
 };
