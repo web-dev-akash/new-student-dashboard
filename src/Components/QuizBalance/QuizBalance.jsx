@@ -26,6 +26,7 @@ import scrollDown from "/src/Lottie/ScrollDown.json";
 import { PlansAndPricing } from "../Pricing/PlansAndPricing";
 import { MdCheckCircle } from "react-icons/md";
 import { getUserPaymentHistory } from "../../Redux/action";
+import { useDynamicStatusBarColor } from "../DynamicStatusBarColor";
 
 export const QuizBalance = () => {
   const dispatch = useDispatch();
@@ -145,6 +146,8 @@ export const QuizBalance = () => {
       panel?.removeEventListener("scroll", handleScroll);
     };
   }, [history]);
+
+  useDynamicStatusBarColor("#E7E6FF");
 
   if (!history) {
     return <Loading />;

@@ -27,6 +27,7 @@ import { ConfettiComponent } from "../Components/ConfettiComponent/ConfettiCompo
 import { getWinnersData } from "../Redux/action";
 import { Loading } from "../Components/Loading/Loading";
 import logo from "/images/logo.png";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const WeeklyWinners = () => {
   const navigate = useNavigate();
@@ -80,6 +81,8 @@ export const WeeklyWinners = () => {
       dispatch(getWinnersData(user.grade));
     }
   }, []);
+
+  useDynamicStatusBarColor("#E7E6FF");
 
   if (!winners || !winners.status || winners.status !== 200) {
     return <Loading />;

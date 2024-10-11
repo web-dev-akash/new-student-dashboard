@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setMode } from "../Redux/action";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const NoUserFound = () => {
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ export const NoUserFound = () => {
   useEffect(() => {
     dispatch(setMode(""));
   }, []);
+  useDynamicStatusBarColor("#ffffff");
   return (
     <div
       className="email-not-found"

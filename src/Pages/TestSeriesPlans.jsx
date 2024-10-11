@@ -25,6 +25,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "/images/logo.png";
 import { FcFaq } from "react-icons/fc";
 import { ImCross } from "react-icons/im";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const TestSeriesPlans = () => {
   const toast = useToast();
@@ -103,6 +104,8 @@ export const TestSeriesPlans = () => {
       console.log("error is ------------", error);
     }
   };
+
+  useDynamicStatusBarColor("#E7E6FF");
 
   return (
     <ChakraProvider disableGlobalStyle>

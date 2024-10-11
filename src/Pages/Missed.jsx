@@ -2,6 +2,7 @@ import { Box, ChakraProvider, Image, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const Missed = () => {
   const link = new URLSearchParams(window.location.search).get("link");
@@ -10,7 +11,7 @@ export const Missed = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-
+  useDynamicStatusBarColor("#ffffff");
   return (
     <ChakraProvider disableGlobalStyle>
       <Box minHeight={"100vh"}>

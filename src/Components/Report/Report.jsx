@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ClickBtn } from "../ClickBtn/ClickBtn";
 import { getReportDataNew, updateAnalysisToSheet } from "../../Redux/action";
+import { useDynamicStatusBarColor } from "../DynamicStatusBarColor";
 
 // eslint-disable-next-line no-unused-vars
 export const Report = () => {
@@ -27,6 +28,7 @@ export const Report = () => {
     }
   }, []);
 
+  useDynamicStatusBarColor("#ffffff");
   if (loading || !sessions) {
     return <Loading />;
   }

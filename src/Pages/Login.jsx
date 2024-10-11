@@ -22,6 +22,7 @@ import { fetchUser } from "../Redux/action";
 // import axios from "axios";
 import { LoginSlider } from "../Components/LoginSlider/LoginSlider";
 import { Loading } from "../Components/Loading/Loading";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 ring2.register();
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -122,6 +123,8 @@ export const Login = () => {
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  useDynamicStatusBarColor("#ffffff");
 
   if (localEmail && loading) {
     return <Loading />;

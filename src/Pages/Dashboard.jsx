@@ -13,6 +13,7 @@ import { TestSeriesComp } from "../Components/TestSeries/TestSeriesComp";
 import { TestSeriesDoubtSessionComp } from "../Components/TestSeries/TestSeriesDoubtSessionComp";
 import { StoriesComponent } from "../Components/Stories/StoriesComponent";
 import logo from "/images/icon.png";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const Dashboard = ({ setTab }) => {
   const dispatch = useDispatch();
@@ -116,6 +117,8 @@ export const Dashboard = ({ setTab }) => {
       timersRef.current.forEach((timer) => clearTimeout(timer));
     };
   }, [alert]);
+
+  useDynamicStatusBarColor("#ffffff");
 
   return (
     <Box

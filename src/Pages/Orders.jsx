@@ -6,6 +6,7 @@ import preview from "../assets/preview.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGifts } from "react-icons/fa";
 import logo from "/images/logo.png";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const Orders = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ export const Orders = () => {
       dispatch(getOrders(id));
     }
   }, []);
+
+  useDynamicStatusBarColor("#E7E6FF");
 
   return (
     <>

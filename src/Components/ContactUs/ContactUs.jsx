@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { RiPhoneFill, RiWhatsappFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import contact_us from "/src/assets/contact_us.png";
+import { useDynamicStatusBarColor } from "../DynamicStatusBarColor";
 
 export const ContactUs = () => {
   const toast = useToast();
@@ -112,6 +113,8 @@ export const ContactUs = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  useDynamicStatusBarColor("#E7E6FF");
 
   return (
     <Box>

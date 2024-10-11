@@ -45,6 +45,7 @@ import { CgArrowBottomLeftR, CgArrowTopRightR } from "react-icons/cg";
 import { ClickBtn } from "../Components/ClickBtn/ClickBtn";
 import Lottie from "lottie-react";
 import scrollDown from "/src/Lottie/ScrollDown.json";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const Store = () => {
   const dispatch = useDispatch();
@@ -116,6 +117,8 @@ export const Store = () => {
       dispatch(getProducts());
     }
   }, []);
+
+  useDynamicStatusBarColor("#E7E6FF");
 
   if (tempMode === "thankyou") {
     return (

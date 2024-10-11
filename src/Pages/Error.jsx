@@ -14,6 +14,7 @@ import {
 import { useDispatch } from "react-redux";
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const Error = () => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ export const Error = () => {
     dispatch(setMode(""));
     navigate("/");
   };
-
+  useDynamicStatusBarColor("#ffffff");
   return (
     <Box
       textAlign={"center"}

@@ -5,6 +5,7 @@ import { ReferralSteps } from "../Components/Referral/ReferralSteps";
 import { InviteButton } from "../Components/InviteButton/InviteButton";
 import { useEffect } from "react";
 import { ClickBtn } from "../Components/ClickBtn/ClickBtn";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const Referrals = () => {
   const referrals = useSelector((state) => state.user.referrals);
@@ -12,6 +13,8 @@ export const Referrals = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  useDynamicStatusBarColor("#E7E6FF");
 
   return (
     <Box

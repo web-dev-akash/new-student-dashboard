@@ -16,6 +16,7 @@ import * as changeCase from "change-case";
 import { Loading } from "../Components/Loading/Loading";
 import { debounce } from "lodash";
 import logo from "/src/assets/logo.png";
+import { useDynamicStatusBarColor } from "../Components/DynamicStatusBarColor";
 
 export const Address = () => {
   const dispatch = useDispatch();
@@ -132,7 +133,7 @@ export const Address = () => {
   };
 
   useEffect(() => {}, [address.city, address.state, invalidPincode]);
-
+  useDynamicStatusBarColor("#ffffff");
   if (loading) {
     return <Loading />;
   }
