@@ -14,9 +14,11 @@ import {
 } from "../Redux/action";
 import { messaging, requestForToken } from "../firebase";
 import { onMessage } from "firebase/messaging";
+import { Button, Text, useToast } from "@chakra-ui/react";
 
 export const Home = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
   const user = useSelector((state) => state.user);
   const oqad = useSelector((state) => state.oqad);
   const testSeries = useSelector((state) => state.testSeries);
@@ -47,28 +49,25 @@ export const Home = () => {
 
   onMessage(messaging, (payload) => {
     console.log("Foreground Notification", payload);
-    const notificationTitle = payload.data.title;
-    const notificationOptions = {
-      body: payload.data.body,
-      icon: "https://lh3.googleusercontent.com/d/1uh8c7Vk_ktqRnwr2o9OBs3_Uyj7BG4nv?authuser=1/view",
-      tag: "reminder",
-      renotify: true,
-      dir: "rtl",
-      vibrate: [200, 100, 200],
-      requireInteraction: true,
-      silent: false,
-      badge:
-        "https://lh3.googleusercontent.com/d/1tfdKKaHEYRvFjG2dkFeIf64U1ulpNiIq?authuser=1/view",
-    };
-    const notify = new Notification(notificationTitle, notificationOptions);
-
-    notify.onclick = (e) => {
-      e.preventDefault();
-      window.open(
-        `https://students.wisechamps.com?email=${user.email}`,
-        "_blank"
-      );
-    };
+    toast({
+      title: payload.data.title,
+      description: (
+        <Box>
+          <Text mb={1.5}>{payload.data.body}</Text>
+          <Button
+            onClick={() => {
+              window.open(payload.data.url);
+            }}
+          >
+            Join Now
+          </Button>
+        </Box>
+      ),
+      position: "top",
+      duration: 5000,
+      isClosable: true,
+      status: "success",
+    });
   });
 
   useEffect(() => {
