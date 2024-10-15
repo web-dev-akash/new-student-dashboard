@@ -9,7 +9,7 @@ export const Loading = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        height: "90vh",
+        height: "100vh",
       }}
     >
       <l-ring
