@@ -1,25 +1,206 @@
 {
   "short_name": "Wisechamps",
-  "name": "Wisechamps | Students Dashboard",
+  "name": "Wisechamps",
   "icons": [
     {
-      "src": "/images/icon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "icons/16.png",
+      "sizes": "16x16",
+      "type": "image/png"
     },
     {
-      "src": "/images/icon.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "icons/20.png",
+      "sizes": "20x20",
+      "type": "image/png"
     },
     {
-      "src": "/images/icon.png",
+      "src": "icons/29.png",
+      "sizes": "29x29",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/40.png",
+      "sizes": "40x40",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/50.png",
+      "sizes": "50x50",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/57.png",
+      "sizes": "57x57",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/58.png",
+      "sizes": "58x58",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/60.png",
+      "sizes": "60x60",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/76.png",
+      "sizes": "76x76",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/80.png",
+      "sizes": "80x80",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/87.png",
+      "sizes": "87x87",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/100.png",
+      "sizes": "100x100",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/114.png",
+      "sizes": "114x114",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/120.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/167.png",
+      "sizes": "167x167",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "sizes": "512x512"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
     }
   ],
+  "id": "/",
+  "scope": "/",
   "start_url": "/",
+  "lang": "en",
   "display": "standalone",
   "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "Welcome to WiseChamps - your go-to platform for interactive online Olympiad quizzes designed to sharpen your child's knowledge, aptitude, and reasoning skills. Our expertly crafted quizzes cover a wide range of subjects, helping kids excel academically and develop critical thinking abilities. With engaging and challenging content, WiseChamps ensures a fun learning experience that prepares children for competitive exams and future success. Join us today and watch your child become a true champion!",
+  "dir": "auto",
+  "orientation": "portrait",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "display_override": ["window-controls-overlay"],
+  "iarc_rating_id": "na",
+  "screenshots": [
+    {
+      "src": "/images/screenshots/1.png",
+      "sizes": "374x832",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/screenshots/2.png",
+      "sizes": "374x830",
+      "type": "image/png"
+    }
+  ],
+  "features": ["Reminders", "Live Quizzes", "Test Series"],
+  "shortcuts": [
+    {
+      "name": "Add Quiz Balance",
+      "url": "/#buy_quiz",
+      "description": "Buy more quizzes",
+      "icons": [
+        {
+          "src": "icons/192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Refer a Friend",
+      "url": "/#refer",
+      "description": "Refer friends and earn wisechamps coins",
+      "icons": [
+        {
+          "src": "icons/192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "categories": ["education"],
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "handle_links": "auto",
+  "file_handlers": [],
+  "protocol_handlers": [
+    {
+      "protocol": "web+wisechamps",
+      "url": "/%s"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }

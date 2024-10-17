@@ -28,3 +28,4 @@ dist-ssr
 .netlify
 
 public/firebase-messaging-sw.js
+public/well-known

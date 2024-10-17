@@ -21,25 +21,6 @@ const theme = createTheme({
   },
 });
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .getRegistration("/firebase-messaging-sw.js")
-    .then((registration) => {
-      if (!registration) {
-        navigator.serviceWorker
-          .register("/firebase-messaging-sw.js")
-          .then((reg) => {
-            console.log("Service Worker Registered", reg);
-          })
-          .catch((error) => {
-            console.log("Error Registering the service worker ", error);
-          });
-      } else {
-        console.log("Service Worker Already Registered", registration);
-      }
-    });
-}
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>

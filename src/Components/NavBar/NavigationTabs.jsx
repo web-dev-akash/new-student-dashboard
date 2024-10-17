@@ -41,11 +41,14 @@ export const NavigationTabs = () => {
   };
 
   useEffect(() => {
-    if (query === "#buy_quiz") {
-      setActiveTab(4);
-    }
     if (query === "#reports") {
       setActiveTab(1);
+    } else if (query === "#gifts") {
+      setActiveTab(2);
+    } else if (query === "#refer") {
+      setActiveTab(3);
+    } else if (query === "#buy_quiz") {
+      setActiveTab(4);
     }
   }, []);
 

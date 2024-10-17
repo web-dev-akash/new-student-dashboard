@@ -12,7 +12,7 @@ import {
   getTestSeriesDoubtSessions,
   updatePushTokenToZoho,
 } from "../Redux/action";
-import { messaging, requestForToken } from "../firebase";
+import { FIREBASE_VAPID_KEY, messaging, requestForToken } from "../firebase";
 import { onMessage } from "firebase/messaging";
 import { Button, Text, useToast } from "@chakra-ui/react";
 
@@ -24,25 +24,45 @@ export const Home = () => {
   const testSeries = useSelector((state) => state.testSeries);
   const currentStories = useSelector((state) => state.story);
   const testSeriesDoubtSession = useSelector((state) => state.doubtSession);
-  const tokenLocal = localStorage.getItem("FCM_TOKEN") || null;
+
+  function urlBase64ToUint8Array(base64String) {
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, "+")
+      .replace(/_/g, "/");
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
 
   const getToken = () => {
     Notification.requestPermission().then((perm) => {
       if (perm === "granted") {
-        if (!tokenLocal) {
-          navigator.serviceWorker.ready.then((registration) => {
-            requestForToken(registration).then((token) => {
-              if (token) {
-                localStorage.setItem("FCM_TOKEN", token);
-                updatePushTokenToZoho(user.email, token).then((res) => {
-                  console.log("Updated in DB", res);
-                });
-              } else {
-                console.log("Error Generating Token");
-              }
-            });
+        navigator.serviceWorker.ready.then(async (registration) => {
+          const subscription = await registration.pushManager.getSubscription();
+          if (subscription) {
+            return subscription;
+          }
+          const convertedVapidKey = urlBase64ToUint8Array(FIREBASE_VAPID_KEY);
+          const subscription_1 = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: convertedVapidKey,
           });
-        }
+          console.log("Subscription is :", subscription_1);
+          requestForToken(registration).then((token) => {
+            if (token) {
+              localStorage.setItem("FCM_TOKEN", token);
+              updatePushTokenToZoho(user.email, token).then((res) => {
+                console.log("Updated in DB", res);
+              });
+            } else {
+              console.log("Error Generating Token");
+            }
+          });
+        });
       }
     });
   };

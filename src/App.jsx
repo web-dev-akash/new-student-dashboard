@@ -119,20 +119,18 @@ function App() {
           <Route
             path="*"
             element={
-              <PrivateRouter>
-                <Box
-                  height={["80vh", "80vh", "90vh", "95vh"]}
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  flexDirection={"column"}
-                >
-                  <Heading>OOPS!</Heading>
-                  <Text fontSize={["15px", "15px", "18px", "18px"]}>
-                    Page not Found...
-                  </Text>
-                </Box>
-              </PrivateRouter>
+              <Box
+                height={["80vh", "80vh", "90vh", "95vh"]}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                flexDirection={"column"}
+              >
+                <Heading>OOPS!</Heading>
+                <Text fontSize={["15px", "15px", "18px", "18px"]}>
+                  Page not Found...
+                </Text>
+              </Box>
             }
           ></Route>
         </Routes>
