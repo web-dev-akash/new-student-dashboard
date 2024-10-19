@@ -327,12 +327,6 @@ export const TestSeriesPlans = () => {
                     ₹999
                   </Text>
                   <Text>₹199</Text>
-                  <Text
-                    whiteSpace={"nowrap"}
-                    fontSize={["13px", "13px", "14px", "15px", "16px"]}
-                  >
-                    No Doubt Session
-                  </Text>
                 </Box>
               </Box>
               <Text
@@ -340,7 +334,7 @@ export const TestSeriesPlans = () => {
                 fontSize={["13px", "13px", "14px", "15px", "16px"]}
                 mb={"15px"}
               >
-                Validity : 10th Sep - 15th Oct
+                Validity - 30th Nov
               </Text>
               <Button
                 width={"100%"}
@@ -440,12 +434,6 @@ export const TestSeriesPlans = () => {
                     ₹999
                   </Text>
                   <Text>₹199</Text>{" "}
-                  <Text
-                    whiteSpace={"nowrap"}
-                    fontSize={["13px", "13px", "14px", "15px", "16px"]}
-                  >
-                    No Doubt Session
-                  </Text>
                 </Box>
               </Box>
               <Box
@@ -458,7 +446,7 @@ export const TestSeriesPlans = () => {
                   fontWeight={600}
                   fontSize={["13px", "13px", "14px", "15px", "16px"]}
                 >
-                  Validity : 10th Sep - 15th Oct
+                  Validity - 30th Nov
                 </Text>
               </Box>
               <Button
@@ -560,12 +548,6 @@ export const TestSeriesPlans = () => {
                     ₹999
                   </Text>
                   <Text>₹199</Text>{" "}
-                  <Text
-                    whiteSpace={"nowrap"}
-                    fontSize={["13px", "13px", "14px", "15px", "16px"]}
-                  >
-                    No Doubt Session
-                  </Text>
                 </Box>
               </Box>
               <Box
@@ -578,7 +560,7 @@ export const TestSeriesPlans = () => {
                   fontWeight={600}
                   fontSize={["13px", "13px", "14px", "15px", "16px"]}
                 >
-                  Validity : 10th Sep - 15th Oct
+                  Validity - 30th Nov
                 </Text>
               </Box>
               <Button
