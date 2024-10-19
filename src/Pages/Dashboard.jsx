@@ -171,7 +171,7 @@ export const Dashboard = ({ setTab }) => {
       >
         <WeeklyQuiz />
         <TestSeriesComp />
-        <TestSeriesDoubtSessionComp />
+        {/* <TestSeriesDoubtSessionComp /> */}
         {/* <Pricing setTab={setTab} /> */}
         <OQAD />
         <Fade in={showStory} unmountOnExit id="story">

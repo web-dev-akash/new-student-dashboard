@@ -57,11 +57,12 @@ export const TestSeriesComp = () => {
   const science = useSelector((state) => state.user.testSeries.Science);
   const english = useSelector((state) => state.user.testSeries.English);
   const testSeries = useSelector((state) => state.testSeries.data);
+  const testSeriesStatus = useSelector((state) => state.testSeries.status);
 
   const allSubjects = {
+    English: english,
     Maths: maths,
     Science: science,
-    English: english,
   };
 
   const [index, setIndex] = useState(0);
@@ -69,6 +70,7 @@ export const TestSeriesComp = () => {
   const itemRefs = useRef([]);
   const [isAtStart, setIsAtStart] = useState(false);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const [finalData, setFinalData] = useState([]);
 
   const getSessionStatus = (sessionDateTime) => {
     const now = new Date();
@@ -165,6 +167,23 @@ export const TestSeriesComp = () => {
     }
   }, [index]);
 
+  useEffect(() => {
+    if (testSeries?.length > 0) {
+      const finalTestData = [];
+      for (const subject in allSubjects) {
+        const subjectTests = testSeries.filter(
+          (test) => test.Subject === subject
+        );
+        if (allSubjects[subject]) {
+          finalTestData.push(...subjectTests);
+        } else {
+          finalTestData.push(subjectTests[0], subjectTests[1]);
+        }
+      }
+      setFinalData(finalTestData);
+    }
+  }, [testSeriesStatus]);
+
   return (
     <Box
       position={"relative"}
@@ -174,7 +193,7 @@ export const TestSeriesComp = () => {
       borderRadius={"10px"}
       padding={"10px 0"}
       boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 20px 0px"}
-      display={testSeries.length === 0 ? "none" : "block"}
+      display={finalData.length === 0 ? "none" : "block"}
     >
       <Box
         fontWeight={700}
@@ -200,7 +219,7 @@ export const TestSeriesComp = () => {
         display={"flex"}
         alignItems={"center"}
         justifyContent={
-          testSeries.length <= 3
+          finalData.length <= 3
             ? ["space-evenly", "space-evenly", "space-evenly", "center"]
             : "space-evenly"
         }
@@ -213,7 +232,7 @@ export const TestSeriesComp = () => {
         ref={containerRef}
         id="quizScroller"
       >
-        {testSeries.map(
+        {finalData.map(
           ({ Activate_Date, Survey_Link, id, Name, Subject, Free }, idx) => {
             if (!itemRefs.current[idx]) {
               itemRefs.current[idx] = React.createRef();
