@@ -435,10 +435,21 @@ export const QuizBalance = () => {
           </Accordion>
         )}
         <Box ref={quizBalanaceRef}>
-          <PlansAndPricing />
+          {/* discontinue the plans purchase */}
+          {/* <PlansAndPricing /> */}
+          <Text
+            padding={"70px"}
+            margin={"0 auto"}
+            maxWidth={"400px"}
+            fontSize={"50px"}
+            fontWeight={700}
+            opacity={"0.7"}
+          >
+            No Plans Available
+          </Text>
         </Box>
 
-        <Box mt={["20px", "25px", "30px", "30px"]}>
+        <Box>
           <Alert colorScheme="none">
             <List
               spacing={3}
