@@ -444,6 +444,7 @@ export const QuizBalance = () => {
             fontSize={"50px"}
             fontWeight={700}
             opacity={"0.7"}
+            textAlign={"center"}
           >
             No Plans Available
           </Text>
