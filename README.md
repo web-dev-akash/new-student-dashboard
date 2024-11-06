@@ -1,4 +1,4 @@
-# Personal Portfolio
+# Student Dashboard
 
 ## Individual Project | Duration (1 Month)
 
