@@ -792,9 +792,10 @@ export const Store = () => {
                   onClick={() => setProductId(Product_Id)}
                 >
                   <Button
-                    id={coins < Unit_Price ? "submit-btn-active" : "submit-btn"}
-                    isLoading={coins < Unit_Price ? true : false}
-                    loadingText="Insufficient Coins"
+                    // id={coins < Unit_Price ? "submit-btn-active" : "submit-btn"}
+                    id="submit-btn-active"
+                    isLoading={true}
+                    loadingText="Not Available"
                     spinnerPlacement="none"
                     fontSize={["13px", "13px", "14px", "15px"]}
                     onClick={onOpen}
